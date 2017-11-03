@@ -11,6 +11,39 @@ public class GestorDB {
 		displayDB();
 	}
 	
+	public static void reg(String name, String pass) {
+		insertarDB(name, pass);
+	}
+	
+	
+
+	public static boolean log(String name, String pass) {
+		boolean log = false;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
+			Statement stat = conn.createStatement();
+			String Query = "SELECT * FROM USER";
+			ResultSet rs = stat.executeQuery(Query);
+			int nuser = 1;
+			while (rs.next() && log==false) {				
+				if (name.equals(rs.getString(1))) {
+					if (pass.equals(rs.getString(2))) {
+						log=true;
+					}
+				}				
+				nuser++;
+			}
+			rs.close();
+			stat.close();
+			conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		return log;
+	}
+	
 	public static void displayDB() {
 		try {
 			Class.forName("org.sqlite.JDBC");
