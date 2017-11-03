@@ -7,17 +7,20 @@ import java.sql.SQLException;
 
 public class GestorDB {
 	
-	public static void main(String[] args) {	
+	public static void main(String[] args) {
+		
+		//ejecutad este main para ver lo que hay en la bd
 		displayDB();
 	}
 	
-	public static void reg(String name, String pass) {
-		insertarDB(name, pass);
+	public static boolean reg(String dni,String name, String pass, String confirPass) {
+		boolean reg = insertarDB(dni,name, pass, confirPass); 		
+		return reg;
 	}
 	
 	
 
-	public static boolean log(String name, String pass) {
+	public static boolean log(String dni,String pass) {
 		boolean log = false;
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -27,8 +30,8 @@ public class GestorDB {
 			ResultSet rs = stat.executeQuery(Query);
 			int nuser = 1;
 			while (rs.next() && log==false) {				
-				if (name.equals(rs.getString(1))) {
-					if (pass.equals(rs.getString(2))) {
+				if (dni.equals(rs.getString(1))) {
+					if (pass.equals(rs.getString(3))) {
 						log=true;
 					}
 				}				
@@ -54,8 +57,9 @@ public class GestorDB {
 			int nuser = 1;
 			while (rs.next()) {
 				System.out.println("----USUARIO "+nuser+"----");
-				System.out.println("Name: "+rs.getString(1));
-				System.out.println("Pass: "+rs.getString(2));
+				System.out.println("DNI: "+rs.getString(1));
+				System.out.println("Name: "+rs.getString(2));
+				System.out.println("Pass: "+rs.getString(3));
 				nuser++;
 			}
 			rs.close();
@@ -66,18 +70,24 @@ public class GestorDB {
 			}
 	}
 	
+	public static void deleteUser(String dni) {
+		String sentencia = "DELETE FROM USER WHERE dni = '"+dni+"'";
+		runSentenciaDB(sentencia);
+	}
+	
 	public static void deleteTableDB(){
 		String sentencia = "DROP TABLE USER";
 		runSentenciaDB(sentencia);
 	}
 	
-	public static void insertarDB(String name, String pass) {
-		String sentencia = "INSERT INTO USER VALUES ('"+name+"','"+pass+"')";
+	public static boolean insertarDB(String dni, String name, String pass, String confirPass) {
+		String sentencia = "INSERT INTO USER VALUES ('"+dni+"','"+name+"','"+pass+"')";
 		runSentenciaDB(sentencia);
+		return true;
 	}
 	
 	public static void crearDB() {
-		String sentencia = "CREATE TABLE USER(name STRING, pass STRING)";
+		String sentencia = "CREATE TABLE USER(dni STRING PRIMARY KEY,name STRING, pass STRING)";
 		runSentenciaDB(sentencia);
 	}
 	
