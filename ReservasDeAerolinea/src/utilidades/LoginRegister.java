@@ -1,17 +1,18 @@
 package utilidades;
 
+import datos.Usuario;
 import gestores.GestorDB;
 
 public class LoginRegister {
-	public static boolean log(String dni, String pass) {
-		boolean logSuccess=false;
-		if (comprobarDNI(dni)==true) {
+	public static Usuario log(String dni, String pass) {
+		Usuario usuario = null;
+		if (comprobarDNI(dni)) {
 			if (comprobarPass(pass)) {				
-				logSuccess = GestorDB.log(dni, pass);
+				usuario = GestorDB.log(dni, pass);
 			}
 
 		}
-		return logSuccess;		
+		return usuario;		
 	}
 	public static boolean reg(String dni, String name, String pass, String confirPass) {
 		if (comprobarDNI(dni)==true) {

@@ -4,6 +4,8 @@ import java.sql.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import datos.Usuario;
+
 
 public class GestorDB {
 	
@@ -23,22 +25,21 @@ public class GestorDB {
 	
 	
 
-	public static boolean log(String dni,String pass) {
-		boolean log = false;
+	public static Usuario log(String dni,String pass) {
+		Usuario usuario = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
 			Statement stat = conn.createStatement();
 			String Query = "SELECT * FROM USER";
 			ResultSet rs = stat.executeQuery(Query);
-			int nuser = 1;
-			while (rs.next() && log==false) {				
+			
+			while (rs.next() && usuario == null) {
 				if (dni.equals(rs.getString(1))) {
 					if (pass.equals(rs.getString(3))) {
-						log=true;
+						usuario = new Usuario(rs.getString(1), rs.getString(2));
 					}
 				}				
-				nuser++;
 			}
 			rs.close();
 			stat.close();
@@ -47,7 +48,7 @@ public class GestorDB {
 				e.printStackTrace();
 			}
 		
-		return log;
+		return usuario;
 	}
 	
 	public static void displayDB() {

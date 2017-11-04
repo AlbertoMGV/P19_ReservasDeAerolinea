@@ -90,12 +90,19 @@ public class VLogin extends JFrame {
 		btnNewButton.setBounds(156, 227, 97, 25);
 		contentPane.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Login");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton btnLogin= new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String dni = textField.getText();
-				String pass = passwordField.getText();
-				if (LoginRegister.log(dni, pass)==true) {
+				char[] pwd = passwordField.getPassword();
+				
+				String pass = "";
+				
+				for(int i = 0; i < pwd.length; i++){
+					pass += pwd[i];
+				}
+				
+				if (LoginRegister.log(dni, pass) != null) {
 					dispose();
 					//launch ventana de app
 					VInicio.crearVInicio();
@@ -106,7 +113,7 @@ public class VLogin extends JFrame {
 				};
 			}
 		});
-		btnNewButton_1.setBounds(290, 226, 97, 25);
-		contentPane.add(btnNewButton_1);
+		btnLogin.setBounds(290, 226, 97, 25);
+		contentPane.add(btnLogin);
 	}
 }
