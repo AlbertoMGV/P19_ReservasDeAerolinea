@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import datos.Usuario;
 import utilidades.LoginRegister;
 
 import javax.swing.JLabel;
@@ -15,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -42,6 +45,15 @@ public class VLogin extends JFrame {
 	//creo la ventana en absolut layer ya que no  va a ser resizable :)
 	
 	public VLogin() {
+		//cambiar look 
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			e1.printStackTrace();
+		}
+		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -102,10 +114,13 @@ public class VLogin extends JFrame {
 					pass += pwd[i];
 				}
 				
-				if (LoginRegister.log(dni, pass) != null) {
-					dispose();
+				Usuario u = LoginRegister.log(dni, pass);
+				
+				if (u != null) {
 					//launch ventana de app
-					VInicio.crearVInicio();
+					VInicio.crearVInicio(u);
+					
+					dispose();
 					
 				} else {
 					//lanzar error de loging
