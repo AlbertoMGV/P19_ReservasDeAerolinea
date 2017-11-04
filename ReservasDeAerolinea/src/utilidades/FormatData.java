@@ -36,9 +36,7 @@ public class FormatData {
 				if(data[11].contains("Europe")){
 					//descartamos bases militares, etc
 					if(data[1].contains("Airport")){
-						data[0] = code+"";
 						fw.write(arrayToString(data) + "\n");
-						code++;
 					}
 				}
 			}
