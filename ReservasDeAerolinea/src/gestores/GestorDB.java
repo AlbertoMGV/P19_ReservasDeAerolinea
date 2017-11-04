@@ -9,13 +9,16 @@ public class GestorDB {
 	
 	public static void main(String[] args) {
 		
+		//deleteTableDB();
+		//crearDB();
+		//insertarDB("11111111H", "admin", "admin1");
 		//ejecutad este main para ver lo que hay en la bd
 		displayDB();
 	}
 	
-	public static boolean reg(String dni,String name, String pass, String confirPass) {
-		boolean reg = insertarDB(dni,name, pass, confirPass); 		
-		return reg;
+	public static boolean reg(String dni,String name, String pass) {
+		insertarDB(dni,name, pass); 		
+		return true;
 	}
 	
 	
@@ -80,7 +83,7 @@ public class GestorDB {
 		runSentenciaDB(sentencia);
 	}
 	
-	public static boolean insertarDB(String dni, String name, String pass, String confirPass) {
+	public static boolean insertarDB(String dni, String name, String pass) {
 		String sentencia = "INSERT INTO USER VALUES ('"+dni+"','"+name+"','"+pass+"')";
 		runSentenciaDB(sentencia);
 		return true;

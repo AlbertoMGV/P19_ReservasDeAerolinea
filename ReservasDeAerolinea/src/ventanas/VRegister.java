@@ -93,7 +93,7 @@ public class VRegister extends JFrame {
 					dispose();
 					VLogin.crearVLogin();
 				} else {
-					//lanzo error
+					System.out.println("error jeje");
 				}
  				
 			}
