@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FormatData {
@@ -16,7 +17,7 @@ public class FormatData {
 	
 	
 	public static void main(String[] args) {
-		eliminarAeropuertos();
+		eliminarRutas();
 	}
 	
 	public static void eliminarAeropuertos(){
@@ -39,6 +40,66 @@ public class FormatData {
 						fw.write(arrayToString(data) + "\n");
 					}
 				}
+			}
+			fw.flush();
+			fw.close();
+			bfr.close();
+			fr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	public static ArrayList<String> leerAeropuertos(){
+		File datos = new File("res/airports_new.dat");
+		ArrayList<String> result = new ArrayList<String>();
+		try {
+			FileReader fr = new FileReader(datos);
+			BufferedReader bfr = new BufferedReader(fr);
+			String linea;
+			
+			while((linea = bfr.readLine()) != null){
+				String[] data = linea.split(",");
+				result.add(data[0]);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public static void eliminarRutas(){
+		File original = new File("res/routes.dat");
+		File destination = new File("res/routes_new.dat");
+		ArrayList<String> europeanAirports = leerAeropuertos();
+		try {
+			String line;
+			FileReader fr = new FileReader(original);
+			BufferedReader bfr = new BufferedReader(fr);
+			FileWriter fw = new FileWriter(destination);
+			int code = 0;
+			while((line = bfr.readLine()) != null){				
+				String[] data = line.split(",");
+				
+				//eliminamos rutas que no salgan de europa
+				
+				for(int i = 0; i < europeanAirports.size(); i++){
+					if(data[3].equals(europeanAirports.get(i))){
+						
+						//eliminamos rutas que no tengan como destino europa
+						
+						for(int j = 0; j < europeanAirports.size(); j++){
+							if(data[5].equals(europeanAirports.get(j))){
+								fw.write(line + "\n");
+							}
+						}
+					}
+				}
+				
 			}
 			fw.flush();
 			fw.close();
