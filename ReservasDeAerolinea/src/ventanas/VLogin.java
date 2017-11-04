@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import utilidades.LoginRegister;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Font;
@@ -101,7 +102,7 @@ public class VLogin extends JFrame {
 					
 				} else {
 					//lanzar error de loging
-					System.out.println("mu mal mu mal");
+					JOptionPane.showMessageDialog(null, "DNI o Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
 				};
 			}
 		});

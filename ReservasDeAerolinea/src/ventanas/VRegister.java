@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import utilidades.LoginRegister;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -60,6 +61,7 @@ public class VRegister extends JFrame {
 		textField = new JTextField();
 		textField.setBounds(98, 88, 289, 22);
 		contentPane.add(textField);
+		textField.setToolTipText("Introduce tu DNI");
 		textField.setColumns(10);
 		
 		JLabel lblName = new JLabel("Name:");
@@ -70,6 +72,7 @@ public class VRegister extends JFrame {
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		textField_1.setBounds(98, 123, 289, 22);
+		textField_1.setToolTipText("Introduce tu Nombre y Apellido");
 		contentPane.add(textField_1);
 		
 		JLabel lblPass = new JLabel("Pass:");
@@ -93,7 +96,7 @@ public class VRegister extends JFrame {
 					dispose();
 					VLogin.crearVLogin();
 				} else {
-					System.out.println("error jeje");
+					JOptionPane.showMessageDialog(null, "Los campos no cumplen los formatos", "Error", JOptionPane.ERROR_MESSAGE);
 				}
  				
 			}
@@ -113,10 +116,12 @@ public class VRegister extends JFrame {
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(98, 158, 289, 22);
+		passwordField.setToolTipText("Introduce una contraseña de entre 6 y 15 caracteres alfanumericos :)");
 		contentPane.add(passwordField);
 		
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setBounds(98, 193, 289, 22);
+		passwordField_1.setToolTipText("Repite la contraseña");
 		contentPane.add(passwordField_1);
 	}
 

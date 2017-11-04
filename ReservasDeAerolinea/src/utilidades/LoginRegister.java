@@ -71,12 +71,13 @@ public class LoginRegister {
 		if(dniAComprobar.length() == 8) {
 			dniAComprobar = "0" + dniAComprobar;
 		}
-		if (!Character.isLetter(dniAComprobar.charAt(8))) {
-			return false;  
-		}
 		if (dniAComprobar.length() != 9){   
 			return false;
 		}
+		if (!Character.isLetter(dniAComprobar.charAt(8))) {
+			return false;  
+		}
+		
 		for (int i=0; i<8; i++) {
 
 			if(!Character.isDigit(dniAComprobar.charAt(i))){
