@@ -13,8 +13,9 @@ import datos.Route;
 
 public class GestorRutas {
 	
+	
 	public static void main(String[] args){
-		ArrayList<Route> rutas = leerRutas("MAD", "GRQ", 0 , 1, new Route());
+		ArrayList<Route> rutas = leerRutas("BIO", "ALC", 0 , 1, new Route());
 		for(Route r : rutas){
 			System.out.println(r.toString());
 			ArrayList<Route> escalas = r.getEscalas();
@@ -25,10 +26,14 @@ public class GestorRutas {
 	}
 	
 	
-	public static ArrayList<Route> leerRutas(String origen, String destino, int depth,int maxDepth, Route previousRoute){
+	public static ArrayList<Route> leerRutas(String origen, String destino, int depth,int maxDepth, Route baseRoute){
 		ArrayList<Route> result = new ArrayList<Route>();
+		ArrayList<Route> escalas = new ArrayList<Route>();
 		ArrayList<Route> finalResult = new ArrayList<Route>();
 		File rutas = new File("res/routes_distances.dat");
+		if(baseRoute.getOrigin() == null){
+			baseRoute = new Route(Airport.get(origen), Airport.get(destino));
+		}
 		try{
 			FileReader fr = new FileReader(rutas);
 			BufferedReader bfr = new BufferedReader(fr);
@@ -46,29 +51,35 @@ public class GestorRutas {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
+		int i = 0;
 		for(Route r : result){
-			if(r.getDestination().equals(Airport.get(destino))){
+
+			if(r.getDestination().equals(baseRoute.getDestination())){
 				//hemos llegado al destino
 				if(depth == 0){
 					//vuelo directo
 					finalResult.add(r);
 				}else{
 					//vuelo con escalas
-					Airport original = previousRoute.getOrigin();
-					String distancia = (previousRoute.getDistance() + r.getDistance())+"";
-					ArrayList<Route> escalas = r.getEscalas();
-					escalas.add(previousRoute);
-					escalas.add(r);
-					finalResult.add(new Route(original, distancia, r.getDestination(), escalas, new ArrayList<Aircraft>(), previousRoute.getAirline() + " + " + r.getAirline()));
+					if(!baseRoute.getOrigin().getIATA().equals(origen)){
+						
+						baseRoute.addEscala(r, maxDepth);	
+						Route addRoute = new Route(baseRoute);
+						finalResult.add(addRoute);
+						baseRoute = new Route(baseRoute.getOrigin(), baseRoute.getDestination());
+						baseRoute.addEscala(r, maxDepth);
+					}
 				}
 			}else{
-				//no llegamos al destino, buscamos si en cada destino hay algun vuelo que llegue a nuestro destino final
+				
 				if(depth < maxDepth){
-					finalResult.addAll(leerRutas(r.getDestination().getIATA(), destino, depth + 1, maxDepth, r));
+					baseRoute.addEscala(r, maxDepth);
+					finalResult.addAll(leerRutas(r.getDestination().getIATA(), destino, depth+1, maxDepth, baseRoute));
 				}
 			}
+			i++;
 		}
+		
 		return finalResult;
 	}
 
