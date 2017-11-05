@@ -36,4 +36,9 @@ public class Escala {
 		this.duration = duration;
 	}
 
+	@Override
+	public String toString() {
+		return "Escala [airport=" + airport.getIATA() + ", duration=" + duration + "]";
+	}
+
 }

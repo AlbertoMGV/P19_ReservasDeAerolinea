@@ -9,10 +9,14 @@ public class Route {
 	private Airport destination;
 	private int distance;
 	private String airline;
-	private ArrayList<Escala> escalas;
+	private ArrayList<Route> escalas;
 	private Aircraft aircraft;
 	
-	public Route(Airport origin, String distance, Airport destination, ArrayList<Escala> escalas, ArrayList<Aircraft> aircraft, String airline) {
+	public Route(){
+		
+	}
+	
+	public Route(Airport origin, String distance, Airport destination, ArrayList<Route> escalas, ArrayList<Aircraft> aircraft, String airline) {
 		this.origin = origin;
 		this.distance = Integer.parseInt(distance);
 		this.destination = destination;
@@ -32,12 +36,20 @@ public class Route {
 		}
 	}
 	
-	public void addEscala(Escala e){
+	public void addEscala(Route e){
 		this.escalas.add(e);
 	}
 	
-	public ArrayList<Escala> getEscalas(){
+	public String getAirline(){
+		return this.airline;
+	}
+	
+	public ArrayList<Route> getEscalas(){
 		return this.escalas;
+	}
+	
+	public int getDistance(){
+		return this.distance;
 	}
 
 	public Airport getOrigin() {
@@ -66,8 +78,8 @@ public class Route {
 
 	@Override
 	public String toString() {
-		return "Route [origin=" + origin.getICAO() + ", destination=" + destination.getICAO() + ", distance=" + distance + ", airline="
-				+ airline + ", escalas=" + escalas + ", aircraft=" + aircraft.getICAO() + "]";
+		return "Route [origin=" + origin.getIATA() + ", destination=" + destination.getIATA() + ", distance=" + distance + ", airline="
+				+ airline + ", escalas=" + escalas.size() + ", aircraft=" + aircraft.getICAO() + "]";
 	}
 	
 	

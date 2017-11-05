@@ -58,23 +58,23 @@ public class Airport {
 	}
 
 	public String getName() {
-		return name;
+		return name.replace("\"", "");
 	}
 
 	public String getCity() {
-		return city;
+		return city.replace("\"", "");
 	}
 
 	public String getCountry() {
-		return country;
+		return country.replace("\"", "");
 	}
 
 	public String getIATA() {
-		return IATA;
+		return IATA.replace("\"", "");
 	}
 
 	public String getICAO() {
-		return ICAO;
+		return ICAO.replace("\"", "");
 	}
 
 	public String getLat() {
