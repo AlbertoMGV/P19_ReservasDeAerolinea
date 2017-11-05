@@ -35,7 +35,8 @@ public class FormatData {
 			BufferedReader bfr = new BufferedReader(fr);
 			FileWriter fw = new FileWriter(rutasKM);
 			String origin, destination;
-			double distance, lat1, lon1, lat2, lon2;
+			double lat1, lon1, lat2, lon2;
+			int distance;
 			
 			while((linea = bfr.readLine()) != null){
 				String[] data = linea.split(",");
@@ -50,7 +51,7 @@ public class FormatData {
 				lat2 = datos.get(destination).getLat();
 				lon2 = datos.get(destination).getLon();
 				
-				distance = distancia(lat1, lon1, lat2, lon2);
+				distance = (int) distancia(lat1, lon1, lat2, lon2);
 				
 				for(int i = 0; i < data.length; i++){
 					newData[i] = data[i];
