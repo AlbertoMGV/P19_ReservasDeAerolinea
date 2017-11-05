@@ -7,21 +7,29 @@ public class Route {
 	
 	private Airport origin;
 	private Airport destination;
+	private int distance;
+	private String airline;
 	private ArrayList<Escala> escalas;
 	private Aircraft aircraft;
 	
-	public Route(Airport origin, Airport destination, ArrayList<Escala> escalas, ArrayList<Aircraft> aircraft) {
+	public Route(Airport origin, String distance, Airport destination, ArrayList<Escala> escalas, ArrayList<Aircraft> aircraft, String airline) {
 		this.origin = origin;
+		this.distance = Integer.parseInt(distance);
 		this.destination = destination;
 		this.escalas = escalas;
+		this.airline = airline;
 		
 		/*ya que algunas rutas se vuelan con diferentes aviones dependiendo del día,
 		 * recibimos como parámetro un arraylist con todas las posibilidades y se elige
 		 * uno al azar.
 		 */
 		
-		Random r = new Random(System.currentTimeMillis());
-		this.aircraft = aircraft.get(r.nextInt(aircraft.size()));
+		if(!aircraft.isEmpty()){
+			Random r = new Random(System.currentTimeMillis());
+			this.aircraft = aircraft.get(r.nextInt(aircraft.size()));
+		}else{
+			this.aircraft = new Aircraft("B738", "738", "Boeing 737-800", 150, 850);
+		}
 	}
 	
 	public void addEscala(Escala e){
@@ -54,6 +62,12 @@ public class Route {
 
 	public void setAircraft(Aircraft aircraft) {
 		this.aircraft = aircraft;
+	}
+
+	@Override
+	public String toString() {
+		return "Route [origin=" + origin.getICAO() + ", destination=" + destination.getICAO() + ", distance=" + distance + ", airline="
+				+ airline + ", escalas=" + escalas + ", aircraft=" + aircraft.getICAO() + "]";
 	}
 	
 	
