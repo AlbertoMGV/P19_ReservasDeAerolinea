@@ -18,6 +18,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VInicio extends JFrame {
 	
@@ -68,11 +70,13 @@ public class VInicio extends JFrame {
 		lblOrigen.setBounds(12, 83, 56, 16);
 		getContentPane().add(lblOrigen);
 		
+		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"BILBAO", "MADRID", "BARCELONA", "PARIS", "BERLIN", "ROMA", "LISBOA"}));
 		comboBox.setBounds(80, 80, 132, 22);
 		getContentPane().add(comboBox);
 		
+		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"BILBAO", "MADRID", "BARCELONA", "PARIS", "BERLIN", "ROMA", "LISBOA"}));
 		comboBox_1.setBounds(80, 115, 132, 22);
@@ -86,6 +90,7 @@ public class VInicio extends JFrame {
 		lblNPasajeros.setBounds(12, 159, 98, 16);
 		getContentPane().add(lblNPasajeros);
 		
+		//Igual mejor en vez de elegir el numero escribirlo
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}));
 		comboBox_2.setBounds(122, 156, 41, 22);
@@ -95,6 +100,7 @@ public class VInicio extends JFrame {
 		lblTipoBillete.setBounds(198, 159, 87, 16);
 		getContentPane().add(lblTipoBillete);
 		
+		//hay + clases??
 		JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Turista", "Business"}));
 		comboBox_3.setBounds(312, 156, 87, 22);
@@ -122,11 +128,17 @@ public class VInicio extends JFrame {
 		lblEjemploDdmmaaaa.setBounds(260, 194, 154, 16);
 		getContentPane().add(lblEjemploDdmmaaaa);
 		
+		//GUARDAR LO SELECCIONADO Y EXCEPCIONES
 		JButton btnAceptar = new JButton("ACEPTAR");
 		btnAceptar.setBounds(122, 405, 97, 25);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelat = new JButton("CANCELAR");
+		btnCancelat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		btnCancelat.setBounds(260, 405, 97, 25);
 		getContentPane().add(btnCancelat);
 	}
