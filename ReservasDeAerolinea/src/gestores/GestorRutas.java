@@ -18,7 +18,7 @@ public class GestorRutas {
 	
 	
 	public static void main(String[] args){
-		getRuta("SLM", "BIO");
+		getRuta("BIO", "LHR", 3);
 	}
 	
 	
@@ -80,7 +80,7 @@ public class GestorRutas {
 	}*/
 	
 	
-	public static ArrayList<String[]> getRuta(String origen, String destino){
+	public static ArrayList<String[]> getRuta(String origen, String destino, int maxEscalas){
 		ArrayList<String[]> result = new ArrayList<String[]>();
 		LinkedList<Airport> cola = new LinkedList<Airport>();
 		LinkedList<Integer> profundidad = new LinkedList<Integer>();
@@ -92,16 +92,18 @@ public class GestorRutas {
 		while(!cola.isEmpty()) {
 			Airport v = cola.pop();
 			int depth = profundidad.pop();
-			for(String[] vecino : v.getDestinos()) {
-				Airport aVecino = Airport.get(vecino[0]);
-				if(vecino[0].equals(destino)){
-					System.out.println("encontrada ruta, profundidad :" + depth + ", parada anterior: " + v.getIATA());
-					break;
-				}
-				if(!visited.contains(aVecino)) {
-					cola.push(aVecino);
-					profundidad.push(depth + 1);
-					visited.add(aVecino);
+			if(depth <= maxEscalas) {
+				for(String[] vecino : v.getDestinos()) {
+					Airport aVecino = Airport.get(vecino[0]);
+					if(vecino[0].equals(destino)){
+						System.out.println("encontrada ruta, profundidad :" + depth + ", parada anterior: " + v.getIATA());
+						break;
+					}
+					if(!visited.contains(aVecino)) {
+						cola.push(aVecino);
+						profundidad.push(depth + 1);
+						visited.add(aVecino);
+					}
 				}
 			}
 		}
