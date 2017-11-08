@@ -33,7 +33,7 @@ public class GestorRutas {
 			if(depth <= maxEscalas) {
 				for(String[] vecino : v.getDestinos()) {
 					Airport aVecino = Airport.get(vecino[0]);
-					if(vecino[0].equals(destino)){
+					if(aVecino.getIATA().equals(destino)){
 						System.out.println("encontrada ruta, profundidad :" + depth + ", parada anterior: " + v.getIATA());
 						break;
 					}
