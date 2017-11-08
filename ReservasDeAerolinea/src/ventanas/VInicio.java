@@ -137,6 +137,7 @@ public class VInicio extends JFrame {
 		btnCancelat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
+			
 			}
 		});
 		btnCancelat.setBounds(260, 405, 97, 25);
