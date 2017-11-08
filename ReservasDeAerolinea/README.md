@@ -5,6 +5,6 @@
 
 
 
-Pag para info de cada avion: https://doc8643.com/aircraft/
+Pag para info de cada avion: https://doc8643.com
 
 Significado codigos avion: http://www.airlinecodes.co.uk/arctypes.asp

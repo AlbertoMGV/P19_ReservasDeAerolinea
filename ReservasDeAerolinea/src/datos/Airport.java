@@ -4,13 +4,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import gestores.GestorRutas;
 
 public class Airport {
 	
 	private int airportId;
 	
 	private static HashMap<String, Airport> aeropuertos;
+	
+	private ArrayList<String[]> destinos;
+	
+	private Airport parent;
 	
 	private String name;
 	private String city;
@@ -22,10 +29,11 @@ public class Airport {
 	
 	public Airport(String airportId, String name, String city, String country, String IATA, String ICAO, String lat, String lon) {
 		this.airportId = Integer.parseInt(airportId);
+		this.IATA = IATA.replace("\"", "");
+		this.destinos = GestorRutas.leerRutas(this.IATA);
 		this.name = name;
 		this.city = city;
 		this.country = country;
-		this.IATA = IATA;
 		this.ICAO = ICAO;
 		this.lat = lat;
 		this.lon = lon;
@@ -33,6 +41,10 @@ public class Airport {
 	
 	//Devuelve un objeto Airport con su código IATA
 	
+	public ArrayList<String[]> getDestinos() {
+		return destinos;
+	}
+
 	public static Airport get(String IATA){
 		if(aeropuertos == null){
 			aeropuertos = new HashMap<String, Airport>();
@@ -63,6 +75,14 @@ public class Airport {
 
 	public String getCity() {
 		return city.replace("\"", "");
+	}
+	
+	public void setParent(Airport v) {
+		this.parent = v;
+	}
+	
+	public Airport getParent() {
+		return this.parent;
 	}
 
 	public String getCountry() {

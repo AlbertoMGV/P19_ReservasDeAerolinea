@@ -5,28 +5,24 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import datos.Aircraft;
 import datos.Airport;
-import datos.Escala;
 import datos.Route;
 
 public class GestorRutas {
 	
+	private static ArrayList<String[]> rutas;
+	
 	
 	public static void main(String[] args){
-		ArrayList<Route> rutas = leerRutas("BIO", "ALC", 0 , 1, new Route());
-		for(Route r : rutas){
-			System.out.println(r.toString());
-			ArrayList<Route> escalas = r.getEscalas();
-			for(Route e : escalas){
-				System.out.println("ESCALA: " + e.toString());
-			}
-		}
+		getRuta("SLM", "BIO");
 	}
 	
 	
-	public static ArrayList<Route> leerRutas(String origen, String destino, int depth,int maxDepth, Route baseRoute){
+	/*public static ArrayList<Route> leerRutas(String origen, String destino, int depth,int maxDepth, Route baseRoute){
 		ArrayList<Route> result = new ArrayList<Route>();
 		ArrayList<Route> escalas = new ArrayList<Route>();
 		ArrayList<Route> finalResult = new ArrayList<Route>();
@@ -81,6 +77,70 @@ public class GestorRutas {
 		}
 		
 		return finalResult;
+	}*/
+	
+	
+	public static ArrayList<String[]> getRuta(String origen, String destino){
+		ArrayList<String[]> result = new ArrayList<String[]>();
+		LinkedList<Airport> cola = new LinkedList<Airport>();
+		LinkedList<Integer> profundidad = new LinkedList<Integer>();
+		ArrayList<Airport> visited = new ArrayList<Airport>();
+		Airport aOrigen = Airport.get(origen);
+		cola.push(aOrigen);
+		profundidad.push(0);
+		visited.add(aOrigen);
+		while(!cola.isEmpty()) {
+			Airport v = cola.pop();
+			int depth = profundidad.pop();
+			for(String[] vecino : v.getDestinos()) {
+				Airport aVecino = Airport.get(vecino[0]);
+				if(vecino[0].equals(destino)){
+					System.out.println("encontrada ruta, profundidad :" + depth + ", parada anterior: " + v.getIATA());
+					break;
+				}
+				if(!visited.contains(aVecino)) {
+					cola.push(aVecino);
+					profundidad.push(depth + 1);
+					visited.add(aVecino);
+				}
+			}
+		}
+		
+		
+		return result;
 	}
+	
+	
+	public static ArrayList<String[]> leerRutas(String origen){
+		ArrayList<String[]> result = new ArrayList<String[]>();
+		if(rutas == null) {
+			rutas = new ArrayList<String[]>();
+			File rutasFile = new File("res/routes_distances.dat");
+			try{
+				FileReader fr = new FileReader(rutasFile);
+				BufferedReader bfr = new BufferedReader(fr);
+				String linea;
+				
+				while((linea = bfr.readLine()) != null){
+					String[] datos = linea.split(",");
+					rutas.add(datos);
+					//encontrar todas las rutas que salen del aeropuerto de origen
+
+					
+				}
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
+		
+		for(String[] ruta : rutas) {
+			if(ruta[2].equals(origen)){
+				String[] resultado = {ruta[4], ruta[0] ,ruta[9]};
+				result.add(resultado);
+			}
+		}
+		return result;
+	}
+	
 
 }
