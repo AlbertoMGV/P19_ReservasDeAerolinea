@@ -103,7 +103,7 @@ public class VInicio extends JFrame {
 		
 		//hay + clases??
 		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Turista", "Business"}));
+		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Turista", "Business" , "Económica"}));
 		comboBox_3.setBounds(312, 156, 87, 22);
 		getContentPane().add(comboBox_3);
 		
