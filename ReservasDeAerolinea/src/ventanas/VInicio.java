@@ -93,7 +93,7 @@ public class VInicio extends JFrame {
 		
 		//Igual mejor en vez de elegir el numero escribirlo
 		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}));
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"}));
 		comboBox_2.setBounds(122, 156, 41, 22);
 		getContentPane().add(comboBox_2);
 		
@@ -101,7 +101,7 @@ public class VInicio extends JFrame {
 		lblTipoBillete.setBounds(198, 159, 87, 16);
 		getContentPane().add(lblTipoBillete);
 		
-		//hay + clases??
+		
 		JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Turista", "Business" , "Económica"}));
 		comboBox_3.setBounds(312, 156, 87, 22);
