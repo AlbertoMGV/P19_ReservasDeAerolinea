@@ -55,10 +55,11 @@ public class Airport {
 				BufferedReader bfr = new BufferedReader(fr);
 				String linea;
 				while((linea = bfr.readLine()) != null){
+					linea = linea.replaceAll("\"", "");
 					String[] data = linea.split(",");
 					Airport result = new Airport(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
 					if(result.getIATA().length() > 2) {
-						todosAeropuertos.add(result);
+						aeropuertos.put(data[4], result);
 					}
 				}
 			} catch (IOException e) {
