@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import datos.Usuario;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -130,6 +131,11 @@ public class VInicio extends JFrame {
 		
 		//GUARDAR LO SELECCIONADO Y EXCEPCIONES
 		JButton btnAceptar = new JButton("ACEPTAR");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido seleccionados", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		btnAceptar.setBounds(122, 405, 97, 25);
 		getContentPane().add(btnAceptar);
 		
