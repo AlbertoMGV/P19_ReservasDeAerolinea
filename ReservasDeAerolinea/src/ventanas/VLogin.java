@@ -15,11 +15,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.image.ImagingOpException;
 import java.awt.event.ActionEvent;
 
 public class VLogin extends JFrame {
@@ -86,7 +90,8 @@ public class VLogin extends JFrame {
 		passwordField.setBounds(134, 172, 278, 30);
 		contentPane.add(passwordField);
 		
-		JLabel lblNewLabel = new JLabel("Futura foto de la compa\u00F1ia");
+		JLabel lblNewLabel = new JLabel();
+		lblNewLabel.setIcon(new ImageIcon("././res/bg.jpg"));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(27, 13, 385, 79);
 		contentPane.add(lblNewLabel);
