@@ -18,6 +18,7 @@ public class Airport {
 	private ArrayList<String[]> destinos;
 		
 	private ArrayList<Airport> parent;
+	private static ArrayList<Airport> todosAeropuertos;
 	
 	private String name;
 	private String city;
@@ -56,7 +57,9 @@ public class Airport {
 				while((linea = bfr.readLine()) != null){
 					String[] data = linea.split(",");
 					Airport result = new Airport(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
-					aeropuertos.put(data[4].replace("\"", ""), result);
+					if(result.getIATA().length() > 2) {
+						todosAeropuertos.add(result);
+					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -64,6 +67,32 @@ public class Airport {
 		}
 		return aeropuertos.get(IATA);
 	}
+	
+	public static ArrayList<Airport> getAll(){
+		if(todosAeropuertos == null){
+			todosAeropuertos = new ArrayList<Airport>();
+			File datos = new File("res/airports_new.dat");
+			try {
+				FileReader fr = new FileReader(datos);
+				BufferedReader bfr = new BufferedReader(fr);
+				String linea;
+				while((linea = bfr.readLine()) != null){
+					System.out.println(linea);
+					linea = linea.replace("\"", "");
+					System.out.println(linea);
+					String[] data = linea.split(",");
+					Airport result = new Airport(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
+					if(result.getIATA().length() > 2) {
+						todosAeropuertos.add(result);
+					}
+					}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return todosAeropuertos;
+	}
+	
 
 	public int getAirportId() {
 		return airportId;
@@ -106,6 +135,10 @@ public class Airport {
 
 	public String getLon() {
 		return lon;
+	}
+	
+	public String toString() {
+		return this.city + ", (" + this.IATA + ")";
 	}
 	
 	

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import datos.Airport;
 import datos.Usuario;
 
 import javax.swing.JLabel;
@@ -72,16 +73,16 @@ public class VInicio extends JFrame {
 		getContentPane().add(lblOrigen);
 		
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"BILBAO", "MADRID", "BARCELONA", "PARIS", "BERLIN", "ROMA", "LISBOA"}));
-		comboBox.setBounds(80, 80, 132, 22);
-		getContentPane().add(comboBox);
+		JComboBox comboBoxOrigen = new JComboBox();
+		comboBoxOrigen.setModel(new DefaultComboBoxModel(Airport.getAll().toArray()));
+		comboBoxOrigen.setBounds(80, 80, 132, 22);
+		getContentPane().add(comboBoxOrigen);
 		
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"BILBAO", "MADRID", "BARCELONA", "PARIS", "BERLIN", "ROMA", "LISBOA"}));
-		comboBox_1.setBounds(80, 115, 132, 22);
-		getContentPane().add(comboBox_1);
+		JComboBox comboBoxDestino = new JComboBox();
+		comboBoxDestino.setModel(new DefaultComboBoxModel(Airport.getAll().toArray()));
+		comboBoxDestino.setBounds(80, 115, 132, 22);
+		getContentPane().add(comboBoxDestino);
 		
 		JLabel lblDestino = new JLabel("DESTINO");
 		lblDestino.setBounds(12, 118, 56, 16);
