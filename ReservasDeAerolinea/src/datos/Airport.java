@@ -17,7 +17,7 @@ public class Airport {
 	
 	private ArrayList<String[]> destinos;
 		
-	private Airport parent;
+	private ArrayList<Airport> parent;
 	
 	private String name;
 	private String city;
@@ -53,10 +53,10 @@ public class Airport {
 				FileReader fr = new FileReader(datos);
 				BufferedReader bfr = new BufferedReader(fr);
 				String linea;
-				
 				while((linea = bfr.readLine()) != null){
 					String[] data = linea.split(",");
-					aeropuertos.put(data[4].replace("\"", ""), new Airport(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]));
+					Airport result = new Airport(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
+					aeropuertos.put(data[4].replace("\"", ""), result);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -78,10 +78,13 @@ public class Airport {
 	}
 	
 	public void setParent(Airport v) {
-		this.parent = v;
+		if(this.parent == null) {
+			this.parent = new ArrayList<Airport>();
+		}
+		this.parent.add(v);
 	}
 	
-	public Airport getParent() {
+	public ArrayList<Airport> getParent() {
 		return this.parent;
 	}
 
