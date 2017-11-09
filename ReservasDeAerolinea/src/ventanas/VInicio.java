@@ -29,6 +29,8 @@ public class VInicio extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	
+	private static final int MAX_PASAJEROS = 20;
+	
 	public static void crearVInicio(Usuario u) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -88,15 +90,19 @@ public class VInicio extends JFrame {
 		lblDestino.setBounds(12, 118, 56, 16);
 		getContentPane().add(lblDestino);
 		
-		JLabel lblNPasajeros = new JLabel("N\u00BA PASAJEROS");
+		JLabel lblNPasajeros = new JLabel("PASAJEROS");
 		lblNPasajeros.setBounds(12, 159, 98, 16);
 		getContentPane().add(lblNPasajeros);
 		
 		//Igual mejor en vez de elegir el numero escribirlo
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"}));
-		comboBox_2.setBounds(122, 156, 41, 22);
-		getContentPane().add(comboBox_2);
+		JComboBox comboBoxPasajeros = new JComboBox();
+		String[] nPasajeros = new String[MAX_PASAJEROS];
+		for(int i = 0; i < MAX_PASAJEROS; i++) {
+			nPasajeros[i]  = (i+1)+"";
+		}
+		comboBoxPasajeros.setModel(new DefaultComboBoxModel(nPasajeros));
+		comboBoxPasajeros.setBounds(122, 156, 41, 22);
+		getContentPane().add(comboBoxPasajeros);
 		
 		JLabel lblTipoBillete = new JLabel("CLASE");
 		lblTipoBillete.setBounds(198, 159, 87, 16);

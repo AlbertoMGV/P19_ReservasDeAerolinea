@@ -79,7 +79,6 @@ public class Airport {
 				while((linea = bfr.readLine()) != null){
 					System.out.println(linea);
 					linea = linea.replace("\"", "");
-					System.out.println(linea);
 					String[] data = linea.split(",");
 					Airport result = new Airport(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
 					if(result.getIATA().length() > 2) {
