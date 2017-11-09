@@ -137,6 +137,8 @@ public class VInicio extends JFrame {
 		btnCancelat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
+				VLogin frame = new VLogin();
+				frame.setVisible(true);
 			
 			}
 		});
