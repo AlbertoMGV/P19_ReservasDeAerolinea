@@ -58,6 +58,7 @@ public class VInicio extends JFrame {
 		this.loggedUser = u;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(725, 350, 474, 453);
+		setTitle("[DeustoAIR] Inicio");
 		getContentPane().setLayout(null);
 		
 		JLabel lblReservaDeVuelos = new JLabel("RESERVA DE VUELOS");

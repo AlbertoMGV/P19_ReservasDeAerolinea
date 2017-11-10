@@ -55,6 +55,7 @@ public class VRegister extends JFrame {
 		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(725, 350, 450, 371);
+		setTitle("[DeustoAIR] Register");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

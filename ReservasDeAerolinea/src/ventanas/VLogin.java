@@ -61,7 +61,7 @@ public class VLogin extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(725, 350, 450, 300);
-		this.setTitle("");
+		this.setTitle("[DeustoAIR] Login");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -89,6 +89,8 @@ public class VLogin extends JFrame {
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		passwordField.setBounds(134, 172, 278, 30);
 		contentPane.add(passwordField);
+		
+		
 		
 		JLabel lblNewLabel = new JLabel();
 		lblNewLabel.setIcon(new ImageIcon("././res/bg.jpg"));
@@ -135,5 +137,8 @@ public class VLogin extends JFrame {
 		});
 		btnLogin.setBounds(290, 226, 97, 25);
 		contentPane.add(btnLogin);
+		
+		textField.setText("45915504Y");
+		passwordField.setText("123qwe");
 	}
 }

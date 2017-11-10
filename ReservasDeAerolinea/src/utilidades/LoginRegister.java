@@ -62,10 +62,10 @@ public class LoginRegister {
 	public static boolean comprobarNombre(String nombreAComprobar) {
 		int nletrasok = 0;
 		nombreAComprobar = nombreAComprobar.toLowerCase();
-		if (nombreAComprobar.length()>=3 && nombreAComprobar.length()<=20) {
+		if (nombreAComprobar.length()>=3 && nombreAComprobar.length()<=50) {
 			for (int i = 0; i < nombreAComprobar.length(); i++) {
 				char c = nombreAComprobar.charAt(i);
-				if (Character.isDigit(c)==true || Character.isLetter(c)==true) {
+				if (Character.isLetterOrDigit(c)==true || Character.isSpaceChar(c)) {
 					nletrasok++;
 				}
 			}
