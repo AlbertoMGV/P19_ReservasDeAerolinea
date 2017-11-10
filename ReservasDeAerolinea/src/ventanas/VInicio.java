@@ -57,7 +57,7 @@ public class VInicio extends JFrame {
 		}
 		this.loggedUser = u;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 474, 453);
+		setBounds(725, 350, 474, 453);
 		getContentPane().setLayout(null);
 		
 		JLabel lblReservaDeVuelos = new JLabel("RESERVA DE VUELOS");
@@ -164,5 +164,16 @@ public class VInicio extends JFrame {
 		lblNewLabel.setIcon(new ImageIcon("././res/bg.jpg"));
 		lblNewLabel.setBounds(41, 13, 385, 79);
 		getContentPane().add(lblNewLabel);
+		
+		JButton btnMiPerfil = new JButton("Mi perfil");
+		btnMiPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+				VPerfil frame = new VPerfil(u);
+				frame.setVisible(true);
+			}
+		});
+		btnMiPerfil.setBounds(329, 105, 97, 25);
+		getContentPane().add(btnMiPerfil);
 	}
 }

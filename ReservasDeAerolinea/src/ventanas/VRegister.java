@@ -54,7 +54,7 @@ public class VRegister extends JFrame {
 			e1.printStackTrace();
 		}
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 371);
+		setBounds(725, 350, 450, 371);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

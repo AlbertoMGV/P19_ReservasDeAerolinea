@@ -9,12 +9,13 @@ import datos.Usuario;
 
 public class GestorDB {
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		
 		//ejecutad este main para ver lo que hay en la bd				
 		//el usuario de prueba --> ("11111111H", "Admin", "admin1", "admin@deustoair.es");
 		displayDB();
-	}
+	} 
+*/
 	
 	public static boolean reg(String dni,String name, String pass, String email) {
 		insertarDB(dni,name, pass, email); 		
@@ -35,7 +36,7 @@ public class GestorDB {
 			while (rs.next() && usuario == null) {
 				if (dni.equals(rs.getString(1))) {
 					if (pass.equals(rs.getString(3))) {
-						usuario = new Usuario(rs.getString(1), rs.getString(2));
+						usuario = new Usuario(rs.getString(1), rs.getString(2), "");
 					}
 				}				
 			}
@@ -47,6 +48,25 @@ public class GestorDB {
 			}
 		
 		return usuario;
+	}
+	
+	public static String emailBD(String dni) {
+		String email="";
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
+			Statement stat = conn.createStatement();
+			String Query = "SELECT email FROM USER WHERE dni='"+dni+"'";
+			ResultSet rs = stat.executeQuery(Query);
+			email = rs.getString(1);
+			rs.close();
+			stat.close();
+			conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return email;
+		
 	}
 	
 	public static void displayDB() {
