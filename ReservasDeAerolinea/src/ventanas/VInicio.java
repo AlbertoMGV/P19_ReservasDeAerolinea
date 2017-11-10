@@ -18,6 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -45,6 +46,7 @@ public class VInicio extends JFrame {
 	}
 	
 	public VInicio(Usuario u) {
+		setResizable(false);
 		//cambiar look 
 		
 		try {
@@ -55,43 +57,43 @@ public class VInicio extends JFrame {
 		}
 		this.loggedUser = u;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 474, 490);
+		setBounds(100, 100, 474, 453);
 		getContentPane().setLayout(null);
 		
 		JLabel lblReservaDeVuelos = new JLabel("RESERVA DE VUELOS");
-		lblReservaDeVuelos.setBounds(12, 13, 154, 16);
+		lblReservaDeVuelos.setBounds(24, 105, 154, 16);
 		getContentPane().add(lblReservaDeVuelos);
 		
 		JRadioButton rdbtnIdaYVuelta = new JRadioButton("Ida y Vuelta");
-		rdbtnIdaYVuelta.setBounds(8, 38, 127, 25);
+		rdbtnIdaYVuelta.setBounds(20, 130, 127, 25);
 		getContentPane().add(rdbtnIdaYVuelta);
 		
 		JRadioButton rdbtnSoloIda = new JRadioButton("Solo Ida");
-		rdbtnSoloIda.setBounds(156, 38, 127, 25);
+		rdbtnSoloIda.setBounds(168, 130, 127, 25);
 		getContentPane().add(rdbtnSoloIda);
 		
 		JLabel lblOrigen = new JLabel("ORIGEN");
-		lblOrigen.setBounds(12, 83, 56, 16);
+		lblOrigen.setBounds(24, 175, 56, 16);
 		getContentPane().add(lblOrigen);
 		
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBoxOrigen = new JComboBox();
 		comboBoxOrigen.setModel(new DefaultComboBoxModel(Airport.getAll().toArray()));
-		comboBoxOrigen.setBounds(80, 80, 132, 22);
+		comboBoxOrigen.setBounds(92, 172, 132, 22);
 		getContentPane().add(comboBoxOrigen);
 		
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBoxDestino = new JComboBox();
 		comboBoxDestino.setModel(new DefaultComboBoxModel(Airport.getAll().toArray()));
-		comboBoxDestino.setBounds(80, 115, 132, 22);
+		comboBoxDestino.setBounds(92, 207, 132, 22);
 		getContentPane().add(comboBoxDestino);
 		
 		JLabel lblDestino = new JLabel("DESTINO");
-		lblDestino.setBounds(12, 118, 56, 16);
+		lblDestino.setBounds(24, 210, 56, 16);
 		getContentPane().add(lblDestino);
 		
 		JLabel lblNPasajeros = new JLabel("PASAJEROS");
-		lblNPasajeros.setBounds(12, 159, 98, 16);
+		lblNPasajeros.setBounds(24, 251, 98, 16);
 		getContentPane().add(lblNPasajeros);
 		
 		//Igual mejor en vez de elegir el numero escribirlo
@@ -101,39 +103,39 @@ public class VInicio extends JFrame {
 			nPasajeros[i]  = (i+1)+"";
 		}
 		comboBoxPasajeros.setModel(new DefaultComboBoxModel(nPasajeros));
-		comboBoxPasajeros.setBounds(122, 156, 41, 22);
+		comboBoxPasajeros.setBounds(134, 248, 41, 22);
 		getContentPane().add(comboBoxPasajeros);
 		
 		JLabel lblTipoBillete = new JLabel("CLASE");
-		lblTipoBillete.setBounds(198, 159, 87, 16);
+		lblTipoBillete.setBounds(210, 251, 87, 16);
 		getContentPane().add(lblTipoBillete);
 		
 		
 		JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Turista", "Business" , "Económica"}));
-		comboBox_3.setBounds(312, 156, 87, 22);
+		comboBox_3.setBounds(324, 248, 87, 22);
 		getContentPane().add(comboBox_3);
 		
 		JLabel lblFechaIda = new JLabel("FECHA IDA");
-		lblFechaIda.setBounds(12, 188, 80, 16);
+		lblFechaIda.setBounds(24, 280, 80, 16);
 		getContentPane().add(lblFechaIda);
 		
 		JLabel lblFechaVuelta = new JLabel("FECHA VUELTA");
-		lblFechaVuelta.setBounds(12, 224, 98, 16);
+		lblFechaVuelta.setBounds(24, 316, 98, 16);
 		getContentPane().add(lblFechaVuelta);
 		
 		textField = new JTextField();
-		textField.setBounds(122, 191, 126, 22);
+		textField.setBounds(134, 283, 126, 22);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(122, 221, 126, 22);
+		textField_1.setBounds(134, 313, 126, 22);
 		getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel lblEjemploDdmmaaaa = new JLabel("Ejemplo: DD/MM/AAAA");
-		lblEjemploDdmmaaaa.setBounds(260, 194, 154, 16);
+		lblEjemploDdmmaaaa.setBounds(272, 286, 154, 16);
 		getContentPane().add(lblEjemploDdmmaaaa);
 		
 		//GUARDAR LO SELECCIONADO Y EXCEPCIONES
@@ -143,7 +145,7 @@ public class VInicio extends JFrame {
 				JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido seleccionados", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		btnAceptar.setBounds(122, 405, 97, 25);
+		btnAceptar.setBounds(118, 368, 97, 25);
 		getContentPane().add(btnAceptar);
 		
 		JButton btnCancelat = new JButton("CANCELAR");
@@ -155,7 +157,12 @@ public class VInicio extends JFrame {
 			
 			}
 		});
-		btnCancelat.setBounds(260, 405, 97, 25);
+		btnCancelat.setBounds(256, 368, 97, 25);
 		getContentPane().add(btnCancelat);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon("././res/bg.jpg"));
+		lblNewLabel.setBounds(41, 13, 385, 79);
+		getContentPane().add(lblNewLabel);
 	}
 }

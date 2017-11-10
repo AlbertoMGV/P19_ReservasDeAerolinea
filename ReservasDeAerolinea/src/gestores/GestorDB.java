@@ -11,15 +11,13 @@ public class GestorDB {
 	
 	public static void main(String[] args) {
 		
-		//deleteTableDB();
-		//crearDB();
-		//insertarDB("11111111H", "admin", "admin1");
-		//ejecutad este main para ver lo que hay en la bd
+		//ejecutad este main para ver lo que hay en la bd				
+		//el usuario de prueba --> ("11111111H", "Admin", "admin1", "admin@deustoair.es");
 		displayDB();
 	}
 	
-	public static boolean reg(String dni,String name, String pass) {
-		insertarDB(dni,name, pass); 		
+	public static boolean reg(String dni,String name, String pass, String email) {
+		insertarDB(dni,name, pass, email); 		
 		return true;
 	}
 	
@@ -64,6 +62,7 @@ public class GestorDB {
 				System.out.println("DNI: "+rs.getString(1));
 				System.out.println("Name: "+rs.getString(2));
 				System.out.println("Pass: "+rs.getString(3));
+				System.out.println("Email: "+rs.getString(4));
 				nuser++;
 			}
 			rs.close();
@@ -84,10 +83,15 @@ public class GestorDB {
 		runSentenciaDB(sentencia);
 	}
 	
-	public static boolean insertarDB(String dni, String name, String pass) {
-		String sentencia = "INSERT INTO USER VALUES ('"+dni+"','"+name+"','"+pass+"')";
+	public static boolean insertarDB(String dni, String name, String pass, String email) {
+		String sentencia = "INSERT INTO USER VALUES ('"+dni+"','"+name+"','"+pass+"','"+email+"')";
 		runSentenciaDB(sentencia);
 		return true;
+	}
+	
+	public static void crearColumna() {
+		String sentencia = "ALTER TABLE USER ADD COLUMN email VARCHAR(254);)";
+		runSentenciaDB(sentencia);
 	}
 	
 	public static void crearDB() {
@@ -107,5 +111,8 @@ public class GestorDB {
 			e.printStackTrace();
 		}
 	} 
+	
+	
+	
 
 }
