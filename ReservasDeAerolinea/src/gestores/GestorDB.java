@@ -8,6 +8,19 @@ import java.util.ArrayList;
 import datos.Usuario;
 
 
+/*
+ * Tablas: 
+ * creada=USER [dni,nom,pass,email]
+ * falta=RESERVA []
+ * falta=VUELO[]
+ * falta=RUTA[]
+ * 
+ * 
+ */
+
+
+
+
 public class GestorDB {
 
 	/*	public static void main(String[] args) {
