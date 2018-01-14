@@ -37,6 +37,7 @@ public class GestorRutas {
 					if(aVecino.getIATA().equals(destino)){
 						System.out.println("encontrada ruta (" + (aOrigen.getIATA())+ "-" + aVecino.getIATA()+ "), profundidad :" + depth);
 						System.out.println("Ruta completa: " + getEscalas(aOrigen, v, aVecino));
+						result.add(getEscalas(aOrigen, v, aVecino).split(","));
 						break;
 					}
 					if(!visited.contains(aVecino)) {
@@ -88,14 +89,14 @@ public class GestorRutas {
 	
 	private static String getEscalas(Airport origen, Airport ultimaEscala, Airport destino) {
 		if(ultimaEscala.getPrevious() == null) {
-			return "Sin escalas";
+			return origen.getIATA() + ","+destino.getIATA();
 		}else {
-			String result = origen.getIATA() + ", ";
+			String result = origen.getIATA() + ",";
 			
 			Airport escala = ultimaEscala;
 			
 			while(!escala.equals(origen)) {
-				result += escala.getIATA()+", ";
+				result += escala.getIATA()+",";
 				escala = escala.getPrevious();
 				
 			}

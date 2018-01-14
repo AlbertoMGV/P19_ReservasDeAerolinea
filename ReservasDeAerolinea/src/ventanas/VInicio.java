@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import datos.Airport;
 import datos.Usuario;
+import gestores.GestorRutas;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -22,6 +23,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.awt.event.ActionEvent;
 
 public class VInicio extends JFrame {
@@ -30,6 +34,7 @@ public class VInicio extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	
+	private Object[] airports;
 	private static final int MAX_PASAJEROS = 20;
 	
 	public static void crearVInicio(Usuario u) {
@@ -48,6 +53,7 @@ public class VInicio extends JFrame {
 	public VInicio(Usuario u) {
 		setResizable(false);
 		//cambiar look 
+	
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -60,6 +66,21 @@ public class VInicio extends JFrame {
 		setBounds(725, 350, 474, 453);
 		setTitle("[DeustoAIR] Inicio");
 		getContentPane().setLayout(null);
+		
+		//ordenar arraylist de aeropuertos 
+		
+		ArrayList<Airport> a =  Airport.getAll();
+		Comparator c = new Comparator<Airport>() {
+			   @Override
+		        public int compare(Airport a2, Airport a1)
+		        {
+
+		            return  a2.getCity().compareTo(a1.getCity());
+		        }
+		};
+		a.sort(c);
+		
+		airports = a.toArray();
 		
 		JLabel lblReservaDeVuelos = new JLabel("RESERVA DE VUELOS");
 		lblReservaDeVuelos.setBounds(24, 105, 154, 16);
@@ -79,13 +100,14 @@ public class VInicio extends JFrame {
 		
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBoxOrigen = new JComboBox();
-		comboBoxOrigen.setModel(new DefaultComboBoxModel(Airport.getAll().toArray()));
+		comboBoxOrigen.setModel(new DefaultComboBoxModel(airports));
 		comboBoxOrigen.setBounds(92, 172, 132, 22);
 		getContentPane().add(comboBoxOrigen);
 		
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBoxDestino = new JComboBox();
-		comboBoxDestino.setModel(new DefaultComboBoxModel(Airport.getAll().toArray()));
+		comboBoxDestino.setModel(new DefaultComboBoxModel(airports));
+		comboBoxDestino.setSelectedIndex(airports.length-1);
 		comboBoxDestino.setBounds(92, 207, 132, 22);
 		getContentPane().add(comboBoxDestino);
 		
@@ -112,14 +134,18 @@ public class VInicio extends JFrame {
 		getContentPane().add(lblTipoBillete);
 		
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Turista", "Business" , "Económica"}));
-		comboBox_3.setBounds(324, 248, 87, 22);
-		getContentPane().add(comboBox_3);
+		JComboBox classComboBox = new JComboBox();
+		classComboBox.setModel(new DefaultComboBoxModel(new String[] {"Turista", "Business" , "Económica"}));
+		classComboBox.setBounds(324, 248, 87, 22);
+		getContentPane().add(classComboBox);
 		
 		JLabel lblFechaIda = new JLabel("FECHA IDA");
 		lblFechaIda.setBounds(24, 280, 80, 16);
 		getContentPane().add(lblFechaIda);
+		JComboBox depthComboBox = new JComboBox();
+		depthComboBox.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4"}));
+		depthComboBox.setBounds(352, 173, 41, 20);
+		getContentPane().add(depthComboBox);
 		
 		JLabel lblFechaVuelta = new JLabel("FECHA VUELTA");
 		lblFechaVuelta.setBounds(24, 316, 98, 16);
@@ -143,7 +169,22 @@ public class VInicio extends JFrame {
 		JButton btnAceptar = new JButton("ACEPTAR");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido seleccionados", "Error", JOptionPane.ERROR_MESSAGE);
+				String origen, destino;
+				int escalas;
+				
+				origen = ((Airport) comboBoxOrigen.getSelectedItem()).getIATA();
+				destino = ((Airport) comboBoxDestino.getSelectedItem()).getIATA();
+				escalas = Integer.parseInt(depthComboBox.getSelectedItem().toString());
+				
+				ArrayList<String[]> resultados = GestorRutas.getRuta(origen, destino, escalas);
+				
+				for(String[] r : resultados) {
+					System.out.println(Arrays.toString(r));
+				}
+				
+				Airport.resetPrevious();
+
+				//JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido seleccionados", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		btnAceptar.setBounds(118, 368, 97, 25);
@@ -176,5 +217,11 @@ public class VInicio extends JFrame {
 		});
 		btnMiPerfil.setBounds(329, 105, 97, 25);
 		getContentPane().add(btnMiPerfil);
+		
+		JLabel lblEscalasMx = new JLabel("Escalas M\u00E1x.");
+		lblEscalasMx.setBounds(272, 176, 70, 14);
+		getContentPane().add(lblEscalasMx);
+		
+
 	}
 }

@@ -49,6 +49,12 @@ public class Airport {
 		
 	}
 	
+	public static void resetPrevious() {
+		for(Airport a : todosAeropuertos) {
+			a.setPrevious(null);
+		}
+	}
+	
 	//Devuelve un objeto Airport con su código IATA
 	
 	public ArrayList<String[]> getDestinos() {
@@ -95,7 +101,6 @@ public class Airport {
 				BufferedReader bfr = new BufferedReader(fr);
 				String linea;
 				while((linea = bfr.readLine()) != null){
-					System.out.println(linea);
 					linea = linea.replace("\"", "");
 					String[] data = linea.split(",");
 					Airport result = new Airport(data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]);
