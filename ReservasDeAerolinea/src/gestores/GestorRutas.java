@@ -35,8 +35,7 @@ public class GestorRutas {
 				for(String[] vecino : v.getDestinos()) {
 					Airport aVecino = Airport.get(vecino[0]);
 					if(aVecino.getIATA().equals(destino)){
-						System.out.println("encontrada ruta (" + (aOrigen.getIATA())+ "-" + aVecino.getIATA()+ "), profundidad :" + depth);
-						System.out.println("Ruta completa: " + getEscalas(aOrigen, v, aVecino));
+						//Destino alcanzado
 						result.add(getEscalas(aOrigen, v, aVecino).split(","));
 						break;
 					}

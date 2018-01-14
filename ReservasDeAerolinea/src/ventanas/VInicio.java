@@ -18,6 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
@@ -92,7 +93,12 @@ public class VInicio extends JFrame {
 		
 		JRadioButton rdbtnSoloIda = new JRadioButton("Solo Ida");
 		rdbtnSoloIda.setBounds(168, 130, 127, 25);
+		rdbtnSoloIda.setSelected(true);
 		getContentPane().add(rdbtnSoloIda);
+		
+		ButtonGroup btnGroup = new ButtonGroup();
+		btnGroup.add(rdbtnSoloIda);
+		btnGroup.add(rdbtnIdaYVuelta);
 		
 		JLabel lblOrigen = new JLabel("ORIGEN");
 		lblOrigen.setBounds(24, 175, 56, 16);
@@ -101,16 +107,17 @@ public class VInicio extends JFrame {
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBoxOrigen = new JComboBox();
 		comboBoxOrigen.setModel(new DefaultComboBoxModel(airports));
+		comboBoxOrigen.setSelectedItem(Airport.get("BIO"));
 		comboBoxOrigen.setBounds(92, 172, 132, 22);
 		getContentPane().add(comboBoxOrigen);
 		
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBoxDestino = new JComboBox();
 		comboBoxDestino.setModel(new DefaultComboBoxModel(airports));
-		comboBoxDestino.setSelectedIndex(airports.length-1);
+		comboBoxDestino.setSelectedItem(Airport.get("LHR"));
 		comboBoxDestino.setBounds(92, 207, 132, 22);
 		getContentPane().add(comboBoxDestino);
-		
+			
 		JLabel lblDestino = new JLabel("DESTINO");
 		lblDestino.setBounds(24, 210, 56, 16);
 		getContentPane().add(lblDestino);
@@ -144,6 +151,7 @@ public class VInicio extends JFrame {
 		getContentPane().add(lblFechaIda);
 		JComboBox depthComboBox = new JComboBox();
 		depthComboBox.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4"}));
+		depthComboBox.setSelectedIndex(1);
 		depthComboBox.setBounds(352, 173, 41, 20);
 		getContentPane().add(depthComboBox);
 		
@@ -178,11 +186,20 @@ public class VInicio extends JFrame {
 				
 				ArrayList<String[]> resultados = GestorRutas.getRuta(origen, destino, escalas);
 				
+				if(rdbtnIdaYVuelta.isSelected() && !resultados.isEmpty()) {
+					resultados.addAll(GestorRutas.getRuta(destino, origen, escalas));
+				}
+				
 				for(String[] r : resultados) {
 					System.out.println(Arrays.toString(r));
 				}
 				
+				VResultados r = new VResultados(resultados);
+				r.setVisible(true);
+				
 				Airport.resetPrevious();
+				
+				System.out.println("-------------------");
 
 				//JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido seleccionados", "Error", JOptionPane.ERROR_MESSAGE);
 			}
