@@ -1,25 +1,21 @@
 package ventanas;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import datos.Usuario;
 import gestores.GestorDB;
-
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.JList;
-import javax.swing.JComboBox;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 
 public class VPerfil extends JFrame {
 
@@ -89,7 +85,7 @@ public class VPerfil extends JFrame {
 		textPane_2.setBounds(221, 131, 461, 22);
 		contentPane.add(textPane_2);
 
-		JList listReservas = new JList(new DefaultListModel<String>());
+		JList listReservas = new JList(new DefaultListModel<String>());		
 		listReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel lblNewLabel_2 = new JLabel("Reservas");
 		lblNewLabel_2.setBounds(22, 208, 56, 16);
@@ -101,8 +97,9 @@ public class VPerfil extends JFrame {
 			((DefaultListModel)listReservas.getModel()).addElement(vuelos.get(indx));
 			indx++;
 		}
-		listReservas.setBounds(12, 241, 670, 111);
-		contentPane.add(listReservas);
+		JScrollPane panelscroll = new JScrollPane(listReservas);
+		panelscroll.setBounds(12, 241, 670, 111);
+		contentPane.add(panelscroll);
 
 		
 
