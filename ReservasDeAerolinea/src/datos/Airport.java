@@ -15,6 +15,8 @@ public class Airport {
 	
 	private static HashMap<String, Airport> aeropuertos;
 	
+	private Airport prev;
+	
 	private ArrayList<String[]> destinos;
 		
 	private ArrayList<Airport> parent;
@@ -40,10 +42,25 @@ public class Airport {
 		this.lon = lon;
 	}
 	
+	public Airport clone() {
+		Airport a = new Airport(this.airportId+"", this.name, this.city, this.country, this.IATA, this.ICAO, this.lat, this.lon);
+		a.setPrevious(prev);
+		return a;
+		
+	}
+	
 	//Devuelve un objeto Airport con su código IATA
 	
 	public ArrayList<String[]> getDestinos() {
 		return destinos;
+	}
+	
+	public void setPrevious(Airport a) {
+		this.prev = a;
+	}
+	
+	public Airport getPrevious() {
+		return this.prev;
 	}
 
 	public static Airport get(String IATA){

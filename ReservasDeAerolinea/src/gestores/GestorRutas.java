@@ -16,7 +16,7 @@ public class GestorRutas {
 	
 	
 	public static void main(String[] args){
-		getRuta("BIO", "LHR", 3);
+		getRuta("BIO", "MAD", 1);
 	}
 	
 	public static ArrayList<String[]> getRuta(String origen, String destino, int maxEscalas){
@@ -35,10 +35,12 @@ public class GestorRutas {
 				for(String[] vecino : v.getDestinos()) {
 					Airport aVecino = Airport.get(vecino[0]);
 					if(aVecino.getIATA().equals(destino)){
-						System.out.println("encontrada ruta, profundidad :" + depth + ", parada anterior: " + v.getIATA());
+						System.out.println("encontrada ruta (" + (aOrigen.getIATA())+ "-" + aVecino.getIATA()+ "), profundidad :" + depth);
+						System.out.println("Ruta completa: " + getEscalas(aOrigen, v, aVecino));
 						break;
 					}
 					if(!visited.contains(aVecino)) {
+						aVecino.setPrevious(v);
 						cola.push(aVecino);
 						profundidad.push(depth + 1);
 						visited.add(aVecino);
@@ -46,6 +48,7 @@ public class GestorRutas {
 				}
 			}
 		}
+		
 		
 		
 		return result;
@@ -81,6 +84,28 @@ public class GestorRutas {
 			}
 		}
 		return result;
+	}
+	
+	private static String getEscalas(Airport origen, Airport ultimaEscala, Airport destino) {
+		if(ultimaEscala.getPrevious() == null) {
+			return "Sin escalas";
+		}else {
+			String result = origen.getIATA() + ", ";
+			
+			Airport escala = ultimaEscala;
+			
+			while(!escala.equals(origen)) {
+				result += escala.getIATA()+", ";
+				escala = escala.getPrevious();
+				
+			}
+			
+			result += destino.getIATA();
+			
+			return result;
+		}
+		
+		
 	}
 	
 
