@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import datos.Airport;
+import datos.Route;
+
 public class FormatData {
 
 	//Clase ajena al proyecto principal, para manipular los datos que utilizaremos 
@@ -21,6 +24,27 @@ public class FormatData {
 	public static void main(String[] args) {
 		rellenarDistancias();
 	}
+	
+	
+	public static ArrayList<Route> leerRutas() {
+		ArrayList<Route> resultado = new ArrayList<Route>();
+		File rutas = new File("res/routes_distances.dat");
+		try {
+			String linea;
+			FileReader fr = new FileReader(rutas);
+			BufferedReader bfr = new BufferedReader(fr);
+			
+			while((linea = bfr.readLine())!= null) {
+				String[] data = linea.split(",");
+				Route ruta = new Route(Airport.get(data[2]), data[9], Airport.get(data[4]), data[8], data[0]);
+				resultado.add(ruta);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+	
 	
 	
 	public static void rellenarDistancias(){

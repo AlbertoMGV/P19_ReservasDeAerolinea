@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import datos.Airport;
+import datos.Multiplicadores;
 import datos.Usuario;
 import gestores.GestorRutas;
 
@@ -173,6 +174,11 @@ public class VInicio extends JFrame {
 		lblEjemploDdmmaaaa.setBounds(272, 286, 154, 16);
 		getContentPane().add(lblEjemploDdmmaaaa);
 		
+		System.out.println(Multiplicadores.aerolinea("IB") +  " = 'IB'");
+		System.out.println(Multiplicadores.aerolinea("EI") +  " = 'EI'");
+		System.out.println(Multiplicadores.aerolinea("TF") +  " = 'TF'");
+
+
 		//GUARDAR LO SELECCIONADO Y EXCEPCIONES
 		JButton btnAceptar = new JButton("ACEPTAR");
 		btnAceptar.addActionListener(new ActionListener() {
