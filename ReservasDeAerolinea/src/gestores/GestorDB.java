@@ -141,7 +141,7 @@ public class GestorDB {
 	}
 
 	public static void crearDB() {
-		//String sentencia = "CREATE TABLE USER(dni STRING PRIMARY KEY,name STRING, pass STRING)";
+		//String sentencia = "CREATE TABLE USER(dni STRING PRIMARY KEY,name STRING, pass STRING, email STRING)";
 		//String sentencia = "CREATE TABLE Airport(airportId int(5) NOT NULL PRIMARY KEY,	name_ap String(20),	city String(20), country String(20), IATA String(3) NOT NULL, ICAO String(4) NOT NULL, lat double, lon double);";
 		//String sentencia = "CREATE TABLE Aircraft(IATA String(3) NOT NULL,ICAO String(4) NOT NULL,name_ac String(12) NOT NULL UNIQUE,seating int(4),speed double(4,2),PRIMARY KEY(IATA, ICAO, name_ac));";
 		//String sentencia = "CREATE TABLE Route(origin String(20) NOT NULL,destination String(20) NOT NULL,distance int(8),airline String(20),PRIMARY KEY(origin,destination, airline));";
@@ -167,22 +167,21 @@ public class GestorDB {
 
 	//crear lista con todo los vuelos COMO NO HAY VUELLOS LO TESTEO CON USUARIOS
 
-	public static ArrayList<String> listVuelos() {		
+	public static ArrayList<String> listVuelos(Usuario u) {		
 		ArrayList<String> vuelos = new ArrayList<String>();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
 			Statement stat = conn.createStatement();
-			String Query = "SELECT * FROM USER";
+			String Query = "SELECT * FROM Reserva WHERE dni = '"+u.getDni()+"';";
 			ResultSet rs = stat.executeQuery(Query);
 			
 			String vuelo= "";
 			int indx = 1;
 			while (rs.next()) {
 				vuelo = indx +". ";
-				vuelo = vuelo + rs.getString(1) + " | ";
-				vuelo = vuelo + rs.getString(2) + " | ";
-				vuelo = vuelo + rs.getString(4);
+				vuelo = vuelo + "Codigo Reserva: " + rs.getString(1) + " | ";
+				vuelo = vuelo + "Identificador del Vuelo: "+ rs.getString(2);
 				vuelos.add(vuelo);
 				indx++;
 
@@ -195,6 +194,10 @@ public class GestorDB {
 		}
 		return vuelos;
 	}
+
+
+
+	
 
 
 
