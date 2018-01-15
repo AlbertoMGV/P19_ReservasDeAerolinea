@@ -1,29 +1,4 @@
-"CREATE TABLE Airport
-(airportId int(5) NOT NULL PRIMARY KEY,
-name_ap String(20),
-city String(20),
-country String(20),
-IATA String(3) NOT NULL,
-ICAO String(4) NOT NULL,
-lat double,
-lon double);"
-
-CREATE TABLE Aircraft
-(IATA String(3) NOT NULL,
-ICAO String(4) NOT NULL,
-name_ac String(12) NOT NULL UNIQUE,
-seating int(4),
-speed double(4,2),
-PRIMARY KEY(IATA, ICAO, name));
-
-CREATE TABLE Route
-(origin String(20) NOT NULL,
-destination String(20) NOT NULL,
-distance int(8),
-airline String(20),
-PRIMARY KEY(origin,destination));
-
-CREATE TABLE Usuario
-(dni String(9) NOT NULL PRIMARY KEY,
-name_u String(15),
-email String(25));
+CREATE TABLE USER(dni STRING PRIMARY KEY,name STRING, pass STRING);
+CREATE TABLE Airport(airportId int(5) NOT NULL PRIMARY KEY,	name_ap String(20),	city String(20), country String(20), IATA String(3) NOT NULL, ICAO String(4) NOT NULL, lat double, lon double);
+CREATE TABLE Aircraft(IATA String(3) NOT NULL,ICAO String(4) NOT NULL,name_ac String(12) NOT NULL UNIQUE,seating int(4),speed double(4,2),PRIMARY KEY(IATA, ICAO, name_ac));
+CREATE TABLE Route(origin String(20) NOT NULL,destination String(20) NOT NULL,distance int(8),airline String(20),PRIMARY KEY(origin,destination));
