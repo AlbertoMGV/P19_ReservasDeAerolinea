@@ -5,15 +5,15 @@ city String(20),
 country String(20),
 IATA String(3) NOT NULL,
 ICAO String(4) NOT NULL,
-lat int(2,7),
-lon int(2,7));
+lat double(2,7),
+lon double(2,7));
 
 CREATE TABLE Aircraft
 (IATA String(3) NOT NULL,
 ICAO String(4) NOT NULL,
 name_ac String(12) NOT NULL UNIQUE,
 seating int(4),
-speed int(4,2),
+speed double(4,2),
 PRIMARY KEY(IATA, ICAO, name));
 
 CREATE TABLE Route
