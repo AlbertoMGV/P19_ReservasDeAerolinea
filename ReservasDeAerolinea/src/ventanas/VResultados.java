@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.ScrollPane;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JFrame;
@@ -26,7 +27,7 @@ public class VResultados extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VResultados(ArrayList<String[]> resultados, int pasajeros, int claseId) {
+	public VResultados(ArrayList<String[]> resultados, int pasajeros, int claseId, String[] fechas) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 685, 500);
 		setResizable(false);
@@ -40,12 +41,17 @@ public class VResultados extends JFrame {
 		
 		for(String[] s : resultados) {
 			
-			Pricing vuelo = Pricing.procesarPrecio(s, null, pasajeros, claseId);
+			Pricing vuelo = Pricing.procesarPrecio(s, fechas, pasajeros, claseId);
+			
+			String[] data = {Arrays.toString(vuelo.getAerolineas()), Airport.get(s[0]).getCity(), escalas(s), Airport.get(s[s.length-1]).getCity(), vuelo.getPrecio() + "", "salida", "llegada"};
+
+			
+			if(vuelo.getAerolineas().length + 1 == s.length) {
+				tbm.addRow(data);
+			}
 			
 
-			String[] data = {vuelo.getAerolinea(), Airport.get(s[0]).getCity(), escalas(s), Airport.get(s[s.length-1]).getCity(), vuelo.getPrecio() + "", "salida", "llegada"};
 			
-			tbm.addRow(data);
 		}
 		
 		table.getColumnModel().getColumn(2).setPreferredWidth(200);

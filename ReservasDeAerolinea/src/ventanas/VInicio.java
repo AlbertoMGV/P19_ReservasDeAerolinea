@@ -173,11 +173,6 @@ public class VInicio extends JFrame {
 		JLabel lblEjemploDdmmaaaa = new JLabel("Ejemplo: DD/MM/AAAA");
 		lblEjemploDdmmaaaa.setBounds(272, 286, 154, 16);
 		getContentPane().add(lblEjemploDdmmaaaa);
-		
-		System.out.println(Multiplicadores.aerolinea("IB") +  " = 'IB'");
-		System.out.println(Multiplicadores.aerolinea("EI") +  " = 'EI'");
-		System.out.println(Multiplicadores.aerolinea("TF") +  " = 'TF'");
-
 
 		//GUARDAR LO SELECCIONADO Y EXCEPCIONES
 		JButton btnAceptar = new JButton("ACEPTAR");
@@ -196,17 +191,21 @@ public class VInicio extends JFrame {
 				if(rdbtnIdaYVuelta.isSelected() && !resultados.isEmpty()) {
 					resultados.addAll(GestorRutas.getRuta(destino, origen, escalas));
 				}
-				
-				for(String[] r : resultados) {
-					System.out.println(Arrays.toString(r));
+							
+				String[] fechas = new String[2];
+				if(rdbtnIdaYVuelta.isSelected()) {
+					if(!textField_1.getText().equals("")) {
+						fechas[1] = textField_1.getText();
+					}
 				}
 				
-				VResultados r = new VResultados(resultados, pasajeros, claseId);
+				fechas[0] = textField.getText();
+				
+				VResultados r = new VResultados(resultados, pasajeros, claseId, fechas);
 				r.setVisible(true);
 				
 				Airport.resetPrevious();
 				
-				System.out.println("-------------------");
 
 				//JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido seleccionados", "Error", JOptionPane.ERROR_MESSAGE);
 			}

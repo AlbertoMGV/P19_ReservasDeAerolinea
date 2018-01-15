@@ -16,7 +16,7 @@ public class GestorRutas {
 	
 	
 	public static void main(String[] args){
-		getRuta("BIO", "MAD", 1);
+		getRuta("AVN", "ESB", 3);
 	}
 	
 	public static ArrayList<String[]> getRuta(String origen, String destino, int maxEscalas){
@@ -50,7 +50,7 @@ public class GestorRutas {
 		}
 		
 		
-		
+		 
 		return result;
 	}
 	
@@ -95,12 +95,34 @@ public class GestorRutas {
 			Airport escala = ultimaEscala;
 			
 			while(!escala.equals(origen)) {
-				result += escala.getIATA()+",";
+				result = result + escala.getIATA()+",";
 				escala = escala.getPrevious();
 				
 			}
 			
 			result += destino.getIATA();
+			
+			//reordenar escalas
+			
+			String[] array = result.split(",");
+			String[] temp = new String[array.length];
+			
+
+			temp[0] = array[0];
+			temp[temp.length-1] = array[temp.length-1];
+
+			
+			for(int i = 1; i < temp.length-1; i++) {
+				temp[i] = array[temp.length-i-1];
+			}
+			
+			result = "";
+			
+			for(int i = 0; i < temp.length - 1; i++) {
+				result += temp[i] + ",";
+			}
+			
+			result += array[temp.length-1];
 			
 			return result;
 		}

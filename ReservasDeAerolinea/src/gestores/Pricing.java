@@ -12,42 +12,45 @@ public class Pricing {
 	private static final double IVA = 1.21;
 	
 	private double precio;
-	private String aerolinea;
+	private String[] aerolineas;
 	/*
 	 * claseId = 0 -> "Económica", 
 	 * claseId = 1 -> "Turista", 
 	 * claseId = 2 -> "Business"
 	 */
 	
-	public Pricing(double precio, String aerolinea) {
+	public Pricing(double precio, String[] aerolineas) {
 		this.precio = precio;
-		int n_vuelo = ThreadLocalRandom.current().nextInt(1, 9999);
-		String s_vuelo = n_vuelo+"";
-		while(s_vuelo.length() < 4) {
-			s_vuelo = 0 + s_vuelo;
+		this.aerolineas = new String[aerolineas.length];
+		for(int i = 0; i < aerolineas.length; i++) {
+			int n_vuelo = ThreadLocalRandom.current().nextInt(1, 9999);
+			String s_vuelo = n_vuelo+"";
+			while(s_vuelo.length() < 4) {
+				s_vuelo = 0 + s_vuelo;
+			}
+			this.aerolineas[i] = aerolineas[i] +"-"+ s_vuelo;
 		}
-		this.aerolinea = aerolinea + s_vuelo;
 	}
 	
 	public double getPrecio() {
 		return precio;
 	}
 
-	public String getAerolinea() {
-		return aerolinea;
+	public String[] getAerolineas() {
+		return aerolineas;
 	}
 
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 
-	public void setAerolinea(String aerolinea) {
-		this.aerolinea = aerolinea;
+	public void setAerolineas(String[] aerolineas) {
+		this.aerolineas = aerolineas;
 	}
 
 	public static void main(String[] args) {
-		String[] ruta = {"BIO", "BCN" ,"LHR"};
-		System.out.println(procesarPrecio(ruta, null, 1, 0));
+		String[] ruta = {"AMS", "BRU", "ZTH", "BIO"};
+		System.out.println(Arrays.toString(getAerolineas(ruta)));
 	}
 	
 	public static Pricing procesarPrecio(String[] ruta, String[] fechas, int pasajeros, int claseId) {
@@ -63,17 +66,33 @@ public class Pricing {
 		
 		precioTotal += totalDistance/8;
 		
-		String aerolinea = getAerolinea(ruta);
+		String[] aerolineas = getAerolineas(ruta);
 		
-		double multiplicadorAerolinea = Multiplicadores.aerolinea(aerolinea);
+		double multiplicadorAerolinea = Multiplicadores.aerolineas(aerolineas);
 		double multiplicadorClase = Multiplicadores.clase(claseId);
-		double multiplicadorAdicional = Multiplicadores.adicional();
+		double multiplicadorAdicional;
+		
+		if(fechas[1] != null) {
+			multiplicadorAdicional = Multiplicadores.adicional(fechas[0], fechas[1]);
+		}else {
+			multiplicadorAdicional = Multiplicadores.adicional(fechas[0]);
+		}
+		
 		
 		precioTotal = ((precioTotal * multiplicadorAerolinea * multiplicadorClase) * pasajeros) * multiplicadorAdicional;
 		
+		System.out.println("Pricing for :" + Arrays.toString(ruta));
+		
+		
 		precioTotal = (precioTotal + PRECIO_BASE)*IVA;
 		
-		return new Pricing(precioTotal, aerolinea);		
+		System.out.println("Aerolineas: " + Arrays.toString(aerolineas)+ ", multiplicador: " + multiplicadorAerolinea);
+		System.out.println("Clase: " + claseId + ", multiplicador: " + multiplicadorClase);
+		System.out.println("Fechas: " + Arrays.toString(fechas)+ ", multiplicador: " + multiplicadorAdicional);
+
+
+		
+		return new Pricing(precioTotal, aerolineas);		
 	}
 
 	private static double procesarDistancia(String[] ruta) {
@@ -85,19 +104,27 @@ public class Pricing {
 		return total;
 	}
 	
-	private static String getAerolinea(String[] ruta) {
+	private static String[] getAerolineas(String[] ruta) {
 		//leer las aerolineas de cada ruta y devolver una aleatoria.
-		ArrayList<String> aerolineas = new ArrayList<String>();
+		String result = "";
+		String[] array;
 		for(int i = 0; i < ruta.length - 1; i++) {
+			ArrayList<String> aerolineas = new ArrayList<String>();
 			aerolineas.addAll(GestorDB.getAerolineas(ruta[i], ruta[i+1]));
+			if(aerolineas.size() > 0) {
+				int random = ThreadLocalRandom.current().nextInt(0, aerolineas.size());
+				result += aerolineas.get(random) + ", ";
+			}
+
 		}
 		
-		int random = ThreadLocalRandom.current().nextInt(0, aerolineas.size() - 1);
+		if(result.length() > 0) {
+			result = result.substring(0, result.length()-1);
+		}
 		
-		System.out.println("Aerolinea: " + aerolineas.get(random));
-		System.out.println("Ruta: " + Arrays.toString(ruta));
+		array = result.split(",");
 		
-		return aerolineas.get(random);
+		return array;
 	}
 
 }
