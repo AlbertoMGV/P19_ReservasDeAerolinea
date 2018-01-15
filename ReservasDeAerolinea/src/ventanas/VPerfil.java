@@ -90,7 +90,7 @@ public class VPerfil extends JFrame {
 		JLabel lblNewLabel_2 = new JLabel("Reservas");
 		lblNewLabel_2.setBounds(22, 208, 56, 16);
 		contentPane.add(lblNewLabel_2);
-		ArrayList<String> vuelos = GestorDB.listVuelos();
+		ArrayList<String> vuelos = GestorDB.listVuelos(u);
 		int max = vuelos.size();
 		int indx = 0;
 		while (indx < max) {

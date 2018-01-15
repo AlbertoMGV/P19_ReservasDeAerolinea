@@ -165,13 +165,13 @@ public class GestorDB {
 
 	//crear lista con todo los vuelos COMO NO HAY VUELLOS LO TESTEO CON USUARIOS
 
-	public static ArrayList<String> listVuelos() {		
+	public static ArrayList<String> listVuelos(Usuario u) {		
 		ArrayList<String> vuelos = new ArrayList<String>();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
 			Statement stat = conn.createStatement();
-			String Query = "SELECT * FROM USER";
+			String Query = "SELECT * FROM Reserva WHERE dni = '"+u.getDni()+"';";
 			ResultSet rs = stat.executeQuery(Query);
 			
 			String vuelo= "";
@@ -193,6 +193,10 @@ public class GestorDB {
 		}
 		return vuelos;
 	}
+
+
+
+	
 
 
 
