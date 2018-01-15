@@ -6,14 +6,12 @@ public class Aircraft {
 	private String IATA;
 	private String name;
 	
-	private int seating;
-	private long speed;
+	private int speed;
 	
-	public Aircraft(String ICAO, String IATA, String name, int seating, long speed) {
+	public Aircraft(String ICAO, String IATA, String name, int speed) {
 		this.ICAO = ICAO;
 		this.IATA = IATA;
 		this.name = name;
-		this.seating = seating;
 		this.speed = speed;
 	}
 
@@ -29,11 +27,7 @@ public class Aircraft {
 		return name;
 	}
 
-	public int getSeating() {
-		return seating;
-	}
-
-	public long getSpeed() {
+	public int getSpeed() {
 		return speed;
 	}
 
@@ -49,11 +43,7 @@ public class Aircraft {
 		this.name = name;
 	}
 
-	public void setSeating(int seating) {
-		this.seating = seating;
-	}
-
-	public void setSpeed(long speed) {
+	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 	

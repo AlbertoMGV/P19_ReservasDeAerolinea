@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.ScrollPane;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import datos.Airport;
+import gestores.Pricing;
 
 import javax.swing.JTable;
 
@@ -22,25 +24,9 @@ public class VResultados extends JFrame {
 	private JTable table;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VResultados frame = new VResultados(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the frame.
 	 */
-	public VResultados(ArrayList<String[]> resultados) {
+	public VResultados(ArrayList<String[]> resultados, int pasajeros, int claseId) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 685, 500);
 		setResizable(false);
@@ -53,9 +39,11 @@ public class VResultados extends JFrame {
 		table = new JTable(tbm);
 		
 		for(String[] s : resultados) {
+			
+			Pricing vuelo = Pricing.procesarPrecio(s, null, pasajeros, claseId);
+			
 
-
-			String[] data = {"n_vuelo", Airport.get(s[0]).getCity(), escalas(s), Airport.get(s[s.length-1]).getCity(), "precio", "salida", "llegada"};
+			String[] data = {vuelo.getAerolinea(), Airport.get(s[0]).getCity(), escalas(s), Airport.get(s[s.length-1]).getCity(), vuelo.getPrecio() + "", "salida", "llegada"};
 			
 			tbm.addRow(data);
 		}

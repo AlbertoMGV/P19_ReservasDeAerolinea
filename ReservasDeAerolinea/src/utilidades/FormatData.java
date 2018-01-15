@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import datos.Aircraft;
 import datos.Airport;
 import datos.Route;
 
@@ -39,9 +40,38 @@ public class FormatData {
 				Route ruta = new Route(Airport.get(data[2]), data[9], Airport.get(data[4]), data[8], data[0]);
 				resultado.add(ruta);
 			}
+			
+			bfr.close();
+			fr.close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		return resultado;
+	}
+	
+	public static ArrayList<Aircraft> leerAircraft(){
+		ArrayList<Aircraft> resultado = new ArrayList<Aircraft>();
+		
+		File aircraft = new File("res/aircraft.dat");
+		
+		try {
+			String linea;
+			FileReader fr = new FileReader(aircraft);
+			BufferedReader bfr = new BufferedReader(fr);
+			while((linea = bfr.readLine()) != null) {
+				String[] data = linea.split(",");
+				if(!data[1].equals("n/a")) {
+					Aircraft ac = new Aircraft(data[0], data[1], data[2], 800);
+					resultado.add(ac);
+				}
+				
+			}
+			bfr.close();
+			fr.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+				
 		return resultado;
 	}
 	

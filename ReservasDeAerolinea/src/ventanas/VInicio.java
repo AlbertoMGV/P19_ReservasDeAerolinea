@@ -185,7 +185,8 @@ public class VInicio extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String origen, destino;
 				int escalas;
-				
+				int pasajeros = Integer.parseInt(comboBoxPasajeros.getSelectedItem().toString());
+				int claseId = classComboBox.getSelectedIndex();
 				origen = ((Airport) comboBoxOrigen.getSelectedItem()).getIATA();
 				destino = ((Airport) comboBoxDestino.getSelectedItem()).getIATA();
 				escalas = Integer.parseInt(depthComboBox.getSelectedItem().toString());
@@ -200,7 +201,7 @@ public class VInicio extends JFrame {
 					System.out.println(Arrays.toString(r));
 				}
 				
-				VResultados r = new VResultados(resultados);
+				VResultados r = new VResultados(resultados, pasajeros, claseId);
 				r.setVisible(true);
 				
 				Airport.resetPrevious();

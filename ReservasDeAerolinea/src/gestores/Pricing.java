@@ -11,18 +11,46 @@ public class Pricing {
 	private static final double PRECIO_BASE = 35;
 	private static final double IVA = 1.21;
 	
+	private double precio;
+	private String aerolinea;
 	/*
 	 * claseId = 0 -> "Económica", 
 	 * claseId = 1 -> "Turista", 
 	 * claseId = 2 -> "Business"
 	 */
 	
+	public Pricing(double precio, String aerolinea) {
+		this.precio = precio;
+		int n_vuelo = ThreadLocalRandom.current().nextInt(1, 9999);
+		String s_vuelo = n_vuelo+"";
+		while(s_vuelo.length() < 4) {
+			s_vuelo = 0 + s_vuelo;
+		}
+		this.aerolinea = aerolinea + s_vuelo;
+	}
+	
+	public double getPrecio() {
+		return precio;
+	}
+
+	public String getAerolinea() {
+		return aerolinea;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	public void setAerolinea(String aerolinea) {
+		this.aerolinea = aerolinea;
+	}
+
 	public static void main(String[] args) {
 		String[] ruta = {"BIO", "BCN" ,"LHR"};
 		System.out.println(procesarPrecio(ruta, null, 1, 0));
 	}
 	
-	public static double procesarPrecio(String[] ruta, String[] fechas, int pasajeros, int claseId) {
+	public static Pricing procesarPrecio(String[] ruta, String[] fechas, int pasajeros, int claseId) {
 		
 		double precioTotal = 0;
 		
@@ -45,7 +73,7 @@ public class Pricing {
 		
 		precioTotal = (precioTotal + PRECIO_BASE)*IVA;
 		
-		return precioTotal;		
+		return new Pricing(precioTotal, aerolinea);		
 	}
 
 	private static double procesarDistancia(String[] ruta) {
