@@ -1,0 +1,29 @@
+CREATE TABLE Airport
+(airportId NUMBER(5) NOT NULL PRIMARY KEY,
+name_ap VARCHAR(20),
+city VARCHAR(20),
+country VARCHAR(20),
+IATA CHAR(3) NOT NULL,
+ICAO CHAR(4) NOT NULL,
+lat NUMBER(2,7),
+lon NUMBER(2,7));
+
+CREATE TABLE Aircraft
+(IATA CHAR(3) NOT NULL,
+ICAO CHAR(4) NOT NULL,
+name_ac VARCHAR(12) NOT NULL UNIQUE,
+seating NUMBER(4),
+speed NUMBER(4,2),
+PRIMARY KEY(IATA, ICAO, name));
+
+CREATE TABLE Route
+(origin VARCHAR(20) NOT NULL,
+destination VARCHAR(20) NOT NULL,
+distance NUMBER(8),
+airline VARCHAR(20),
+PRIMARY KEY(origin,destination));
+
+CREATE TABLE Usuario
+(dni VARCHAR(9) NOT NULL PRIMARY KEY,
+name_u VARCHAR(15),
+email VARCHAR(25));
