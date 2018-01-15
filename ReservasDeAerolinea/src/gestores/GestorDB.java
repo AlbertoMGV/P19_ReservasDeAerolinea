@@ -30,8 +30,10 @@ public class GestorDB {
 		//ejecutad este main para ver lo que hay en la bd				
 		//el usuario de prueba --> ("11111111H", "Admin", "admin1", "admin@deustoair.es");
 		//deleteUser("72844994S");
-			
 		//crearDB();
+			
+		System.out.println(getDistancia("BIO", "BCN"));
+		System.out.println(getDistancia("BCN", "LHR"));
 		//insertarDBAirport();
 		//displayDB();
 	}  
@@ -134,6 +136,46 @@ public class GestorDB {
 		runSentenciaDB(sentencia);
 		return true;
 	}
+	
+	public static int getDistancia(String origin, String destino) {
+		int distance = -1;
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
+			Statement stat = conn.createStatement();
+			String sentencia = "SELECT MIN(distance) FROM Route WHERE origin='"+origin+"' and destination='" + destino+"';";
+			ResultSet rs = stat.executeQuery(sentencia);
+			distance = rs.getInt(1);
+			rs.close();
+			stat.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return distance;
+	}
+	
+	public static ArrayList<String> getAerolineas(String origin, String destino) {
+		ArrayList<String> aerolineas = new ArrayList<String>();
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
+			Statement stat = conn.createStatement();
+			String sentencia = "SELECT DISTINCT airline FROM Route WHERE origin='"+origin+"' and destination='" + destino+"';";
+			ResultSet rs = stat.executeQuery(sentencia);
+			while(rs.next()) {
+				aerolineas.add(rs.getString(1));
+			}
+			rs.close();
+			stat.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return aerolineas;
+	}
+	
+	
 
 	public static void crearColumna() {
 		String sentencia = "ALTER TABLE USER ADD COLUMN email VARCHAR(254);)";
@@ -163,7 +205,7 @@ public class GestorDB {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	} 
+	}
 
 	//crear lista con todo los vuelos COMO NO HAY VUELLOS LO TESTEO CON USUARIOS
 

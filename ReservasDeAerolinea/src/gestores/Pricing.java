@@ -1,5 +1,9 @@
 package gestores;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
 import datos.Multiplicadores;
 
 public class Pricing {
@@ -13,6 +17,11 @@ public class Pricing {
 	 * claseId = 2 -> "Business"
 	 */
 	
+	public static void main(String[] args) {
+		String[] ruta = {"BIO", "BCN" ,"LHR"};
+		System.out.println(procesarPrecio(ruta, null, 1, 0));
+	}
+	
 	public static double procesarPrecio(String[] ruta, String[] fechas, int pasajeros, int claseId) {
 		
 		double precioTotal = 0;
@@ -24,7 +33,7 @@ public class Pricing {
 		
 		double totalDistance = procesarDistancia(ruta);
 		
-		precioTotal += totalDistance;
+		precioTotal += totalDistance/8;
 		
 		String aerolinea = getAerolinea(ruta);
 		
@@ -40,13 +49,27 @@ public class Pricing {
 	}
 
 	private static double procesarDistancia(String[] ruta) {
+		double total = 0;
+		for(int i = 0; i < ruta.length - 1; i++) {
+			total += GestorDB.getDistancia(ruta[i], ruta[i+1]);
+		}
 		//recorrer cada una de las rutas y sumar sus distancias
-		return 0;
+		return total;
 	}
 	
 	private static String getAerolinea(String[] ruta) {
 		//leer las aerolineas de cada ruta y devolver una aleatoria.
-		return "";
+		ArrayList<String> aerolineas = new ArrayList<String>();
+		for(int i = 0; i < ruta.length - 1; i++) {
+			aerolineas.addAll(GestorDB.getAerolineas(ruta[i], ruta[i+1]));
+		}
+		
+		int random = ThreadLocalRandom.current().nextInt(0, aerolineas.size() - 1);
+		
+		System.out.println("Aerolinea: " + aerolineas.get(random));
+		System.out.println("Ruta: " + Arrays.toString(ruta));
+		
+		return aerolineas.get(random);
 	}
 
 }
