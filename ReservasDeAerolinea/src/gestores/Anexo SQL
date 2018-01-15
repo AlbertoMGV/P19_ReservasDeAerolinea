@@ -1,12 +1,12 @@
-CREATE TABLE Airport
+"CREATE TABLE Airport
 (airportId int(5) NOT NULL PRIMARY KEY,
 name_ap String(20),
 city String(20),
 country String(20),
 IATA String(3) NOT NULL,
 ICAO String(4) NOT NULL,
-lat double(2,7),
-lon double(2,7));
+lat double,
+lon double);"
 
 CREATE TABLE Aircraft
 (IATA String(3) NOT NULL,

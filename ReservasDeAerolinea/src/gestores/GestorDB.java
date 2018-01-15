@@ -23,15 +23,16 @@ import datos.Usuario;
 
 public class GestorDB {
 
-	/*	public static void main(String[] args) {
+		public static void main(String[] args) {
 
 		//ejecutad este main para ver lo que hay en la bd				
 		//el usuario de prueba --> ("11111111H", "Admin", "admin1", "admin@deustoair.es");
 		//deleteUser("72844994S");
 			
-			
+		//crearDB();
+		insertarDBAirport();
 		displayDB();
-	}  */
+	}  
 
 
 	public static boolean reg(String dni,String name, String pass, String email) {
@@ -125,6 +126,12 @@ public class GestorDB {
 		runSentenciaDB(sentencia);
 		return true;
 	}
+	
+	public static boolean insertarDBAirport() {
+		String sentencia = "INSERT INTO Airport VALUES (2, 'EPEEP', 'CIUDAD', 'PAIS', 'IATA', 'ICAO', 5.6, 6.7);";
+		runSentenciaDB(sentencia);
+		return true;
+	}
 
 	public static void crearColumna() {
 		String sentencia = "ALTER TABLE USER ADD COLUMN email VARCHAR(254);)";
@@ -132,7 +139,8 @@ public class GestorDB {
 	}
 
 	public static void crearDB() {
-		String sentencia = "CREATE TABLE USER(dni STRING PRIMARY KEY,name STRING, pass STRING)";
+		//String sentencia = "CREATE TABLE USER(dni STRING PRIMARY KEY,name STRING, pass STRING)";
+		String sentencia = "CREATE TABLE Airport(airportId int(5) NOT NULL PRIMARY KEY,	name_ap String(20),	city String(20), country String(20), IATA String(3) NOT NULL, ICAO String(4) NOT NULL, lat double, lon double);";
 		runSentenciaDB(sentencia);
 	}
 
