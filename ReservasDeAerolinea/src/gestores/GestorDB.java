@@ -178,9 +178,8 @@ public class GestorDB {
 			int indx = 1;
 			while (rs.next()) {
 				vuelo = indx +". ";
-				vuelo = vuelo + rs.getString(1) + " | ";
-				vuelo = vuelo + rs.getString(2) + " | ";
-				vuelo = vuelo + rs.getString(4);
+				vuelo = vuelo + "Codigo Reserva: " + rs.getString(1) + " | ";
+				vuelo = vuelo + "Identificador del Vuelo: "+ rs.getString(2);
 				vuelos.add(vuelo);
 				indx++;
 
