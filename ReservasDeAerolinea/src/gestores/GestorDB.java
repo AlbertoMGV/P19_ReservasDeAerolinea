@@ -23,7 +23,7 @@ import datos.Usuario;
 
 public class GestorDB {
 
-		public static void main(String[] args) {
+/*		public static void main(String[] args) {
 
 		//ejecutad este main para ver lo que hay en la bd				
 		//el usuario de prueba --> ("11111111H", "Admin", "admin1", "admin@deustoair.es");
@@ -33,7 +33,7 @@ public class GestorDB {
 		//insertarDBAirport();
 		//displayDB();
 	}  
-
+*/
 
 	public static boolean reg(String dni,String name, String pass, String email) {
 		insertarDB(dni,name, pass, email); 		
@@ -143,8 +143,11 @@ public class GestorDB {
 		//String sentencia = "CREATE TABLE Airport(airportId int(5) NOT NULL PRIMARY KEY,	name_ap String(20),	city String(20), country String(20), IATA String(3) NOT NULL, ICAO String(4) NOT NULL, lat double, lon double);";
 		//String sentencia = "CREATE TABLE Aircraft(IATA String(3) NOT NULL,ICAO String(4) NOT NULL,name_ac String(12) NOT NULL UNIQUE,seating int(4),speed double(4,2),PRIMARY KEY(IATA, ICAO, name_ac));";
 		//String sentencia = "CREATE TABLE Route(origin String(20) NOT NULL,destination String(20) NOT NULL,distance int(8),airline String(20),PRIMARY KEY(origin,destination));";
+		//String sentencia = "CREATE TABLE Vuelo(vueloId int(7) NOT NULL PRIMARY KEY,horarioSalida DATETIME,horarioLlegada DATETIME,origin String(20) NOT NULL REFERENCES Route(origin),destination String(20) NOT NULL REFERENCES Route(destination));";
+		//String sentencia = "CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,vueloId int(7) NOT NULL  REFERENCES Vuelo(vueloId),dni String(9) NOT NULL REFERENCES USER(dni));";
 		String sentencia = "";
 		runSentenciaDB(sentencia);
+		
 	}
 
 
