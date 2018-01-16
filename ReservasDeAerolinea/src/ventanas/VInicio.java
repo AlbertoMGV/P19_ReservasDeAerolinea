@@ -25,16 +25,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class VInicio extends JFrame {
 	
 	private Usuario loggedUser;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField fecha1TextField;
+	private JTextField fecha2TextField;
 	
 	private Object[] airports;
 	private static final int MAX_PASAJEROS = 20;
@@ -160,15 +163,19 @@ public class VInicio extends JFrame {
 		lblFechaVuelta.setBounds(24, 316, 98, 16);
 		getContentPane().add(lblFechaVuelta);
 		
-		textField = new JTextField();
-		textField.setBounds(134, 283, 126, 22);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date(System.currentTimeMillis());
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(134, 313, 126, 22);
-		getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		fecha1TextField = new JTextField();
+		fecha1TextField.setBounds(134, 283, 126, 22);
+		getContentPane().add(fecha1TextField);
+		fecha1TextField.setColumns(10);
+		fecha1TextField.setText(df.format(date));
+		
+		fecha2TextField = new JTextField();
+		fecha2TextField.setBounds(134, 313, 126, 22);
+		getContentPane().add(fecha2TextField);
+		fecha2TextField.setColumns(10);
 		
 		JLabel lblEjemploDdmmaaaa = new JLabel("Ejemplo: DD/MM/AAAA");
 		lblEjemploDdmmaaaa.setBounds(272, 286, 154, 16);
@@ -193,16 +200,23 @@ public class VInicio extends JFrame {
 				}
 							
 				String[] fechas = new String[2];
+	
+				
 				if(rdbtnIdaYVuelta.isSelected()) {
-					if(!textField_1.getText().equals("")) {
-						fechas[1] = textField_1.getText();
+					if(fecha2TextField.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido rellenados", "Error", JOptionPane.ERROR_MESSAGE);
+					}else {
+						fechas[1] = fecha2TextField.getText();
 					}
 				}
 				
-				fechas[0] = textField.getText();
-				
-				VResultados r = new VResultados(resultados, pasajeros, claseId, fechas);
-				r.setVisible(true);
+				if(!fecha1TextField.getText().isEmpty()) {
+					fechas[0] = fecha1TextField.getText();
+					VResultados r = new VResultados(resultados, pasajeros, claseId, fechas);
+					r.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido rellenados", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 				
 				Airport.resetPrevious();
 				
