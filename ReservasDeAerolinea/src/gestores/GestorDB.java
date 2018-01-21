@@ -31,24 +31,7 @@ public class GestorDB {
 
 		public static void main(String[] args) {
 			
-			/*
 			
-			ArrayList<Route> rutas = FormatData.leerRutas();
-			
-			for(Route r : rutas) {
-				insertarRuta(r.getOrigin().getIATA(), r.getDestination().getIATA(), r.getDistance(), r.getAirline(), r.getAircraft());
-			}
-			
-			*/
-			
-			
-			//deleteTableDB();
-			//ejecutad este main para ver lo que hay en la bd				
-			//el usuario de prueba --> ("11111111H", "Admin", "admin1", "admin@deustoair.es");
-			//deleteUser("72844994S");
-			//crearDB();
-			//insertarDBAirport();
-			//displayDB();
 	}  
 
 
