@@ -16,6 +16,7 @@ import java.util.Set;
 import datos.Aircraft;
 import datos.Airport;
 import datos.Route;
+import gestores.GestorDB;
 
 public class FormatData {
 
@@ -23,9 +24,18 @@ public class FormatData {
 	
 	
 	public static void main(String[] args) {
-		rellenarDistancias();
+		generarArchivoAviones();
 	}
 	
+	
+	public static void renameFile(File file, String newName) {
+		File newFile = new File(file.getAbsolutePath()+"\\"+newName);
+		file.renameTo(newFile);
+	}
+	
+	public static void generarArchivoAviones() {
+		System.out.println(GestorDB.getAircraft());
+	}
 	
 	public static ArrayList<Route> leerRutas() {
 		ArrayList<Route> resultado = new ArrayList<Route>();

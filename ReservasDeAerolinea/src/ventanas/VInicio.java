@@ -35,7 +35,7 @@ import java.awt.event.ActionEvent;
 
 public class VInicio extends JFrame {
 	
-	private Usuario loggedUser;
+	private static Usuario loggedUser;
 	private JTextField fecha1TextField;
 	private JTextField fecha2TextField;
 	
@@ -261,4 +261,10 @@ public class VInicio extends JFrame {
 		
 
 	}
+
+
+	public static Usuario getLoggedUser() {
+		return loggedUser;
+	}
 }
+

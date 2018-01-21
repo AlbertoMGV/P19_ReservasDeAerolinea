@@ -86,11 +86,12 @@ public class Pricing {
 		
 		precioTotal = (precioTotal + PRECIO_BASE)*IVA;
 		
+		/*
 		System.out.println("Aerolineas: " + Arrays.toString(aerolineas)+ ", multiplicador: " + multiplicadorAerolinea);
 		System.out.println("Clase: " + claseId + ", multiplicador: " + multiplicadorClase);
 		System.out.println("Fechas: " + Arrays.toString(fechas)+ ", multiplicador: " + multiplicadorAdicional);
-
-
+		*/
+		precioTotal = Math.round(precioTotal * 100.0) / 100.0;
 		
 		return new Pricing(precioTotal, aerolineas);		
 	}

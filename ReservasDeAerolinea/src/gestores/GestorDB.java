@@ -240,6 +240,27 @@ public class GestorDB {
 		return aerolineas;
 	}
 	
+	public static String getAircraft() {
+		String result = "";
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
+			Statement stat = conn.createStatement();
+			String sentencia = "SELECT DISTINCT IATA FROM Aircraft WHERE IATA NOT LIKE '';";
+			ResultSet rs = stat.executeQuery(sentencia);
+			while(rs.next()) {
+				result += rs.getString(1)+",";
+			}
+			result = result.substring(0, result.length()-1);
+			rs.close();
+			stat.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	
 
 	public static void crearColumna() {
