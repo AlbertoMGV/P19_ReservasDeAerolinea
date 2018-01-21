@@ -79,10 +79,7 @@ public class Pricing {
 		}
 		
 		
-		precioTotal = ((precioTotal * multiplicadorAerolinea * multiplicadorClase) * pasajeros) * multiplicadorAdicional;
-		
-		System.out.println("Pricing for :" + Arrays.toString(ruta));
-		
+		precioTotal = ((precioTotal * multiplicadorAerolinea * multiplicadorClase) * pasajeros) * multiplicadorAdicional;		
 		
 		precioTotal = (precioTotal + PRECIO_BASE)*IVA;
 		

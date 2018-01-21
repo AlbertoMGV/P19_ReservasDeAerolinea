@@ -80,7 +80,7 @@ public class VInicio extends JFrame {
 		        public int compare(Airport a2, Airport a1)
 		        {
 
-		            return  a2.getCity().compareTo(a1.getCity());
+		            return  a2.getIATA().compareTo(a1.getIATA());
 		        }
 		};
 		a.sort(c);
@@ -111,14 +111,12 @@ public class VInicio extends JFrame {
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBoxOrigen = new JComboBox();
 		comboBoxOrigen.setModel(new DefaultComboBoxModel(airports));
-		comboBoxOrigen.setSelectedItem(Airport.get("BIO"));
 		comboBoxOrigen.setBounds(92, 172, 132, 22);
 		getContentPane().add(comboBoxOrigen);
 		
 		//Hay que conseguir meter todos los aeropuertos de la base de datos aqui
 		JComboBox comboBoxDestino = new JComboBox();
 		comboBoxDestino.setModel(new DefaultComboBoxModel(airports));
-		comboBoxDestino.setSelectedItem(Airport.get("LHR"));
 		comboBoxDestino.setBounds(92, 207, 132, 22);
 		getContentPane().add(comboBoxDestino);
 			
@@ -213,7 +211,7 @@ public class VInicio extends JFrame {
 				if(!fecha1TextField.getText().isEmpty()) {
 					fechas[0] = fecha1TextField.getText();
 					VResultados r = new VResultados(resultados, pasajeros, claseId, fechas);
-					r.setVisible(true);
+					r.setVisible(true); 
 				}else {
 					JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido rellenados", "Error", JOptionPane.ERROR_MESSAGE);
 				}

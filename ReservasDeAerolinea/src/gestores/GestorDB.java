@@ -179,9 +179,11 @@ public class GestorDB {
 					allAc += ac + ",";
 				}
 			}
-			allAc = allAc.substring(0, allAc.length()-1);
-			System.out.println(allAc);
-			
+
+			if(allAc.length() > 0) {
+				allAc = allAc.substring(0, allAc.length()-1);
+			}
+						
 			String[] acArray = allAc.split(",");
 			int random = ThreadLocalRandom.current().nextInt(0, acArray.length);
 			

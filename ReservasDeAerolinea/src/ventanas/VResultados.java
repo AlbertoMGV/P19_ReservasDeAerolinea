@@ -3,6 +3,8 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.ScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
@@ -16,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 import datos.Airport;
 import datos.Usuario;
+import datos.Vuelo;
+import gestores.GestorDB;
 import gestores.Pricing;
 
 import javax.swing.JTable;
@@ -26,11 +30,15 @@ public class VResultados extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private ArrayList<String[]> resultados;
+	private ArrayList<Pricing> precios;
 	private Usuario loggedUser;
 	/**
 	 * Create the frame.
 	 */
 	public VResultados(ArrayList<String[]> resultados, int pasajeros, int claseId, String[] fechas) {
+		this.resultados = resultados;
+		ArrayList<Pricing> precios = new ArrayList<Pricing>();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 685, 500);
 		setResizable(false);
@@ -50,7 +58,8 @@ public class VResultados extends JFrame {
 		for(String[] s : resultados) {
 			
 			Pricing vuelo = Pricing.procesarPrecio(s, fechas, pasajeros, claseId);
-			
+			precios.add(vuelo);
+						
 			String[] data = {Arrays.toString(vuelo.getAerolineas()), Airport.get(s[0]).getCity(), escalas(s), Airport.get(s[s.length-1]).getCity(), vuelo.getPrecio() + " €", "salida", "llegada"};
 
 			
@@ -60,7 +69,7 @@ public class VResultados extends JFrame {
 			
 			
 		}
-		
+		this.precios = precios;
 		JPanel flightsPanel = new JPanel();
 		contentPane.add(flightsPanel, BorderLayout.CENTER);
 		table = new JTable(tbm);
@@ -75,11 +84,36 @@ public class VResultados extends JFrame {
 		
 		JButton btnMoreInfo = new JButton("M\u00E1s informaci\u00F3n...");
 		buttonPanel.add(btnMoreInfo);
+		btnMoreInfo.addActionListener(masInfoListener);
 		
 		JButton btnReservar = new JButton("Reservar");
 		buttonPanel.add(btnReservar);
 		System.out.println("Current user: " + loggedUser.getName());
 	}
+	
+	private ActionListener masInfoListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int selectedIndex = table.getSelectedRow();
+			String[] ruta = resultados.get(selectedIndex);
+			Vuelo[] vuelos = new Vuelo[ruta.length - 1];
+			
+			for(int i = 0; i < ruta.length - 1; i++) {
+				String nVuelo = precios.get(selectedIndex).getAerolineas()[i].replaceAll(" ", "");
+				Airport origen = Airport.get(ruta[i]);
+				Airport destino = Airport.get(ruta[i+1]);
+				String codAerolinea = nVuelo.substring(0, 2);
+
+				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea));
+				vuelos[i] = vuelo;
+			}
+			
+			VInfo infoVuelo = new VInfo(vuelos);
+			infoVuelo.setVisible(true);
+			
+		}
+	};
 	
 	private String escalas(String[] input) {
 		String result="";

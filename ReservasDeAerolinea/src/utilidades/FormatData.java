@@ -24,7 +24,6 @@ public class FormatData {
 	
 	
 	public static void main(String[] args) {
-		renameAircraftImages();
 	}
 	
 	public static void renameAircraftImages() {

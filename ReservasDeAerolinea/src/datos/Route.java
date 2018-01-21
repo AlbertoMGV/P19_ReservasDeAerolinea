@@ -11,10 +11,6 @@ public class Route {
 	private String airline;
 	private String aircraft;
 	
-	public Route(){
-		
-	}
-	
 	public Route(Route route) {
 		this.origin = route.origin;
 		this.destination = route.destination;
