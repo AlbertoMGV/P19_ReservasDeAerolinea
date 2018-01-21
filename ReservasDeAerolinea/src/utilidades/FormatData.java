@@ -26,6 +26,27 @@ public class FormatData {
 	public static void main(String[] args) {
 	}
 	
+	
+	public static void fillAirlines() {
+		File dat = new File("res/airlines.dat");
+		try {
+			FileReader fr = new FileReader(dat);
+			BufferedReader bfr = new BufferedReader(fr);
+			String linea;
+			while((linea = bfr.readLine()) != null) {
+				linea = linea.replace("\"", "");
+				String[] data = linea.split(",");
+				if(data[3].length() > 0) {
+					GestorDB.insertarAirline(Integer.parseInt(data[0]), data[4], data[3], data[1]);
+				}
+			}
+			bfr.close();
+			fr.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void renameAircraftImages() {
 		String imagesPath = "D:\\xampp\\htdocs\\deusto\\imagenes";
 		File carpetaImagenes = new File(imagesPath);

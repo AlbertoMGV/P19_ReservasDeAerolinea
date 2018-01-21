@@ -29,9 +29,8 @@ import utilidades.FormatData;
 
 public class GestorDB {
 
-		public static void main(String[] args) {
-			
-			
+	public static void main(String[] args) {
+		
 	}  
 
 
@@ -117,7 +116,7 @@ public class GestorDB {
 	}
 
 	public static void deleteTableDB(){
-		String sentencia = "DROP TABLE Route";
+		String sentencia = "DROP TABLE Airline";
 		runSentenciaDB(sentencia);
 	}
 
@@ -129,6 +128,12 @@ public class GestorDB {
 	
 	public static boolean insertarAircraft(String ICAO, String IATA, int speed, String name) {
 		String sentencia = "INSERT INTO Aircraft VALUES ('"+IATA+"','"+ICAO+"', '"+name+"' ,"+speed+");";
+		runSentenciaDB(sentencia);
+		return true;
+	}
+	
+	public static boolean insertarAirline(int id, String ICAO, String IATA, String name) {
+		String sentencia = "INSERT INTO Airline VALUES ("+id+",'"+name+"','"+IATA+"','"+ICAO+"');";
 		runSentenciaDB(sentencia);
 		return true;
 	}
@@ -237,6 +242,42 @@ public class GestorDB {
 				result += rs.getString(1)+",";
 			}
 			result = result.substring(0, result.length()-1);
+			rs.close();
+			stat.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public static String getAirlineName(String IATA) {
+		String result = "";
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
+			Statement stat = conn.createStatement();
+			String sentencia = "SELECT name FROM Airline WHERE IATA='"+ IATA +"';";
+			ResultSet rs = stat.executeQuery(sentencia);
+			result = rs.getString(1);
+			rs.close();
+			stat.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public static String getAirlineICAO(String IATA) {
+		String result = "";
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
+			Statement stat = conn.createStatement();
+			String sentencia = "SELECT ICAO FROM Airline WHERE IATA='"+ IATA +"';";
+			ResultSet rs = stat.executeQuery(sentencia);
+			result = rs.getString(1);
 			rs.close();
 			stat.close();
 			conn.close();
