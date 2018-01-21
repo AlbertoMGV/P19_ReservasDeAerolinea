@@ -24,12 +24,27 @@ public class FormatData {
 	
 	
 	public static void main(String[] args) {
-		generarArchivoAviones();
+		renameAircraftImages();
+	}
+	
+	public static void renameAircraftImages() {
+		String imagesPath = "D:\\xampp\\htdocs\\deusto\\imagenes";
+		File carpetaImagenes = new File(imagesPath);
+		File[] subcarpetas = carpetaImagenes.listFiles();
+		
+		for(File subcarpeta : subcarpetas) {
+			if(subcarpeta.isDirectory()) {
+				File[] imagenes = subcarpeta.listFiles();
+				for(int i = 0; i < imagenes.length; i++) {
+					renameFile(imagenes[i], i+".jpg");
+				}
+			}
+		}
 	}
 	
 	
 	public static void renameFile(File file, String newName) {
-		File newFile = new File(file.getAbsolutePath()+"\\"+newName);
+		File newFile = new File(file.getParent()+"\\"+newName);
 		file.renameTo(newFile);
 	}
 	
