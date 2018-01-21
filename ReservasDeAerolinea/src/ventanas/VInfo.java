@@ -13,11 +13,16 @@ import gestores.GestorDB;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Desktop.Action;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 
 public class VInfo extends JFrame {
 
@@ -75,13 +80,44 @@ public class VInfo extends JFrame {
 		JScrollPane scroll = new JScrollPane(flightsPanel);
 		//contentPane.add(flightsPanel, BorderLayout.CENTER);
 		flightsPanel.setLayout(new BoxLayout(flightsPanel, BoxLayout.Y_AXIS));
-		
+		int vuelo_n = 1;
 		for(Vuelo v : vuelos) {
 			JPanel panel = v.getJPanel();
+			JLabel vueloId = new JLabel("Vuelo nº " + vuelo_n);
+			vueloId.setFont(new Font("Tahoma", Font.BOLD, 15));
+			flightsPanel.add(vueloId);
 			flightsPanel.add(panel, BorderLayout.CENTER);
 			flightsPanel.add(Box.createVerticalStrut(5));
+			vuelo_n++;
 		}
 		
 		contentPane.add(scroll);
+		
+		JPanel bottomPanel = new JPanel();
+		contentPane.add(bottomPanel, BorderLayout.SOUTH);
+		
+		JButton btnCerrar = new JButton("Cerrar");
+		bottomPanel.add(btnCerrar);
+		btnCerrar.addActionListener(cerrarListener);
+		
+		JButton btnReservar = new JButton("Reservar");
+		bottomPanel.add(btnReservar);
+		btnReservar.addActionListener(reservarListener);
 	}
+
+
+	private ActionListener cerrarListener = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();			
+		}
+	};
+	private ActionListener reservarListener = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO RESERVA DEL VUELO		
+			}
+		};
 }

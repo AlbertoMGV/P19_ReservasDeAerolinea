@@ -41,7 +41,7 @@ public class GestorDB {
 			
 			*/
 			
-			System.out.println(Arrays.toString(getAerolineas("ZTH", "BIO").toArray()));
+			
 			//deleteTableDB();
 			//ejecutad este main para ver lo que hay en la bd				
 			//el usuario de prueba --> ("11111111H", "Admin", "admin1", "admin@deustoair.es");
