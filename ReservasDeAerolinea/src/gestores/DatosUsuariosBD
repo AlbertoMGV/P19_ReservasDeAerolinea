@@ -1,0 +1,53 @@
+Estos son los usuarios insertados en la BD (Table USER).
+Volcados mediante el metodo displayBD() en la clase GestorBD.
+
+----USUARIO 1----
+DNI: 11111111H
+Name: Admin
+Pass: admin1
+Email: admin@deustoair.es
+----USUARIO 2----
+DNI: 45915504Y
+Name: Alberto Miranda Garcia
+Pass: 123qwe
+Email: aberto.miranda@opendeusto.es
+----USUARIO 3----
+DNI: 82904124A
+Name: Magín Baca Magana
+Pass: qweasd
+Email: Mabaga@gmail.com
+----USUARIO 4----
+DNI: 88409342X
+Name: Geraldo Garrido Verdugo
+Pass: qweasd
+Email: gegaver@gmail.com
+----USUARIO 5----
+DNI: 63848088L
+Name: Michel Loya Crespo
+Pass: qweasd
+Email: milocres@gmail.com
+----USUARIO 6----
+DNI: 38746169R
+Name: Baco Nino Farías
+Pass: qweasd
+Email: banifa@gmail.com
+----USUARIO 7----
+DNI: 17385823P
+Name: Bernabeu Jaimes Hurtado
+Pass: qweasd
+Email: berjahu@gmail.com
+----USUARIO 8----
+DNI: 20111031S
+Name: Eligio Ruelas Ríos
+Pass: qweasd
+Email: eruri@gmail.com
+----USUARIO 9----
+DNI: 18674268Q
+Name: Juan Luis Garrido
+Pass: qweasd
+Email: juluga@gmail.com
+----USUARIO 10----
+DNI: 20944729D
+Name: Rodolfo Sanchez Martinez
+Pass: qweasd
+Email: rosanmar@gmail.com
