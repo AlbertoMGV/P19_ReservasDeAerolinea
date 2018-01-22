@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import datos.Aircraft;
 import datos.Route;
 import datos.Usuario;
+import datos.Vuelo;
 import utilidades.FormatData;
 
 
@@ -22,20 +23,30 @@ public class GestorDB {
 	}  
 	
 	//Registra reservas en la bd ("Nº Vuelo", "Origen", "Escalas", "Destino", "Precio", "H.Salida", "H.Llegada")
-	public static boolean regReserva(ArrayList<String> selectVuelo) {
-		String nvuelo = selectVuelo.get(0);
-		String origen = selectVuelo.get(1);
-		String escalas = selectVuelo.get(2);
-		String destino = selectVuelo.get(3);
-		String precio = selectVuelo.get(4);
-		String hsalida = selectVuelo.get(5);
-		String hllegada = selectVuelo.get(6);
+	public static boolean regVuelo(Vuelo vuelo) {
+		//
+		//String nvuelo = selectVuelo.get(0);
+		//String origen = selectVuelo.get(1);
+		//String escalas = selectVuelo.get(2);
+		//String destino = selectVuelo.get(3);
+		//String precio = selectVuelo.get(4);
+		//String hsalida = selectVuelo.get(5);
+		//String hllegada = selectVuelo.get(6);
 		
-		String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+origen+"','"+escalas+"','"+destino+"','"+hsalida+"','"+hllegada+"','"+precio+"')";
-		runSentenciaDB(sentencia);
+		//String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+origen+"','"+escalas+"','"+destino+"','"+hsalida+"','"+hllegada+"','"+precio+"')";
+		//runSentenciaDB(sentencia);
+		
+		
 		return true;
 	}
 	
+	public static boolean regReserva(Vuelo vuelo) {
+		
+		
+		//String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+origen+"','"+escalas+"','"+destino+"','"+hsalida+"','"+hllegada+"','"+precio+"')";
+		//runSentenciaDB(sentencia);
+		return true;
+	}
 	
 	//Registra Users en la bd
 	public static boolean reg(String dni,String name, String pass, String email) {

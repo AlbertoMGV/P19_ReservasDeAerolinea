@@ -124,17 +124,21 @@ public class VResultados extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			
-			ArrayList<String> selectVuelo = new ArrayList<>();
-			String valor = "";
-			int fila = table.getSelectedRow();
-			for (int i = 0; i < 7; i++) {
-				valor = table.getModel().getValueAt(fila, i).toString();
-				selectVuelo.add(valor);
-			}
+			int selectedIndex = table.getSelectedRow();
+			String[] ruta = resultados.get(selectedIndex);
 			
-			if (GestorDB.regReserva(selectVuelo)) {
-				JOptionPane.showMessageDialog(null, "Vuelo reservado con exito!", "[DeustoAIR]", JOptionPane.NO_OPTION);
-			} 
+
+			for(int i = 0; i < ruta.length - 1; i++) {
+				String nVuelo = precios.get(selectedIndex).getAerolineas()[i].replaceAll(" ", "");
+				Airport origen = Airport.get(ruta[i]);
+				Airport destino = Airport.get(ruta[i+1]);
+				String codAerolinea = nVuelo.substring(0, 2);
+
+				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea));
+				GestorDB.regVuelo(vuelo);
+			}
+
+			;
 			
 			
 		}
