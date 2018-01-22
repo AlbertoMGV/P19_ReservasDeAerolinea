@@ -16,6 +16,7 @@ import java.awt.Font;
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.FlatteningPathIterator;
 
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -27,6 +28,7 @@ import javax.swing.JButton;
 public class VInfo extends JFrame {
 
 	private JPanel contentPane;
+	private JPanel flightsPanel;
 
 	/**
 	 * Launch the application.
@@ -62,6 +64,7 @@ public class VInfo extends JFrame {
 		}
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 550, 450);
+		setTitle("[DeustoAIR] Informacion vuelo seleccionado");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -76,7 +79,7 @@ public class VInfo extends JFrame {
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
 		titlePanel.add(lblTitle);
 		
-		JPanel flightsPanel = new JPanel();
+		flightsPanel = new JPanel();
 		JScrollPane scroll = new JScrollPane(flightsPanel);
 		//contentPane.add(flightsPanel, BorderLayout.CENTER);
 		flightsPanel.setLayout(new BoxLayout(flightsPanel, BoxLayout.Y_AXIS));
@@ -117,7 +120,8 @@ public class VInfo extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO RESERVA DEL VUELO		
+				//TODO RESERVA DEL VUELO	
+				//flightsPanel.
 			}
 		};
 }

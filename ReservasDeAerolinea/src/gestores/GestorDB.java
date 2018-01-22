@@ -14,33 +14,38 @@ import datos.Usuario;
 import utilidades.FormatData;
 
 
-/*
- * Tablas: 
- * creada=USER [dni,nom,pass,email]
- * falta=RESERVA []
- * falta=VUELO[]
- * falta=RUTA[]
- * 
- * 
- */
-
-
-
-
 public class GestorDB {
+
 
 	public static void main(String[] args) {
 		
+		
 	}  
-
-
+	
+	//Registra reservas en la bd ("Nº Vuelo", "Origen", "Escalas", "Destino", "Precio", "H.Salida", "H.Llegada")
+	public static boolean regReserva(ArrayList<String> selectVuelo) {
+		String nvuelo = selectVuelo.get(0);
+		String origen = selectVuelo.get(0);
+		String escalas = selectVuelo.get(0);
+		String destino = selectVuelo.get(0);
+		String precio = selectVuelo.get(0);
+		String hsalida = selectVuelo.get(0);
+		String hllegada = selectVuelo.get(0);
+		
+		String sentencia = "INSERT INTO Reserva VALUES ('"+nvuelo+"','"+origen+"','"+escalas+"','"+destino+"'"+precio+"','"+hsalida+"','"+hllegada+"')";
+		runSentenciaDB(sentencia);
+		return true;
+	}
+	
+	
+	//Registra Users en la bd
 	public static boolean reg(String dni,String name, String pass, String email) {
 		insertarDB(dni,name, pass, email); 		
 		return true;
 	}
 
 
-
+	//loggin. Devuelve el user con el dni y pass que recibe. 
 	public static Usuario log(String dni,String pass) {
 		Usuario usuario = null;
 		try {
@@ -66,7 +71,9 @@ public class GestorDB {
 
 		return usuario;
 	}
-
+	
+	//devuelve el email del usuario que hemos pasado dni.
+	
 	public static String emailBD(String dni) {
 		String email="";
 		try {
@@ -86,6 +93,7 @@ public class GestorDB {
 
 	}
 
+	//lista todos los usuarias de la bd
 	public static void displayDB() {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -109,16 +117,22 @@ public class GestorDB {
 			e.printStackTrace();
 		}
 	}
-
+	
+	//borra usuario de la bd con el dni pasado.
+	
 	public static void deleteUser(String dni) {
 		String sentencia = "DELETE FROM USER WHERE dni = '"+dni+"'";
 		runSentenciaDB(sentencia);
 	}
-
-	public static void deleteTableDB(){
-		String sentencia = "DROP TABLE Airline";
+	
+	
+	//borra la tabla pasada
+	public static void deleteTableDB(String table){
+		String sentencia = "DROP TABLE '"+table+"'";
 		runSentenciaDB(sentencia);
 	}
+	
+	//inserta users en la tabla USER.
 
 	public static boolean insertarDB(String dni, String name, String pass, String email) {
 		String sentencia = "INSERT INTO USER VALUES ('"+dni+"','"+name+"','"+pass+"','"+email+"')";
@@ -126,18 +140,20 @@ public class GestorDB {
 		return true;
 	}
 	
+	//inserta aviones en la tabla Aircraft.
 	public static boolean insertarAircraft(String ICAO, String IATA, int speed, String name) {
 		String sentencia = "INSERT INTO Aircraft VALUES ('"+IATA+"','"+ICAO+"', '"+name+"' ,"+speed+");";
 		runSentenciaDB(sentencia);
 		return true;
 	}
 	
+	//inserta aerolinea en la tabla Airline.
 	public static boolean insertarAirline(int id, String ICAO, String IATA, String name) {
 		String sentencia = "INSERT INTO Airline VALUES ("+id+",'"+name+"','"+IATA+"','"+ICAO+"');";
 		runSentenciaDB(sentencia);
 		return true;
 	}
-	
+	//inserta routas en la tabla Route.
 	public static boolean insertarRuta(String origin, String destino, int distance, String airline, String aircraft) {
 		String sentencia = "INSERT INTO Route VALUES ('" + origin + "', '" + destino + "', " + distance + ", '"+airline+"', '"+aircraft+"');";
 		runSentenciaDB(sentencia);

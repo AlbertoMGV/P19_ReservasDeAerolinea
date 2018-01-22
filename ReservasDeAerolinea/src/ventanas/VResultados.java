@@ -25,7 +25,7 @@ import gestores.Pricing;
 import javax.swing.JTable;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
-
+import gestores.GestorDB;
 public class VResultados extends JFrame {
 
 	private JPanel contentPane;
@@ -33,6 +33,7 @@ public class VResultados extends JFrame {
 	private ArrayList<String[]> resultados;
 	private ArrayList<Pricing> precios;
 	private Usuario loggedUser;
+	private DefaultTableModel tbm;
 	/**
 	 * Create the frame.
 	 */
@@ -41,33 +42,34 @@ public class VResultados extends JFrame {
 		ArrayList<Pricing> precios = new ArrayList<Pricing>();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 685, 500);
+		setTitle("[DeustoAIR] Informacion Vuelos");
 		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
 		setContentPane(contentPane);
-		
+
 		loggedUser = VInicio.getLoggedUser();
 		String[] columnNames = {"Nº Vuelo", "Origen", "Escalas", "Destino", "Precio", "H.Salida", "H.Llegada"};
-		DefaultTableModel tbm = new DefaultTableModel(columnNames, 0) {
+		tbm = new DefaultTableModel(columnNames, 0) {
 			//desactivar modificación de celdas
 			@Override
 			public boolean isCellEditable(int row, int column) {
-			      return false;
-			   }
+				return false;
+			}
 		};
 		for(String[] s : resultados) {
-			
+
 			Pricing vuelo = Pricing.procesarPrecio(s, fechas, pasajeros, claseId);
 			precios.add(vuelo);
-						
+
 			String[] data = {Arrays.toString(vuelo.getAerolineas()), Airport.get(s[0]).getCity(), escalas(s), Airport.get(s[s.length-1]).getCity(), vuelo.getPrecio() + " €", "salida", "llegada"};
 
-			
+
 			if(vuelo.getAerolineas().length + 1 == s.length) {
 				tbm.addRow(data);
 			}
-			
-			
+
+
 		}
 		this.precios = precios;
 		JPanel flightsPanel = new JPanel();
@@ -78,27 +80,28 @@ public class VResultados extends JFrame {
 		flightsPanel.setLayout(new BorderLayout(0, 0));
 		JScrollPane scrollPane = new JScrollPane(table);
 		flightsPanel.add(scrollPane);
-		
+
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
-		
+
 		JButton btnMoreInfo = new JButton("M\u00E1s informaci\u00F3n...");
 		buttonPanel.add(btnMoreInfo);
 		btnMoreInfo.addActionListener(masInfoListener);
-		
+
 		JButton btnReservar = new JButton("Reservar");
 		buttonPanel.add(btnReservar);
-		System.out.println("Current user: " + loggedUser.getName());
+		btnReservar.addActionListener(reservaListener);
+		//System.out.println("Current user: " + loggedUser.getName());
 	}
-	
+
 	private ActionListener masInfoListener = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
 			Vuelo[] vuelos = new Vuelo[ruta.length - 1];
-			
+
 			for(int i = 0; i < ruta.length - 1; i++) {
 				String nVuelo = precios.get(selectedIndex).getAerolineas()[i].replaceAll(" ", "");
 				Airport origen = Airport.get(ruta[i]);
@@ -108,13 +111,32 @@ public class VResultados extends JFrame {
 				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea));
 				vuelos[i] = vuelo;
 			}
-			
+
 			VInfo infoVuelo = new VInfo(vuelos);
 			infoVuelo.setVisible(true);
+
+		}
+	};
+
+	private ActionListener reservaListener = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			ArrayList<String> selectVuelo = new ArrayList<>();
+			String valor = "";
+			int fila = table.getSelectedRow();
+			for (int i = 0; i < 7; i++) {
+				valor = table.getModel().getValueAt(fila, i).toString();
+				selectVuelo.add(valor);
+			}
+			
+			GestorDB.regReserva(selectVuelo);
+			
 			
 		}
 	};
-	
+
 	private String escalas(String[] input) {
 		String result="";
 		for(int i = 1; i < input.length-1; i++) {
@@ -125,6 +147,6 @@ public class VResultados extends JFrame {
 		}
 		return result;
 	}
-	
+
 
 }
