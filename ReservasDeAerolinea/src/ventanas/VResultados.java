@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -131,7 +132,9 @@ public class VResultados extends JFrame {
 				selectVuelo.add(valor);
 			}
 			
-			GestorDB.regReserva(selectVuelo);
+			if (GestorDB.regReserva(selectVuelo)) {
+				JOptionPane.showMessageDialog(null, "Vuelo reservado con exito!", "[DeustoAIR]", JOptionPane.NO_OPTION);
+			} 
 			
 			
 		}
