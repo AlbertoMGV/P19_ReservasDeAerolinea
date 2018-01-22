@@ -129,6 +129,7 @@ public class VResultados extends JFrame {
 			
 
 			for(int i = 0; i < ruta.length - 1; i++) {
+				//registrar vuelos iterativamente
 				String nVuelo = precios.get(selectedIndex).getAerolineas()[i].replaceAll(" ", "");
 				Airport origen = Airport.get(ruta[i]);
 				Airport destino = Airport.get(ruta[i+1]);
@@ -137,8 +138,10 @@ public class VResultados extends JFrame {
 				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea));
 				GestorDB.regVuelo(vuelo);
 			}
-
-			;
+			
+			//Registrar reserva (vuelo, usuario, precio)
+			
+			GestorDB.regReserva(null);
 			
 			
 		}
