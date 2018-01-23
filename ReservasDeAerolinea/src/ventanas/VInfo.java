@@ -37,8 +37,8 @@ public class VInfo extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Vuelo ejemplo = new Vuelo("IB-XXXX", Airport.get("BIO"), Airport.get("MAD"), GestorDB.getAircraft("BIO", "MAD", "UX"));
-					Vuelo ejemplo2 = new Vuelo("AZ-XXXX", Airport.get("MAD"), Airport.get("FCO"), GestorDB.getAircraft("MAD", "FCO", "AZ"));
+					Vuelo ejemplo = new Vuelo("IB-XXXX", Airport.get("BIO"), Airport.get("MAD"), GestorDB.getAircraft("BIO", "MAD", "UX"),0);
+					Vuelo ejemplo2 = new Vuelo("AZ-XXXX", Airport.get("MAD"), Airport.get("FCO"), GestorDB.getAircraft("MAD", "FCO", "AZ"),0);
 
 					Vuelo[] vuelos = {ejemplo, ejemplo2};
 					VInfo frame = new VInfo(vuelos);

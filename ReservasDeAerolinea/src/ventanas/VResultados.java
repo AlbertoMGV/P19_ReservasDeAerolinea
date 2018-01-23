@@ -85,6 +85,14 @@ public class VResultados extends JFrame {
 
 		JPanel buttonPanel = new JPanel();
 		contentPane.add(buttonPanel, BorderLayout.SOUTH);
+		
+		JButton btnNewButton = new JButton("Volver");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		buttonPanel.add(btnNewButton);
 
 		JButton btnMoreInfo = new JButton("M\u00E1s informaci\u00F3n...");
 		buttonPanel.add(btnMoreInfo);
