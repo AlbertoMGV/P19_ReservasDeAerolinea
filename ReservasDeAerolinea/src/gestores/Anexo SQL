@@ -8,6 +8,6 @@ CREATE TABLE Aircraft(IATA String(3) NOT NULL,ICAO String(4) NOT NULL,name_ac St
 
 CREATE TABLE Route(origin String(20) NOT NULL,destination String(20) NOT NULL,distance int(8),airline String(20),PRIMARY KEY(origin,destination, airline));
 
-CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,vueloId int(7) NOT NULL  REFERENCES Vuelo(vueloId),dni String(9) NOT NULL REFERENCES USER(dni));
+CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,precio FLOAT,dni String(9) NOT NULL REFERENCES USER(dni), CHECK(precio>0));
 
 CREATE TABLE Vuelo(nvuelo int(7) NOT NULL PRIMARY KEY, IATAorigen String(3) NOT NULL REFERENCES Airport(IATA),IATAdestino String(3) NOT NULL REFERENCES Airport(IATA), IATAaircraft String(3) NOT NULL REFERENCES Aircraft(IATA),IATAairline String(5) NOT NULL REFERENCES Airline(IATA), COD_R int(9) NOT NULL REFERENCES Reserva(COD_R), horasalida DATETIME)
