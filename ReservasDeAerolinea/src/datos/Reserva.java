@@ -16,7 +16,7 @@ public class Reserva {
 	
 	@Override
 	public String toString() {
-		return "Numero Reserva:" + COD_R + ". Precio:" + precio+".";
+		return "NºReserva:" + COD_R + " | Precio:" + precio;
 	}
 
 	public Reserva(int cOD_R, double precio, String dNI) {

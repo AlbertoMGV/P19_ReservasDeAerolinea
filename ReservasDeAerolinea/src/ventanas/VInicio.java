@@ -21,6 +21,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -41,6 +42,7 @@ public class VInicio extends JFrame {
 	
 	private Object[] airports;
 	private static final int MAX_PASAJEROS = 20;
+
 	
 	public static void crearVInicio(Usuario u) {
 		EventQueue.invokeLater(new Runnable() {
@@ -180,7 +182,10 @@ public class VInicio extends JFrame {
 		getContentPane().add(lblEjemploDdmmaaaa);
 
 		//GUARDAR LO SELECCIONADO Y EXCEPCIONES
-		JButton btnAceptar = new JButton("ACEPTAR");
+		
+		
+		
+		JButton btnAceptar = new JButton("Buscar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String origen, destino;
@@ -202,7 +207,7 @@ public class VInicio extends JFrame {
 				
 				if(rdbtnIdaYVuelta.isSelected()) {
 					if(fecha2TextField.getText().isEmpty()) {
-						JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido rellenados", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido rellenados", "[DeustoAIR] Error", JOptionPane.ERROR_MESSAGE);
 					}else {
 						fechas[1] = fecha2TextField.getText();
 					}
@@ -210,10 +215,15 @@ public class VInicio extends JFrame {
 				
 				if(!fecha1TextField.getText().isEmpty()) {
 					fechas[0] = fecha1TextField.getText();
-					VResultados r = new VResultados(resultados, pasajeros, claseId, fechas);
+					if (!resultados.isEmpty()) {
+						VResultados r = new VResultados(resultados, pasajeros, claseId, fechas);
 					r.setVisible(true); 
+					} else {
+						JOptionPane.showMessageDialog(null, "No se han encontrado vuelos con esas caracteristicas", "[DeustoAIR] Lo siento...", JOptionPane.ERROR_MESSAGE);
+					}
+					
 				}else {
-					JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido rellenados", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido rellenados", "[DeustoAIR] Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 				Airport.resetPrevious();
@@ -222,10 +232,10 @@ public class VInicio extends JFrame {
 				//JOptionPane.showMessageDialog(null, "Comprueba que todos los campos obligatorios han sido seleccionados", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
-		btnAceptar.setBounds(118, 368, 97, 25);
+		btnAceptar.setBounds(110, 368, 111, 25);
 		getContentPane().add(btnAceptar);
 		
-		JButton btnCancelat = new JButton("CANCELAR");
+		JButton btnCancelat = new JButton("Cerrar Sesion");
 		btnCancelat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -234,7 +244,7 @@ public class VInicio extends JFrame {
 			
 			}
 		});
-		btnCancelat.setBounds(256, 368, 97, 25);
+		btnCancelat.setBounds(256, 368, 111, 25);
 		getContentPane().add(btnCancelat);
 		
 		JLabel lblNewLabel = new JLabel("New label");
