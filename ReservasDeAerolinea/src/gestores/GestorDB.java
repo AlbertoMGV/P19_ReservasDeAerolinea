@@ -24,16 +24,16 @@ public class GestorDB {
 	
 	//Registra reservas en la bd ("Nº Vuelo", "Origen", "Escalas", "Destino", "Precio", "H.Salida", "H.Llegada")
 	public static boolean regVuelo(Vuelo vuelo) {
-		//
-		//String nvuelo = selectVuelo.get(0);
-		//String origen = selectVuelo.get(1);
-		//String escalas = selectVuelo.get(2);
-		//String destino = selectVuelo.get(3);
-		//String precio = selectVuelo.get(4);
-		//String hsalida = selectVuelo.get(5);
-		//String hllegada = selectVuelo.get(6);
 		
-		//String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+origen+"','"+escalas+"','"+destino+"','"+hsalida+"','"+hllegada+"','"+precio+"')";
+		String nvuelo = vuelo.getnVuelo();
+		String IATAorigen = vuelo.getOrigen().getIATA();		
+		String IATAdestino = vuelo.getDestino().getIATA();
+		String IATAaircraft = vuelo.getAvion().getIATA();
+		String IATAairline = vuelo.getAerolinea();
+		String COD_R = "";
+		String hsalida = "";
+		
+		String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+IATAorigen+"','"+IATAdestino+"','"+IATAaircraft+"','"+IATAairline+"','"+COD_R+"','"+hsalida+"')";
 		//runSentenciaDB(sentencia);
 		
 		
@@ -41,6 +41,7 @@ public class GestorDB {
 	}
 	
 	public static boolean regReserva(Vuelo vuelo) {
+		
 		
 		
 		//String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+origen+"','"+escalas+"','"+destino+"','"+hsalida+"','"+hllegada+"','"+precio+"')";
