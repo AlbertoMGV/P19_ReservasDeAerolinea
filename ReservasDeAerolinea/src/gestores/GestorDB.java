@@ -19,7 +19,7 @@ public class GestorDB {
 
 
 	public static void main(String[] args) {
-		crearDB();
+		
 	}  
 	
 	//Registra reservas en la bd ("Nº Vuelo", "Origen", "Escalas", "Destino", "Precio", "H.Salida", "H.Llegada")
