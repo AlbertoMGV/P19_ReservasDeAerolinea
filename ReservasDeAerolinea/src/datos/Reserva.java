@@ -1,18 +1,20 @@
 package datos;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class Reserva {
 	
-	private String COD_R;
+	private int COD_R;
 	private double precio;
 	private String DNI;
+
 	
 	
 	
 	
 	
-	public Reserva(String cOD_R, double precio, String dNI) {
+	public Reserva(int cOD_R, double precio, String dNI) {
 		super();
 		COD_R = cOD_R;
 		this.precio = precio;
@@ -20,7 +22,13 @@ public class Reserva {
 		
 	}
 	
-	public String getCOD_R() {
+	public Reserva() {
+		
+	}
+
+	
+
+	public int getCOD_R() {
 		return COD_R;
 	}
 	public double getPrecio() {
@@ -29,8 +37,8 @@ public class Reserva {
 	public String getDNI() {
 		return DNI;
 	}
-	public void setCOD_R(String cOD_R) {
-		COD_R = cOD_R;
+	public void setCOD_R(int i) {
+		COD_R = i;
 	}
 	public void setPrecio(double precio) {
 		this.precio = precio;

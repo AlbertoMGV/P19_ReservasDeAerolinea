@@ -1,28 +1,34 @@
 package ventanas;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+
+import datos.Reserva;
 import datos.Usuario;
 import gestores.GestorDB;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VPerfil extends JFrame {
 
 	private JPanel contentPane;
+	private DefaultTableModel tbmperf;
 
 	/**
 	 * Launch the application.
@@ -52,6 +58,37 @@ public class VPerfil extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		String[] columnNames = {"NºReserva", "Precio", "Dia", "Hora de Salida"};
+		tbmperf = new DefaultTableModel(columnNames, 0) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		
+		ArrayList<Reserva> lstrsv = GestorDB.listReservas(u);
+		
+		String cod_r;
+		String precio;
+
+		
+		for (int i = 0; i < lstrsv.size()-1; i++) {
+			cod_r="";
+			precio="";
+			cod_r = cod_r+ lstrsv.get(i).getCOD_R();
+			precio = precio+lstrsv.get(i).getPrecio();
+			
+			String[] dts = {cod_r,precio,"1/1/2018","00:00:00"};
+						
+			tbmperf.addRow(dts);
+		}
+		
+		//prueba añadir al vperfil reservas para ver como quedaria
+		for (int i = 0; i < 10; i++) {
+			String[] dts = {"cod"+i,"presio","1/1/2018","00:00:00"};			
+			tbmperf.addRow(dts);
+		}
 
 		JLabel lblNewLabel = new JLabel();
 		lblNewLabel.setIcon(new ImageIcon("././res/user.jpg"));
@@ -88,24 +125,17 @@ public class VPerfil extends JFrame {
 		textPane_2.setBounds(221, 131, 461, 22);
 		contentPane.add(textPane_2);
 
-		JList listReservas = new JList(new DefaultListModel<String>());		
+		JTable listReservas = new JTable(tbmperf);		
 		listReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel lblNewLabel_2 = new JLabel("Reservas");
 		lblNewLabel_2.setBounds(22, 208, 56, 16);
 		contentPane.add(lblNewLabel_2);
-		ArrayList<String> vuelos = GestorDB.listVuelos(u);
-		int max = vuelos.size();
-		int indx = 0;
-		
-		
-		while (indx < max) {
-			((DefaultListModel)listReservas.getModel()).addElement(vuelos.get(indx));
-			indx++;
-		}
+
+
 		JScrollPane panelscroll = new JScrollPane(listReservas);
 		panelscroll.setBounds(12, 241, 670, 111);
 		contentPane.add(panelscroll);
-		
+
 		JButton btnNewButton = new JButton("Nueva Reserva");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,7 +145,7 @@ public class VPerfil extends JFrame {
 		});
 		btnNewButton.setBounds(351, 369, 120, 25);
 		contentPane.add(btnNewButton);
-		
+
 		JButton btnNewButton_1 = new JButton("Cerrar Sesion");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -126,7 +156,6 @@ public class VPerfil extends JFrame {
 		btnNewButton_1.setBounds(165, 369, 119, 25);
 		contentPane.add(btnNewButton_1);
 
-		
 
 
 
@@ -136,7 +165,8 @@ public class VPerfil extends JFrame {
 
 
 
-		
+
+
 
 
 

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
 import datos.Aircraft;
@@ -20,7 +21,7 @@ public class GestorDB {
 
 
 	public static void main(String[] args) {
-		crearDB();
+		
 	}  
 	
 	//Registra vuelos en la bd a raiz del obj vuelo pasado
@@ -45,7 +46,7 @@ public class GestorDB {
 	public static boolean regReserva(Reserva reserva) {
 		String dni = reserva.getDNI();
 		double precio = reserva.getPrecio();
-		String cod_r = reserva.getCOD_R();
+		int cod_r = reserva.getCOD_R();
 		
 		String sentencia = "INSERT INTO Reserva VALUES ('"+dni+"','"+precio+"','"+cod_r+"');";
 		runSentenciaDB(sentencia);
@@ -352,8 +353,8 @@ public class GestorDB {
 
 	//crear lista con todo los vuelos COMO NO HAY VUELLOS LO TESTEO CON USUARIOS
 
-	public static ArrayList<String> listVuelos(Usuario u) {		
-		ArrayList<String> vuelos = new ArrayList<String>();
+	public static ArrayList<Reserva> listReservas(Usuario u) {		
+		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
@@ -361,15 +362,16 @@ public class GestorDB {
 			String Query = "SELECT * FROM Reserva WHERE dni = '"+u.getDni()+"';";
 			ResultSet rs = stat.executeQuery(Query);
 			
-			String vuelo= "";
-			int indx = 1;
+			Reserva r1 = new Reserva();
+			
 			while (rs.next()) {
-				vuelo = indx +". ";
-				vuelo = vuelo + "Codigo Reserva: " + rs.getString(1) + " | ";
-				vuelo = vuelo + "Identificador del Vuelo: "+ rs.getString(2);
-				vuelos.add(vuelo);
-				indx++;
-
+				
+				r1.setCOD_R(rs.getInt(0));
+				r1.setPrecio(rs.getDouble(1));
+				r1.setDNI(rs.getString(2));
+				
+				reservas.add(r1);
+				
 			}
 			rs.close();
 			stat.close();
@@ -377,10 +379,14 @@ public class GestorDB {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return vuelos;
+		return reservas;
 	}
 
-
+	public static Timestamp getHsalida(String dni) {
+		
+		return null;
+		
+	}
 
 	
 
