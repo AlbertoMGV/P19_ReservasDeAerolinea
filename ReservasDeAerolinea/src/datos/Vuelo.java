@@ -31,6 +31,8 @@ public class Vuelo {
 		this.aerolinea = nVuelo.trim().substring(0, 2);		
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "Vuelo [nVuelo=" + nVuelo + ", origen=" + origen + ", destino=" + destino + ", avion=" + avion + "]";

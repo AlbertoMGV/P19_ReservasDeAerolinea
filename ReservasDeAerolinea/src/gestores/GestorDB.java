@@ -53,6 +53,34 @@ public class GestorDB {
 		return true;
 	}
 	
+	//devuelve los vuelos vinculados a una reserva
+	public static ArrayList<String> getVuelosRes(Reserva rsv) {
+		ArrayList<String> lstvls = null;
+		
+		
+		try {
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
+			Statement stat = conn.createStatement();
+			String Query = "SELECT * FROM Vuelo WHERE COD_R IN (SELECT COD_R FROM Reserva WHERE DNI='"+rsv.getDNI()+"')";
+			ResultSet rs = stat.executeQuery(Query);
+			
+			String vuelo;
+			while (rs.next()) {
+				vuelo = "";
+				vuelo = "NºVuelo="+rs.getString(0)+", Origen="+rs.getString(1)+", Destino="+ rs.getString(2)+ ", Avion="+rs.getString(3)+ ", Compañia="+rs.getString(4)+", Hora="+rs.getString(6);				
+				lstvls.add(vuelo);
+			}
+			rs.close();
+			stat.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return lstvls;
+	}
+	
 	//Registra Users en la bd
 	public static boolean reg(String dni,String name, String pass, String email) {
 		insertarDB(dni,name, pass, email); 		

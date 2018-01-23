@@ -3,32 +3,30 @@ package ventanas;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextPane;
-import javax.swing.ListSelectionModel;
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
 
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+import java.awt.*;
+import java.awt.event.*;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import datos.Reserva;
 import datos.Usuario;
+import datos.Vuelo;
 import gestores.GestorDB;
 
 public class VPerfil extends JFrame {
 
 	private JPanel contentPane;
 	private DefaultTableModel tbmperf;
+	private JTree arbol;
+
+
 
 	/**
 	 * Launch the application.
@@ -58,37 +56,39 @@ public class VPerfil extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
+
+
 		String[] columnNames = {"NºReserva", "Precio", "Dia", "Hora de Salida"};
 		tbmperf = new DefaultTableModel(columnNames, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return false;
+				return false;	
 			}
 		};
-		
-		ArrayList<Reserva> lstrsv = GestorDB.listReservas(u);
-		
-		String cod_r;
-		String precio;
 
-		
+		//lista de reservas 
+		ArrayList<Reserva> lstrsv = GestorDB.listReservas(u);
+		//lista de vuelos
+		ArrayList<String> lstvls;
+		String cod_r;
+		String precio;		
 		for (int i = 0; i < lstrsv.size()-1; i++) {
-			cod_r="";
-			precio="";
-			cod_r = cod_r+ lstrsv.get(i).getCOD_R();
-			precio = precio+lstrsv.get(i).getPrecio();
-			
-			String[] dts = {cod_r,precio,"1/1/2018","00:00:00"};
-						
-			tbmperf.addRow(dts);
-		}
-		
-		//prueba añadir al vperfil reservas para ver como quedaria
-		for (int i = 0; i < 10; i++) {
-			String[] dts = {"cod"+i,"presio","1/1/2018","00:00:00"};			
-			tbmperf.addRow(dts);
-		}
+			//cada registro es un root
+			DefaultMutableTreeNode root = new DefaultMutableTreeNode(lstrsv.get(i).toString());
+			//los vuelos seran los hijos
+			lstvls = GestorDB.getVuelosRes(lstrsv.get(i));
+			for (int j = 0; j < lstvls.size()-1; j++) {
+				DefaultMutableTreeNode vuelo = new DefaultMutableTreeNode(lstvls.get(j));
+				root.add(vuelo);
+			}
+			arbol = new JTree(root);
+			add(arbol);
+		}		
+
+		JScrollPane panelscroll = new JScrollPane(arbol);
+		panelscroll.setBounds(12, 241, 670, 111);
+		contentPane.add(panelscroll);
 
 		JLabel lblNewLabel = new JLabel();
 		lblNewLabel.setIcon(new ImageIcon("././res/user.jpg"));
@@ -125,16 +125,16 @@ public class VPerfil extends JFrame {
 		textPane_2.setBounds(221, 131, 461, 22);
 		contentPane.add(textPane_2);
 
+		/*Tabla antigua la pasamos a jtreetable
 		JTable listReservas = new JTable(tbmperf);		
 		listReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel lblNewLabel_2 = new JLabel("Reservas");
 		lblNewLabel_2.setBounds(22, 208, 56, 16);
 		contentPane.add(lblNewLabel_2);
+		 */
 
 
-		JScrollPane panelscroll = new JScrollPane(listReservas);
-		panelscroll.setBounds(12, 241, 670, 111);
-		contentPane.add(panelscroll);
+
 
 		JButton btnNewButton = new JButton("Nueva Reserva");
 		btnNewButton.addActionListener(new ActionListener() {
