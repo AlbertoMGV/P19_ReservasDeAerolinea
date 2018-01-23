@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 import datos.Aircraft;
+import datos.Reserva;
 import datos.Route;
 import datos.Usuario;
 import datos.Vuelo;
@@ -22,7 +23,7 @@ public class GestorDB {
 		crearDB();
 	}  
 	
-	//Registra reservas en la bd ("Nº Vuelo", "Origen", "Escalas", "Destino", "Precio", "H.Salida", "H.Llegada")
+	//Registra vuelos en la bd a raiz del obj vuelo pasado
 	public static boolean regVuelo(Vuelo vuelo) {
 		
 		String nvuelo = vuelo.getnVuelo();
@@ -34,18 +35,20 @@ public class GestorDB {
 		String hsalida = "";
 		
 		String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+IATAorigen+"','"+IATAdestino+"','"+IATAaircraft+"','"+IATAairline+"','"+COD_R+"','"+hsalida+"')";
-		//runSentenciaDB(sentencia);
+		runSentenciaDB(sentencia);
 		
 		
 		return true;
 	}
+	//Crea un reserva en bd con el obj reserva pasado
 	
-	public static boolean regReserva(Vuelo vuelo) {
+	public static boolean regReserva(Reserva reserva) {
+		String dni = reserva.getDNI();
+		double precio = reserva.getPrecio();
+		String cod_r = reserva.getCOD_R();
 		
-		
-		
-		//String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+origen+"','"+escalas+"','"+destino+"','"+hsalida+"','"+hllegada+"','"+precio+"')";
-		//runSentenciaDB(sentencia);
+		String sentencia = "INSERT INTO Reserva VALUES ('"+dni+"','"+precio+"','"+cod_r+"');";
+		runSentenciaDB(sentencia);
 		return true;
 	}
 	
