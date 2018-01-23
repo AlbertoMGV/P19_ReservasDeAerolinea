@@ -20,9 +20,11 @@ import utilidades.FormatData;
 public class GestorDB {
 
 
-	public static void main(String[] args) {
-		
-	}  
+	/*public static void main(String[] args) {
+		deleteTableDB("Reserva");
+		deleteTableDB("Vuelo");
+		crearDB();
+	} */ 
 	
 	//Registra vuelos en la bd a raiz del obj vuelo pasado
 	public static boolean regVuelo(Vuelo vuelo) {
@@ -32,7 +34,7 @@ public class GestorDB {
 		String IATAdestino = vuelo.getDestino().getIATA();
 		String IATAaircraft = vuelo.getAvion().getIATA();
 		String IATAairline = vuelo.getAerolinea();
-		String COD_R = "";
+		int COD_R = vuelo.getCODr();
 		String hsalida = "";
 		
 		String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+IATAorigen+"','"+IATAdestino+"','"+IATAaircraft+"','"+IATAairline+"','"+COD_R+"','"+hsalida+"')";
@@ -48,29 +50,30 @@ public class GestorDB {
 		double precio = reserva.getPrecio();
 		int cod_r = reserva.getCOD_R();
 		
-		String sentencia = "INSERT INTO Reserva VALUES ('"+dni+"','"+precio+"','"+cod_r+"');";
+		String sentencia = "INSERT INTO Reserva VALUES ('"+cod_r+"','"+precio+"','"+dni+"');";
 		runSentenciaDB(sentencia);
 		return true;
 	}
 	
 	//devuelve los vuelos vinculados a una reserva
 	public static ArrayList<String> getVuelosRes(Reserva rsv) {
-		ArrayList<String> lstvls = null;
+		ArrayList<String> lstvls = new ArrayList<>();
 		
 		
 		try {
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:datos.db");
 			Statement stat = conn.createStatement();
-			String Query = "SELECT * FROM Vuelo WHERE COD_R IN (SELECT COD_R FROM Reserva WHERE DNI='"+rsv.getDNI()+"')";
+			String Query = "SELECT * FROM Vuelo WHERE COD_R='"+rsv.getCOD_R()+"';";
 			ResultSet rs = stat.executeQuery(Query);
 			
 			String vuelo;
 			while (rs.next()) {
 				vuelo = "";
-				vuelo = "NºVuelo="+rs.getString(0)+", Origen="+rs.getString(1)+", Destino="+ rs.getString(2)+ ", Avion="+rs.getString(3)+ ", Compañia="+rs.getString(4)+", Hora="+rs.getString(6);				
+				vuelo = "NºVuelo="+rs.getString(1)+", Origen="+rs.getString(2)+", Destino="+ rs.getString(3)+ ", Avion="+rs.getString(4)+ ", Compañia="+rs.getString(5)+", Hora="+rs.getString(7);				
 				lstvls.add(vuelo);
 			}
+			
 			rs.close();
 			stat.close();
 			conn.close();
@@ -358,10 +361,11 @@ public class GestorDB {
 		//String sentencia = "CREATE TABLE Airport(airportId int(5) NOT NULL PRIMARY KEY,	name_ap String(20),	city String(20), country String(20), IATA String(3) NOT NULL, ICAO String(4) NOT NULL, lat double, lon double);";
 		//String sentencia = "CREATE TABLE Aircraft(IATA String(3),ICAO String(4) NOT NULL,name_ac String(12) NOT NULL UNIQUE,speed double(4,2),PRIMARY KEY(ICAO, name_ac));";
 		//String sentencia = "CREATE TABLE Route(origin String(20) NOT NULL,destination String(20) NOT NULL,distance int(8),airline String(20),aircraft String(20), PRIMARY KEY(origin,destination, airline));";
-		//String sentencia = "CREATE TABLE Vuelo(nvuelo int(7) NOT NULL PRIMARY KEY, IATAorigen String(3) NOT NULL REFERENCES Airport(IATA),IATAdestino String(3) NOT NULL REFERENCES Airport(IATA), IATAaircraft String(3) NOT NULL REFERENCES Aircraft(IATA),IATAairline String(5) NOT NULL REFERENCES Airline(IATA), COD_R int(9) NOT NULL REFERENCES Reserva(COD_R), horasalida DATETIME);";		                     
-		//String sentencia = "CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,precio FLOAT,dni String(9) NOT NULL REFERENCES USER(dni), CHECK(precio>0));";
-		String sentencia = "";
-		runSentenciaDB(sentencia);
+		String sentencia1 = "CREATE TABLE Vuelo(nvuelo int(7) NOT NULL PRIMARY KEY, IATAorigen String(3) NOT NULL REFERENCES Airport(IATA),IATAdestino String(3) NOT NULL REFERENCES Airport(IATA), IATAaircraft String(3) NOT NULL REFERENCES Aircraft(IATA),IATAairline String(5) NOT NULL REFERENCES Airline(IATA), COD_R int(9) NOT NULL REFERENCES Reserva(COD_R), horasalida DATETIME);";		                     
+		String sentencia2 = "CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,precio FLOAT,dni String(9) NOT NULL REFERENCES USER(dni), CHECK(precio>0));";
+		//String sentencia = "";
+		runSentenciaDB(sentencia1);
+		runSentenciaDB(sentencia2);
 		
 		
 	}
@@ -390,17 +394,23 @@ public class GestorDB {
 			String Query = "SELECT * FROM Reserva WHERE dni = '"+u.getDni()+"';";
 			ResultSet rs = stat.executeQuery(Query);
 			
-			Reserva r1 = new Reserva();
+			
 			
 			while (rs.next()) {
 				
-				r1.setCOD_R(rs.getInt(0));
-				r1.setPrecio(rs.getDouble(1));
-				r1.setDNI(rs.getString(2));
+				Reserva r1 = new Reserva();
+				r1.setCOD_R(rs.getInt(1));
+				r1.setPrecio(rs.getDouble(2));
+				r1.setDNI(rs.getString(3));
+				
+				
 				
 				reservas.add(r1);
 				
 			}
+			
+			
+			
 			rs.close();
 			stat.close();
 			conn.close();

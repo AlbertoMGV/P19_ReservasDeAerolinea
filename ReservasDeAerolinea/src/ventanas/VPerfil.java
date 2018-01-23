@@ -69,25 +69,35 @@ public class VPerfil extends JFrame {
 
 		//lista de reservas 
 		ArrayList<Reserva> lstrsv = GestorDB.listReservas(u);
+		
+		
 		//lista de vuelos
 		ArrayList<String> lstvls;
-		String cod_r;
-		String precio;		
-		for (int i = 0; i < lstrsv.size()-1; i++) {
+		
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("RESERVAS");
+				
+		for (int i = 0; i < lstrsv.size(); i++) {
+			
 			//cada registro es un root
-			DefaultMutableTreeNode root = new DefaultMutableTreeNode(lstrsv.get(i).toString());
+			DefaultMutableTreeNode reservas = new DefaultMutableTreeNode(lstrsv.get(i).toString());
 			//los vuelos seran los hijos
 			lstvls = GestorDB.getVuelosRes(lstrsv.get(i));
-			for (int j = 0; j < lstvls.size()-1; j++) {
-				DefaultMutableTreeNode vuelo = new DefaultMutableTreeNode(lstvls.get(j));
-				root.add(vuelo);
+			
+			for (int j = 0; j < lstvls.size(); j++) {
+				DefaultMutableTreeNode vuelos = new DefaultMutableTreeNode(lstvls.get(j));
+				reservas.add(vuelos);
 			}
-			arbol = new JTree(root);
-			add(arbol);
-		}		
+			
+			
+			root.add(reservas);
+			
+			
+		}	
+		
+		arbol = new JTree(root);
 
 		JScrollPane panelscroll = new JScrollPane(arbol);
-		panelscroll.setBounds(12, 241, 670, 111);
+		panelscroll.setBounds(12, 206, 670, 146);
 		contentPane.add(panelscroll);
 
 		JLabel lblNewLabel = new JLabel();
@@ -125,16 +135,7 @@ public class VPerfil extends JFrame {
 		textPane_2.setBounds(221, 131, 461, 22);
 		contentPane.add(textPane_2);
 
-		/*Tabla antigua la pasamos a jtreetable
-		JTable listReservas = new JTable(tbmperf);		
-		listReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		JLabel lblNewLabel_2 = new JLabel("Reservas");
-		lblNewLabel_2.setBounds(22, 208, 56, 16);
-		contentPane.add(lblNewLabel_2);
-		 */
-
-
-
+	
 
 		JButton btnNewButton = new JButton("Nueva Reserva");
 		btnNewButton.addActionListener(new ActionListener() {

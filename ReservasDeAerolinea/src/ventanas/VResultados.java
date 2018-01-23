@@ -18,6 +18,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import datos.Airport;
+import datos.Reserva;
 import datos.Usuario;
 import datos.Vuelo;
 import gestores.GestorDB;
@@ -109,7 +110,7 @@ public class VResultados extends JFrame {
 				Airport destino = Airport.get(ruta[i+1]);
 				String codAerolinea = nVuelo.substring(0, 2);
 
-				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea));
+				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea),000);
 				vuelos[i] = vuelo;
 			}
 
@@ -127,6 +128,9 @@ public class VResultados extends JFrame {
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
 			
+			//Aqui crear de alguna forma un codigo diferente para cada reserva
+			int COD_R = 2;
+			
 
 			for(int i = 0; i < ruta.length - 1; i++) {
 				//registrar vuelos iterativamente
@@ -134,14 +138,20 @@ public class VResultados extends JFrame {
 				Airport origen = Airport.get(ruta[i]);
 				Airport destino = Airport.get(ruta[i+1]);
 				String codAerolinea = nVuelo.substring(0, 2);
+				
+				
 
-				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea));
+				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea),COD_R);
 				GestorDB.regVuelo(vuelo);
+				
 			}
 			
-			//Registrar reserva (vuelo, usuario, precio)
 			
-			GestorDB.regReserva(null);
+			Reserva reserva = new Reserva(COD_R, 2222, loggedUser.getDni());
+				GestorDB.regReserva(reserva);
+				
+				dispose();
+				JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);
 			
 			
 		}

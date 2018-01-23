@@ -21,14 +21,16 @@ public class Vuelo {
 	private Airport destino;
 	private Aircraft avion;
 	private String aerolinea;
+	private int COD_R;
 
 
-	public Vuelo(String nVuelo, Airport origen, Airport destino, Aircraft avion) {
+	public Vuelo(String nVuelo, Airport origen, Airport destino, Aircraft avion, int cod_r) {
 		this.nVuelo = nVuelo;
 		this.origen = origen;
 		this.destino = destino;
 		this.avion = avion;
-		this.aerolinea = nVuelo.trim().substring(0, 2);		
+		this.aerolinea = nVuelo.trim().substring(0, 2);	
+		this.COD_R = cod_r;
 	}
 
 	
@@ -38,6 +40,10 @@ public class Vuelo {
 		return "Vuelo [nVuelo=" + nVuelo + ", origen=" + origen + ", destino=" + destino + ", avion=" + avion + "]";
 	}
 	
+	
+	public int getCODr() {
+		return COD_R;
+	}
 	
 	public String getAerolinea() {
 		return aerolinea;
