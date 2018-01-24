@@ -112,6 +112,7 @@ public class VResultados extends JFrame {
 			String[] ruta = resultados.get(selectedIndex);
 			Vuelo[] vuelos = new Vuelo[ruta.length - 1];
 			double precio = precios.get(selectedIndex).getPrecio();
+			String hSalida = precios.get(selectedIndex).gethSalida();
 
 			for(int i = 0; i < ruta.length - 1; i++) {
 				String nVuelo = precios.get(selectedIndex).getAerolineas()[i].replaceAll(" ", "");
@@ -123,7 +124,7 @@ public class VResultados extends JFrame {
 				vuelos[i] = vuelo;
 			}
 
-			VInfo infoVuelo = new VInfo(vuelos, precio, loggedUser);
+			VInfo infoVuelo = new VInfo(vuelos, precio, hSalida, loggedUser);
 			infoVuelo.setVisible(true);
 
 		}
@@ -143,7 +144,7 @@ public class VResultados extends JFrame {
 			String sCOD_R = "";
 			//generar 9 numeros aleatorios (cod_r)
 			
-			for(int i = 0; sCOD_R.length() < 9; i++) {
+			while(sCOD_R.length() < 9) {
 				int random = ThreadLocalRandom.current().nextInt(0, 9);
 				sCOD_R += random;
 			}
@@ -162,11 +163,10 @@ public class VResultados extends JFrame {
 			}
 			
 			
-			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni());
-				GestorDB.regReserva(reserva);
-				
-				dispose();
-				JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);
+			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(), hSalida);
+			GestorDB.regReserva(reserva);
+			dispose();
+			JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);
 			
 			
 		}

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-import datos.Aircraft;
 import datos.Multiplicadores;
 
 public class Pricing {

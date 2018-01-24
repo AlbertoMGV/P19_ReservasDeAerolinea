@@ -37,6 +37,7 @@ public class VInfo extends JFrame {
 	private Vuelo[] vuelos;
 	private double precio;
 	private Usuario loggedUser;
+	private String hSalida;
 
 	/**
 	 * Launch the application.
@@ -49,7 +50,7 @@ public class VInfo extends JFrame {
 					Vuelo ejemplo2 = new Vuelo("AZ-XXXX", Airport.get("MAD"), Airport.get("FCO"), GestorDB.getAircraft("MAD", "FCO", "AZ"),0);
 
 					Vuelo[] vuelos = {ejemplo, ejemplo2};
-					VInfo frame = new VInfo(vuelos, 0, null);
+					VInfo frame = new VInfo(vuelos, 0, "",null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,10 +62,11 @@ public class VInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VInfo(Vuelo[] vuelos, double precio, Usuario loggedUser) {
+	public VInfo(Vuelo[] vuelos, double precio, String hSalida ,Usuario loggedUser) {
 		this.vuelos = vuelos;
 		this.precio = precio;
 		this.loggedUser = loggedUser;
+		this.hSalida = hSalida;
 		//cambiar look 
 
 		try {
@@ -137,7 +139,7 @@ public class VInfo extends JFrame {
 			String sCOD_R = "";
 			//generar 9 numeros aleatorios (cod_r)
 			
-			for(int i = 0; sCOD_R.length() < 9; i++) {
+			while(sCOD_R.length() < 9){
 				int random = ThreadLocalRandom.current().nextInt(0, 9);
 				sCOD_R += random;
 			}
@@ -152,7 +154,7 @@ public class VInfo extends JFrame {
 			}
 			
 			
-			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(),horasalida);
+			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(), hSalida);
 			GestorDB.regReserva(reserva);
 			dispose();
 			JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);

@@ -43,7 +43,7 @@ public class GestorDB {
 		String dni = reserva.getDNI();
 		double precio = reserva.getPrecio();
 		int cod_r = reserva.getCOD_R();
-		String hsalida = "";
+		String hsalida = reserva.getHorasalida();
 		
 		String sentencia = "INSERT INTO Reserva VALUES ('"+cod_r+"','"+precio+"','"+dni+"','"+hsalida+"');";
 		runSentenciaDB(sentencia);
@@ -65,7 +65,7 @@ public class GestorDB {
 			String vuelo;
 			while (rs.next()) {
 				vuelo = "";
-				vuelo = "NºVuelo:"+rs.getString(1)+" | Origen:"+rs.getString(2)+" | Destino:"+ rs.getString(3)+ " | Avion:"+rs.getString(4)+ " | Compañia:"+rs.getString(5)+" | Hora:"+rs.getString(7);				
+				vuelo = "NºVuelo:"+rs.getString(1)+" | Origen:"+rs.getString(2)+" | Destino:"+ rs.getString(3)+ " | Avion:"+rs.getString(4)+ " | Compañia:"+rs.getString(5);				
 				lstvls.add(vuelo);
 			}
 			
@@ -399,7 +399,7 @@ public class GestorDB {
 				r1.setCOD_R(rs.getInt(1));
 				r1.setPrecio(rs.getDouble(2));
 				r1.setDNI(rs.getString(3));
-				
+				r1.setHorasalida(rs.getString(4));
 				
 				
 				reservas.add(r1);
