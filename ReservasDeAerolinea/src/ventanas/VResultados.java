@@ -42,6 +42,7 @@ public class VResultados extends JFrame {
 	 * Create the frame.
 	 */
 	public VResultados(ArrayList<String[]> resultados, int pasajeros, int claseId, String[] fechas) {
+		this.fechas1 = fechas;
 		this.resultados = resultados;
 		ArrayList<Pricing> precios = new ArrayList<Pricing>();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -113,9 +114,11 @@ public class VResultados extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
+			String original = resultados.get(0)[0];
 			Vuelo[] vuelos = new Vuelo[ruta.length - 1];
 			double precio = precios.get(selectedIndex).getPrecio();
 			String hSalida = precios.get(selectedIndex).gethSalida();
+			String fecha = fechas1[1];
 
 			for(int i = 0; i < ruta.length - 1; i++) {
 				String nVuelo = precios.get(selectedIndex).getAerolineas()[i].replaceAll(" ", "");
@@ -124,10 +127,15 @@ public class VResultados extends JFrame {
 				String codAerolinea = nVuelo.substring(0, 2);
 
 				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea), 0);
+				if(i == 0) {
+					if(origen.getIATA().equals(original)) {
+						fecha = fechas1[0];
+					}
+				}
 				vuelos[i] = vuelo;
 			}
 			
-			VInfo infoVuelo = new VInfo(vuelos, precio, hSalida, loggedUser,fecha);
+			VInfo infoVuelo = new VInfo(vuelos, precio, hSalida, loggedUser, fecha);
 			infoVuelo.setVisible(true);
 
 		}
@@ -140,8 +148,10 @@ public class VResultados extends JFrame {
 			
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
+			String original = resultados.get(0)[0];
 			double precio = precios.get(selectedIndex).getPrecio();
 			String hSalida = precios.get(selectedIndex).gethSalida();
+			String fecha = fechas1[1];
 			
 			int COD_R = 0;
 			String sCOD_R = "";
@@ -162,12 +172,18 @@ public class VResultados extends JFrame {
 				String codAerolinea = nVuelo.substring(0, 2);
 				
 				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea), COD_R);
+				if(i == 0) {
+					if(origen.getIATA().equals(original)) {
+						fecha = fechas1[0];
+					}
+				}
+				
 				GestorDB.regVuelo(vuelo);				
 			}
 			
 			 
 			
-			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(), hSalida);
+			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(), hSalida, fecha);
 			GestorDB.regReserva(reserva);
 			
 			JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);

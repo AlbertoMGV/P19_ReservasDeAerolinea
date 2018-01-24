@@ -38,7 +38,7 @@ public class VInfo extends JFrame {
 	private double precio;
 	private Usuario loggedUser;
 	private String hSalida;
-	private String[] fechas1;
+	private String fecha;
 
 	/**
 	 * Launch the application.
@@ -51,7 +51,7 @@ public class VInfo extends JFrame {
 					Vuelo ejemplo2 = new Vuelo("AZ-XXXX", Airport.get("MAD"), Airport.get("FCO"), GestorDB.getAircraft("MAD", "FCO", "AZ"),0);
 
 					Vuelo[] vuelos = {ejemplo, ejemplo2};
-					VInfo frame = new VInfo(vuelos, 0, "",null);
+					VInfo frame = new VInfo(vuelos, 0, "",null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,12 +63,12 @@ public class VInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VInfo(Vuelo[] vuelos, double precio, String hSalida ,Usuario loggedUser, String[] fechas) {
+	public VInfo(Vuelo[] vuelos, double precio, String hSalida ,Usuario loggedUser, String fecha) {
 		this.vuelos = vuelos;
 		this.precio = precio;
 		this.loggedUser = loggedUser;
 		this.hSalida = hSalida;
-		this.fechas1=fechas;
+		this.fecha=fecha;
 		
 		//cambiar look 
 
@@ -151,6 +151,8 @@ public class VInfo extends JFrame {
 
 			for(int i = 0; i < vuelos.length; i++) {
 				//registrar vuelos iterativamente
+	
+				
 				vuelos[i].setCodReserva(COD_R);
 				GestorDB.regVuelo(vuelos[i]);
 				
