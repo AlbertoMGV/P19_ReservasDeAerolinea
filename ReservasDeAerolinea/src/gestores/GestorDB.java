@@ -18,13 +18,7 @@ import utilidades.FormatData;
 
 
 public class GestorDB {
-
-
-	/*public static void main(String[] args) {
-		deleteTableDB("Reserva");
-		deleteTableDB("Vuelo");
-		crearDB();
-	} */ 
+		
 	
 	//Registra vuelos en la bd a raiz del obj vuelo pasado
 	public static boolean regVuelo(Vuelo vuelo) {
@@ -35,9 +29,9 @@ public class GestorDB {
 		String IATAaircraft = vuelo.getAvion().getIATA();
 		String IATAairline = vuelo.getAerolinea();
 		int COD_R = vuelo.getCODr();
-		String hsalida = "";
 		
-		String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+IATAorigen+"','"+IATAdestino+"','"+IATAaircraft+"','"+IATAairline+"','"+COD_R+"','"+hsalida+"')";
+		
+		String sentencia = "INSERT INTO Vuelo VALUES ('"+nvuelo+"','"+IATAorigen+"','"+IATAdestino+"','"+IATAaircraft+"','"+IATAairline+"','"+COD_R+"')";
 		runSentenciaDB(sentencia);
 		
 		
@@ -49,8 +43,9 @@ public class GestorDB {
 		String dni = reserva.getDNI();
 		double precio = reserva.getPrecio();
 		int cod_r = reserva.getCOD_R();
+		String hsalida = "";
 		
-		String sentencia = "INSERT INTO Reserva VALUES ('"+cod_r+"','"+precio+"','"+dni+"');";
+		String sentencia = "INSERT INTO Reserva VALUES ('"+cod_r+"','"+precio+"','"+dni+"','"+hsalida+"');";
 		runSentenciaDB(sentencia);
 		return true;
 	}
@@ -355,17 +350,19 @@ public class GestorDB {
 		String sentencia = "ALTER TABLE USER ADD COLUMN email VARCHAR(254);)";
 		runSentenciaDB(sentencia);
 	}
-
-	public static void crearDB() {
+	
+	//Mtd para la creacion de tablas en la bd
+	public static void crearTablaDB() {
 		//String sentencia = "CREATE TABLE USER(dni STRING PRIMARY KEY,name STRING, pass STRING, email STRING)";
 		//String sentencia = "CREATE TABLE Airport(airportId int(5) NOT NULL PRIMARY KEY,	name_ap String(20),	city String(20), country String(20), IATA String(3) NOT NULL, ICAO String(4) NOT NULL, lat double, lon double);";
 		//String sentencia = "CREATE TABLE Aircraft(IATA String(3),ICAO String(4) NOT NULL,name_ac String(12) NOT NULL UNIQUE,speed double(4,2),PRIMARY KEY(ICAO, name_ac));";
 		//String sentencia = "CREATE TABLE Route(origin String(20) NOT NULL,destination String(20) NOT NULL,distance int(8),airline String(20),aircraft String(20), PRIMARY KEY(origin,destination, airline));";
-		String sentencia1 = "CREATE TABLE Vuelo(nvuelo int(7) NOT NULL PRIMARY KEY, IATAorigen String(3) NOT NULL REFERENCES Airport(IATA),IATAdestino String(3) NOT NULL REFERENCES Airport(IATA), IATAaircraft String(3) NOT NULL REFERENCES Aircraft(IATA),IATAairline String(5) NOT NULL REFERENCES Airline(IATA), COD_R int(9) NOT NULL REFERENCES Reserva(COD_R), horasalida DATETIME);";		                     
-		String sentencia2 = "CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,precio FLOAT,dni String(9) NOT NULL REFERENCES USER(dni), CHECK(precio>0));";
+		String sentencia1 = "CREATE TABLE Vuelo(nvuelo int(7) NOT NULL PRIMARY KEY, IATAorigen String(3) NOT NULL REFERENCES Airport(IATA),IATAdestino String(3) NOT NULL REFERENCES Airport(IATA), IATAaircraft String(3) NOT NULL REFERENCES Aircraft(IATA),IATAairline String(5) NOT NULL REFERENCES Airline(IATA), COD_R int(9) NOT NULL REFERENCES Reserva(COD_R));";		                     
+		String sentencia2 = "CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,precio FLOAT,dni String(9) NOT NULL REFERENCES USER(dni), horasalida DATETIME, CHECK(precio>0));";
 		//String sentencia = "";
 		runSentenciaDB(sentencia1);
 		runSentenciaDB(sentencia2);
+		
 		
 		
 	}
