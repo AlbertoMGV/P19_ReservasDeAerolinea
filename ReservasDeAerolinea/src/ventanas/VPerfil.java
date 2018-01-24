@@ -7,8 +7,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -25,8 +28,9 @@ public class VPerfil extends JFrame {
 	private JPanel contentPane;
 	private DefaultTableModel tbmperf;
 	private JTree arbol;
-
-
+	private int selectedReserva;
+	private Usuario u;
+	private JFrame frame = this;
 
 	/**
 	 * Launch the application.
@@ -48,8 +52,10 @@ public class VPerfil extends JFrame {
 	 * Create the frame.
 	 */
 	public VPerfil(Usuario u) {
+		selectedReserva = 0;
+		this.u = u;
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(25, 350, 700, 442);
 		setTitle("[DeustoAIR] Mi Perfil");
 		contentPane = new JPanel();
@@ -104,6 +110,29 @@ public class VPerfil extends JFrame {
 		}	
 		
 		arbol = new JTree(root);
+		
+		arbol.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		
+		arbol.addTreeSelectionListener(new TreeSelectionListener() {
+			
+			@Override
+			public void valueChanged(TreeSelectionEvent e) {
+				DefaultMutableTreeNode nodo = (DefaultMutableTreeNode) arbol.getLastSelectedPathComponent();
+				if(nodo == null) return;
+								
+				Object nodeInfo = nodo.getUserObject();
+				
+				if(!nodo.isLeaf()) {
+					String reserva = (String) nodo.getUserObject();
+					String codString = reserva.split(" - ")[0];
+					codString = codString.substring(14, codString.length());
+					selectedReserva = Integer.parseInt(codString);
+				}else {
+					selectedReserva = -1;
+				}
+				
+			}
+		});
 
 		JScrollPane panelscroll = new JScrollPane(arbol);
 		panelscroll.setBounds(12, 206, 670, 146);
@@ -165,20 +194,38 @@ public class VPerfil extends JFrame {
 		});
 		btnNewButton_1.setBounds(165, 369, 119, 25);
 		contentPane.add(btnNewButton_1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
+		JButton btnEliminarReserva = new JButton("Eliminar reserva");
+		btnEliminarReserva.setForeground(Color.RED);
+		btnEliminarReserva.setBounds(10, 370, 122, 23);
+		contentPane.add(btnEliminarReserva);
+		
+		btnEliminarReserva.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(selectedReserva > 0) {
+					GestorDB.delReserva(selectedReserva);
+					JOptionPane.showMessageDialog(frame,
+						    "Se reiniciará la ventana para que los cambios surtan efecto.",
+						    "Aviso",
+						    JOptionPane.WARNING_MESSAGE);
+					VPerfil perfil = new VPerfil(u);
+					perfil.setVisible(true);
+					dispose();
+				}else if (selectedReserva == -1) {
+					JOptionPane.showMessageDialog(frame,
+						    "No se pueden eliminar vuelos individuales de una reserva.",
+						    "ERROR",
+						    JOptionPane.ERROR_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(frame,
+						    "Debes seleccionar una reserva.",
+						    "ERROR",
+						    JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 
 
 

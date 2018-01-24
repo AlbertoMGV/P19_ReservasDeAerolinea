@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 import gestores.GestorDB;
-import utilidades.FormatData;
+import utilidades.Utilidades;
 
 public class Vuelo {
 	

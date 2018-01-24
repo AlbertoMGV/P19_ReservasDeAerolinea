@@ -255,7 +255,6 @@ public class VInicio extends JFrame {
 		JButton btnMiPerfil = new JButton("Mi perfil");
 		btnMiPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				dispose();
 				VPerfil frame = new VPerfil(u);
 				frame.setVisible(true);
 			}

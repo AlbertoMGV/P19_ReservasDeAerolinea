@@ -14,7 +14,7 @@ import datos.Reserva;
 import datos.Route;
 import datos.Usuario;
 import datos.Vuelo;
-import utilidades.FormatData;
+import utilidades.Utilidades;
 
 
 public class GestorDB {
@@ -38,6 +38,15 @@ public class GestorDB {
 		
 		return true;
 	}
+	
+	//Eliminar reserva
+	
+	public static boolean delReserva(int codReserva) {
+		String sentencia = "DELETE FROM Reserva WHERE COD_R="+codReserva;
+		runSentenciaDB(sentencia);
+		return true;
+	}
+	
 	//Crea un reserva en bd con el obj reserva pasado
 	
 	public static boolean regReserva(Reserva reserva) {

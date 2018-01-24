@@ -59,11 +59,6 @@ public class Pricing {
 	public void setAerolineas(String[] aerolineas) {
 		this.aerolineas = aerolineas;
 	}
-
-	public static void main(String[] args) {
-		String[] ruta = {"AMS", "BRU", "ZTH", "BIO"};
-		System.out.println(Arrays.toString(getAerolineas(ruta)));
-	}
 	
 	public static Pricing procesarPrecio(String[] ruta, String[] fechas, int pasajeros, int claseId) {
 		
@@ -173,7 +168,7 @@ public class Pricing {
 		//calcular duracion
 		double duracion = this.dTotal / 800; //800 es la velocidad por defecto de todos los aviones, en una futura version debe leerse la velocidad del avion que realiza cada escala.
 		int horas = (int) duracion;
-		int minutos = (int) Math.abs(duracion - horas) * 60;
+		int minutos = (int) (Math.abs(duracion - horas) * 60.0);
 		
 		if(horas < minHoras) {
 			minutos = 0;
@@ -191,8 +186,15 @@ public class Pricing {
 		}if(horaLlegada >= 24) {
 			horaLlegada = horaLlegada - 24;
 		}
-		
-		result = horaLlegada + ":" + minLlegada;
+		String sMinLlegada = minLlegada + "";
+		if(minLlegada < 10) {
+			if(minLlegada == 0) {
+				sMinLlegada = "00";
+			}else {
+				sMinLlegada = "0" + minLlegada;
+			}
+		}
+		result = horaLlegada + ":" + sMinLlegada;
 		return result;
 	}
 }

@@ -18,154 +18,9 @@ import datos.Airport;
 import datos.Route;
 import gestores.GestorDB;
 
-public class FormatData {
+public class Utilidades {
 
 	//Clase ajena al proyecto principal, para manipular los datos que utilizaremos 
-	
-	
-	public static void main(String[] args) {
-	}
-	
-	
-	public static void fillAirlines() {
-		File dat = new File("res/airlines.dat");
-		try {
-			FileReader fr = new FileReader(dat);
-			BufferedReader bfr = new BufferedReader(fr);
-			String linea;
-			while((linea = bfr.readLine()) != null) {
-				linea = linea.replace("\"", "");
-				String[] data = linea.split(",");
-				if(data[3].length() > 0) {
-					GestorDB.insertarAirline(Integer.parseInt(data[0]), data[4], data[3], data[1]);
-				}
-			}
-			bfr.close();
-			fr.close();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void renameAircraftImages() {
-		String imagesPath = "D:\\xampp\\htdocs\\deusto\\imagenes";
-		File carpetaImagenes = new File(imagesPath);
-		File[] subcarpetas = carpetaImagenes.listFiles();
-		
-		for(File subcarpeta : subcarpetas) {
-			if(subcarpeta.isDirectory()) {
-				File[] imagenes = subcarpeta.listFiles();
-				for(int i = 0; i < imagenes.length; i++) {
-					renameFile(imagenes[i], i+".jpg");
-				}
-			}
-		}
-	}
-	
-	
-	public static void renameFile(File file, String newName) {
-		File newFile = new File(file.getParent()+"\\"+newName);
-		file.renameTo(newFile);
-	}
-	
-	public static void generarArchivoAviones() {
-		System.out.println(GestorDB.getAircraft());
-	}
-	
-	public static ArrayList<Route> leerRutas() {
-		ArrayList<Route> resultado = new ArrayList<Route>();
-		File rutas = new File("res/routes_distances.dat");
-		try {
-			String linea;
-			FileReader fr = new FileReader(rutas);
-			BufferedReader bfr = new BufferedReader(fr);
-			
-			while((linea = bfr.readLine())!= null) {
-				String[] data = linea.split(",");
-				Route ruta = new Route(Airport.get(data[2]), data[9], Airport.get(data[4]), data[8], data[0]);
-				resultado.add(ruta);
-			}
-			
-			bfr.close();
-			fr.close();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		return resultado;
-	}
-	
-	public static ArrayList<Aircraft> leerAircraft(){
-		ArrayList<Aircraft> resultado = new ArrayList<Aircraft>();
-		
-		File aircraft = new File("res/aircraft.dat");
-		
-		try {
-			String linea;
-			FileReader fr = new FileReader(aircraft);
-			BufferedReader bfr = new BufferedReader(fr);
-			while((linea = bfr.readLine()) != null) {
-				String[] data = linea.split(",");
-				if(!data[1].equals("n/a")) {
-					Aircraft ac = new Aircraft(data[0], data[1], data[2], 800);
-					resultado.add(ac);
-				}
-				
-			}
-			bfr.close();
-			fr.close();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-				
-		return resultado;
-	}
-	
-	
-	
-	public static void rellenarDistancias(){
-		HashMap<String, Coordenadas> datos = leerCoordenadas();
-		
-		File rutas = new File("res/routes_ICAO.dat");
-		File rutasKM = new File("res/routes_distances.dat");
-		
-		try{
-			String linea;
-			FileReader fr = new FileReader(rutas);
-			BufferedReader bfr = new BufferedReader(fr);
-			FileWriter fw = new FileWriter(rutasKM);
-			String origin, destination;
-			double lat1, lon1, lat2, lon2;
-			int distance;
-			
-			while((linea = bfr.readLine()) != null){
-				String[] data = linea.split(",");
-				String[] newData = new String[data.length+1];
-				
-				origin = data[2];
-				destination = data[4];				
-				
-				lat1 = datos.get(origin).getLat();
-				lon1 = datos.get(origin).getLon();
-				
-				lat2 = datos.get(destination).getLat();
-				lon2 = datos.get(destination).getLon();
-				
-				distance = (int) distancia(lat1, lon1, lat2, lon2);
-				
-				for(int i = 0; i < data.length; i++){
-					newData[i] = data[i];
-				}
-				
-				newData[data.length] = distance+"";
-				
-				fw.write(arrayToString(newData, ',') + "\n");
-			}
-			bfr.close();
-			fr.close();
-		}catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	/* metodo para calcular la distancia recorrida por cada ruta. la calcularemos aproximadamente
 	 * mediante las coordenadas del aeropuerto inicial y el de destino. Utilizaremos la formula de Haversine
@@ -356,7 +211,6 @@ public class FormatData {
 			bfr.close();
 			fr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -372,10 +226,149 @@ public class FormatData {
 				result += string[i];
 			}
 		}
-		
 
 		
 		return result;
+	}
+	
+	public static void fillAirlines() {
+		File dat = new File("res/airlines.dat");
+		try {
+			FileReader fr = new FileReader(dat);
+			BufferedReader bfr = new BufferedReader(fr);
+			String linea;
+			while((linea = bfr.readLine()) != null) {
+				linea = linea.replace("\"", "");
+				String[] data = linea.split(",");
+				if(data[3].length() > 0) {
+					GestorDB.insertarAirline(Integer.parseInt(data[0]), data[4], data[3], data[1]);
+				}
+			}
+			bfr.close();
+			fr.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void renameAircraftImages() {
+		String imagesPath = "D:\\xampp\\htdocs\\deusto\\imagenes";
+		File carpetaImagenes = new File(imagesPath);
+		File[] subcarpetas = carpetaImagenes.listFiles();
+		
+		for(File subcarpeta : subcarpetas) {
+			if(subcarpeta.isDirectory()) {
+				File[] imagenes = subcarpeta.listFiles();
+				for(int i = 0; i < imagenes.length; i++) {
+					renameFile(imagenes[i], i+".jpg");
+				}
+			}
+		}
+	}
+	
+	
+	public static void renameFile(File file, String newName) {
+		File newFile = new File(file.getParent()+"\\"+newName);
+		file.renameTo(newFile);
+	}
+	
+	public static void generarArchivoAviones() {
+		System.out.println(GestorDB.getAircraft());
+	}
+	
+	public static ArrayList<Route> leerRutas() {
+		ArrayList<Route> resultado = new ArrayList<Route>();
+		File rutas = new File("res/routes_distances.dat");
+		try {
+			String linea;
+			FileReader fr = new FileReader(rutas);
+			BufferedReader bfr = new BufferedReader(fr);
+			
+			while((linea = bfr.readLine())!= null) {
+				String[] data = linea.split(",");
+				Route ruta = new Route(Airport.get(data[2]), data[9], Airport.get(data[4]), data[8], data[0]);
+				resultado.add(ruta);
+			}
+			
+			bfr.close();
+			fr.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+	
+	public static ArrayList<Aircraft> leerAircraft(){
+		ArrayList<Aircraft> resultado = new ArrayList<Aircraft>();
+		
+		File aircraft = new File("res/aircraft.dat");
+		
+		try {
+			String linea;
+			FileReader fr = new FileReader(aircraft);
+			BufferedReader bfr = new BufferedReader(fr);
+			while((linea = bfr.readLine()) != null) {
+				String[] data = linea.split(",");
+				if(!data[1].equals("n/a")) {
+					Aircraft ac = new Aircraft(data[0], data[1], data[2], 800);
+					resultado.add(ac);
+				}
+				
+			}
+			bfr.close();
+			fr.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		return resultado;
+	}
+	
+	
+	
+	public static void rellenarDistancias(){
+		HashMap<String, Coordenadas> datos = leerCoordenadas();
+		
+		File rutas = new File("res/routes_ICAO.dat");
+		File rutasKM = new File("res/routes_distances.dat");
+		
+		try{
+			String linea;
+			FileReader fr = new FileReader(rutas);
+			BufferedReader bfr = new BufferedReader(fr);
+			FileWriter fw = new FileWriter(rutasKM);
+			String origin, destination;
+			double lat1, lon1, lat2, lon2;
+			int distance;
+			
+			while((linea = bfr.readLine()) != null){
+				String[] data = linea.split(",");
+				String[] newData = new String[data.length+1];
+				
+				origin = data[2];
+				destination = data[4];				
+				
+				lat1 = datos.get(origin).getLat();
+				lon1 = datos.get(origin).getLon();
+				
+				lat2 = datos.get(destination).getLat();
+				lon2 = datos.get(destination).getLon();
+				
+				distance = (int) distancia(lat1, lon1, lat2, lon2);
+				
+				for(int i = 0; i < data.length; i++){
+					newData[i] = data[i];
+				}
+				
+				newData[data.length] = distance+"";
+				
+				fw.write(arrayToString(newData, ',') + "\n");
+			}
+			bfr.close();
+			fr.close();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
