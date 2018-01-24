@@ -8,7 +8,7 @@ public class Reserva {
 	private int COD_R;
 	private double precio;
 	private String DNI;
-
+	private String horasalida;
 	
 	
 	
@@ -16,17 +16,26 @@ public class Reserva {
 	
 	@Override
 	public String toString() {
-		return "NºReserva:" + COD_R + " | Precio:" + precio;
+		return "NºReserva:" + COD_R + " | Precio:" + precio + " | Hora de Salida:"+horasalida;
 	}
 
-	public Reserva(int cOD_R, double precio, String dNI) {
+	public Reserva(int cOD_R, double precio, String dNI, String horasalida) {
 		super();
 		COD_R = cOD_R;
 		this.precio = precio;
 		DNI = dNI;
+		this.horasalida=horasalida;
 		
 	}
 	
+	public String getHorasalida() {
+		return horasalida;
+	}
+
+	public void setHorasalida(String horasalida) {
+		this.horasalida = horasalida;
+	}
+
 	public Reserva() {
 		
 	}

@@ -152,7 +152,7 @@ public class VInfo extends JFrame {
 			}
 			
 			
-			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni());
+			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(),horasalida);
 			GestorDB.regReserva(reserva);
 			dispose();
 			JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);
