@@ -8,15 +8,20 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import datos.Airport;
+import datos.Reserva;
+import datos.Usuario;
 import datos.Vuelo;
 import gestores.GestorDB;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.FlatteningPathIterator;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -29,6 +34,9 @@ public class VInfo extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel flightsPanel;
+	private Vuelo[] vuelos;
+	private double precio;
+	private Usuario loggedUser;
 
 	/**
 	 * Launch the application.
@@ -41,7 +49,7 @@ public class VInfo extends JFrame {
 					Vuelo ejemplo2 = new Vuelo("AZ-XXXX", Airport.get("MAD"), Airport.get("FCO"), GestorDB.getAircraft("MAD", "FCO", "AZ"),0);
 
 					Vuelo[] vuelos = {ejemplo, ejemplo2};
-					VInfo frame = new VInfo(vuelos);
+					VInfo frame = new VInfo(vuelos, 0, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +61,10 @@ public class VInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VInfo(Vuelo[] vuelos) {
+	public VInfo(Vuelo[] vuelos, double precio, Usuario loggedUser) {
+		this.vuelos = vuelos;
+		this.precio = precio;
+		this.loggedUser = loggedUser;
 		//cambiar look 
 
 		try {
@@ -105,7 +116,7 @@ public class VInfo extends JFrame {
 		
 		JButton btnReservar = new JButton("Reservar");
 		bottomPanel.add(btnReservar);
-		btnReservar.addActionListener(reservarListener);
+		btnReservar.addActionListener(reservaListener);
 	}
 
 
@@ -116,12 +127,38 @@ public class VInfo extends JFrame {
 			dispose();			
 		}
 	};
-	private ActionListener reservarListener = new ActionListener() {
+
+	private ActionListener reservaListener = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+						
+			int COD_R = 0;
+			String sCOD_R = "";
+			//generar 9 numeros aleatorios (cod_r)
 			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//TODO RESERVA DEL VUELO	
-				//flightsPanel.
+			for(int i = 0; sCOD_R.length() < 9; i++) {
+				int random = ThreadLocalRandom.current().nextInt(0, 9);
+				sCOD_R += random;
 			}
-		};
+			
+			COD_R = Integer.parseInt(sCOD_R);
+
+			for(int i = 0; i < vuelos.length; i++) {
+				//registrar vuelos iterativamente
+				vuelos[i].setCodReserva(COD_R);
+				GestorDB.regVuelo(vuelos[i]);
+				
+			}
+			
+			
+			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni());
+			GestorDB.regReserva(reserva);
+			dispose();
+			JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);
+			
+			
+		}
+	};
+
 }

@@ -111,6 +111,7 @@ public class VResultados extends JFrame {
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
 			Vuelo[] vuelos = new Vuelo[ruta.length - 1];
+			double precio = Double.parseDouble(tbm.getValueAt(selectedIndex, 4).toString().replace("€", ""));
 
 			for(int i = 0; i < ruta.length - 1; i++) {
 				String nVuelo = precios.get(selectedIndex).getAerolineas()[i].replaceAll(" ", "");
@@ -122,7 +123,7 @@ public class VResultados extends JFrame {
 				vuelos[i] = vuelo;
 			}
 
-			VInfo infoVuelo = new VInfo(vuelos);
+			VInfo infoVuelo = new VInfo(vuelos, precio, loggedUser);
 			infoVuelo.setVisible(true);
 
 		}
@@ -135,6 +136,7 @@ public class VResultados extends JFrame {
 			
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
+			double precio = Double.parseDouble(tbm.getValueAt(selectedIndex, 4).toString().replace("€", ""));
 			
 			int COD_R = 0;
 			String sCOD_R = "";
@@ -145,6 +147,7 @@ public class VResultados extends JFrame {
 				sCOD_R += random;
 			}
 			
+			COD_R = Integer.parseInt(sCOD_R);
 
 			for(int i = 0; i < ruta.length - 1; i++) {
 				//registrar vuelos iterativamente
@@ -152,16 +155,13 @@ public class VResultados extends JFrame {
 				Airport origen = Airport.get(ruta[i]);
 				Airport destino = Airport.get(ruta[i+1]);
 				String codAerolinea = nVuelo.substring(0, 2);
-				COD_R = Integer.parseInt(sCOD_R);
-				System.out.println(COD_R);
-					
-				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea), COD_R);
-				GestorDB.regVuelo(vuelo);
 				
+				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea), COD_R);
+				GestorDB.regVuelo(vuelo);				
 			}
 			
 			
-			Reserva reserva = new Reserva(COD_R, Double.parseDouble(tbm.getValueAt(selectedIndex, 4).toString().replace("€", "")), loggedUser.getDni());
+			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni());
 				GestorDB.regReserva(reserva);
 				
 				dispose();

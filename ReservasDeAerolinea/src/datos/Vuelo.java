@@ -65,6 +65,10 @@ public class Vuelo {
 		return avion;
 	}
 	
+	public void setCodReserva(int COD_R) {
+		this.COD_R = COD_R;
+	}
+	
 	public JPanel getJPanel() {
 		JPanel flightPanel = new JPanel();
 		flightPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
