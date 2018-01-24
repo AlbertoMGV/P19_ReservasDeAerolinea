@@ -64,7 +64,7 @@ public class VResultados extends JFrame {
 			Pricing vuelo = Pricing.procesarPrecio(s, fechas, pasajeros, claseId);
 			precios.add(vuelo);
 
-			String[] data = {Arrays.toString(vuelo.getAerolineas()), Airport.get(s[0]).getCity(), escalas(s), Airport.get(s[s.length-1]).getCity(), vuelo.getPrecio() + " €", "salida", "llegada"};
+			String[] data = {Arrays.toString(vuelo.getAerolineas()), Airport.get(s[0]).getCity(), escalas(s), Airport.get(s[s.length-1]).getCity(), vuelo.getPrecio() + " €", vuelo.gethSalida() + "h", vuelo.gethLlegada()+"h"};
 
 
 			if(vuelo.getAerolineas().length + 1 == s.length) {
@@ -111,7 +111,7 @@ public class VResultados extends JFrame {
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
 			Vuelo[] vuelos = new Vuelo[ruta.length - 1];
-			double precio = Double.parseDouble(tbm.getValueAt(selectedIndex, 4).toString().replace("€", ""));
+			double precio = precios.get(selectedIndex).getPrecio();
 
 			for(int i = 0; i < ruta.length - 1; i++) {
 				String nVuelo = precios.get(selectedIndex).getAerolineas()[i].replaceAll(" ", "");
@@ -136,7 +136,8 @@ public class VResultados extends JFrame {
 			
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
-			double precio = Double.parseDouble(tbm.getValueAt(selectedIndex, 4).toString().replace("€", ""));
+			double precio = precios.get(selectedIndex).getPrecio();
+			String hSalida = precios.get(selectedIndex).gethSalida();
 			
 			int COD_R = 0;
 			String sCOD_R = "";
