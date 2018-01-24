@@ -118,7 +118,7 @@ public class VResultados extends JFrame {
 				Airport destino = Airport.get(ruta[i+1]);
 				String codAerolinea = nVuelo.substring(0, 2);
 
-				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea),000);
+				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea), 0);
 				vuelos[i] = vuelo;
 			}
 
@@ -136,8 +136,14 @@ public class VResultados extends JFrame {
 			int selectedIndex = table.getSelectedRow();
 			String[] ruta = resultados.get(selectedIndex);
 			
-			//Aqui crear de alguna forma un codigo diferente para cada reserva
-			int COD_R = 2;
+			int COD_R = 0;
+			String sCOD_R = "";
+			//generar 9 numeros aleatorios (cod_r)
+			
+			for(int i = 0; sCOD_R.length() < 9; i++) {
+				int random = ThreadLocalRandom.current().nextInt(0, 9);
+				sCOD_R += random;
+			}
 			
 
 			for(int i = 0; i < ruta.length - 1; i++) {
@@ -146,16 +152,16 @@ public class VResultados extends JFrame {
 				Airport origen = Airport.get(ruta[i]);
 				Airport destino = Airport.get(ruta[i+1]);
 				String codAerolinea = nVuelo.substring(0, 2);
-				
-				
-
-				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea),COD_R);
+				COD_R = Integer.parseInt(sCOD_R);
+				System.out.println(COD_R);
+					
+				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea), COD_R);
 				GestorDB.regVuelo(vuelo);
 				
 			}
 			
 			
-			Reserva reserva = new Reserva(COD_R, 2222, loggedUser.getDni());
+			Reserva reserva = new Reserva(COD_R, Double.parseDouble(tbm.getValueAt(selectedIndex, 4).toString().replace("€", "")), loggedUser.getDni());
 				GestorDB.regReserva(reserva);
 				
 				dispose();
