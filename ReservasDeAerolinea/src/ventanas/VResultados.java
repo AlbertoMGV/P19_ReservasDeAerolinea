@@ -36,6 +36,8 @@ public class VResultados extends JFrame {
 	private ArrayList<Pricing> precios;
 	private Usuario loggedUser;
 	private DefaultTableModel tbm;
+	private String[] fechas1;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -49,6 +51,7 @@ public class VResultados extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
 		setContentPane(contentPane);
+		fechas1 = fechas;
 
 		loggedUser = VInicio.getLoggedUser();
 		String[] columnNames = {"Nº Vuelo", "Origen", "Escalas", "Destino", "Precio", "H.Salida", "H.Llegada"};
@@ -123,8 +126,8 @@ public class VResultados extends JFrame {
 				Vuelo vuelo = new Vuelo(nVuelo, origen, destino, GestorDB.getAircraft(origen.getIATA(), destino.getIATA(), codAerolinea), 0);
 				vuelos[i] = vuelo;
 			}
-
-			VInfo infoVuelo = new VInfo(vuelos, precio, hSalida, loggedUser);
+			
+			VInfo infoVuelo = new VInfo(vuelos, precio, hSalida, loggedUser,fecha);
 			infoVuelo.setVisible(true);
 
 		}
@@ -162,10 +165,11 @@ public class VResultados extends JFrame {
 				GestorDB.regVuelo(vuelo);				
 			}
 			
+			 
 			
 			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(), hSalida);
 			GestorDB.regReserva(reserva);
-			dispose();
+			
 			JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);
 			
 			

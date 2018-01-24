@@ -20,6 +20,7 @@ import utilidades.FormatData;
 public class GestorDB {
 		
 	
+	
 	//Registra vuelos en la bd a raiz del obj vuelo pasado
 	public static boolean regVuelo(Vuelo vuelo) {
 		
@@ -44,8 +45,9 @@ public class GestorDB {
 		double precio = reserva.getPrecio();
 		int cod_r = reserva.getCOD_R();
 		String hsalida = reserva.getHorasalida();
+		String fecha = reserva.getFecha();
 		
-		String sentencia = "INSERT INTO Reserva VALUES ('"+cod_r+"','"+precio+"','"+dni+"','"+hsalida+"');";
+		String sentencia = "INSERT INTO Reserva VALUES ('"+cod_r+"','"+precio+"','"+dni+"','"+hsalida+"'"+fecha+"');";
 		runSentenciaDB(sentencia);
 		return true;
 	}
@@ -358,10 +360,10 @@ public class GestorDB {
 		//String sentencia = "CREATE TABLE Aircraft(IATA String(3),ICAO String(4) NOT NULL,name_ac String(12) NOT NULL UNIQUE,speed double(4,2),PRIMARY KEY(ICAO, name_ac));";
 		//String sentencia = "CREATE TABLE Route(origin String(20) NOT NULL,destination String(20) NOT NULL,distance int(8),airline String(20),aircraft String(20), PRIMARY KEY(origin,destination, airline));";
 		String sentencia1 = "CREATE TABLE Vuelo(nvuelo int(7) NOT NULL PRIMARY KEY, IATAorigen String(3) NOT NULL REFERENCES Airport(IATA),IATAdestino String(3) NOT NULL REFERENCES Airport(IATA), IATAaircraft String(3) NOT NULL REFERENCES Aircraft(IATA),IATAairline String(5) NOT NULL REFERENCES Airline(IATA), COD_R int(9) NOT NULL REFERENCES Reserva(COD_R));";		                     
-		String sentencia2 = "CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,precio FLOAT,dni String(9) NOT NULL REFERENCES USER(dni), horasalida DATETIME, CHECK(precio>0));";
+		String sentencia = "CREATE TABLE Reserva(COD_R int(9) NOT NULL PRIMARY KEY,precio FLOAT,dni String(9) NOT NULL REFERENCES USER(dni), horasalida DATETIME,fecha String, CHECK(precio>0));";
 		//String sentencia = "";
 		runSentenciaDB(sentencia1);
-		runSentenciaDB(sentencia2);
+		runSentenciaDB(sentencia);
 		
 		
 		
@@ -400,6 +402,7 @@ public class GestorDB {
 				r1.setPrecio(rs.getDouble(2));
 				r1.setDNI(rs.getString(3));
 				r1.setHorasalida(rs.getString(4));
+				r1.setFecha(rs.getString(5));
 				
 				
 				reservas.add(r1);

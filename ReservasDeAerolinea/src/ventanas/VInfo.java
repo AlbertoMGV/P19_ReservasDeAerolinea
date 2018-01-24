@@ -38,6 +38,7 @@ public class VInfo extends JFrame {
 	private double precio;
 	private Usuario loggedUser;
 	private String hSalida;
+	private String[] fechas1;
 
 	/**
 	 * Launch the application.
@@ -62,11 +63,13 @@ public class VInfo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VInfo(Vuelo[] vuelos, double precio, String hSalida ,Usuario loggedUser) {
+	public VInfo(Vuelo[] vuelos, double precio, String hSalida ,Usuario loggedUser, String[] fechas) {
 		this.vuelos = vuelos;
 		this.precio = precio;
 		this.loggedUser = loggedUser;
 		this.hSalida = hSalida;
+		this.fechas1=fechas;
+		
 		//cambiar look 
 
 		try {
@@ -154,7 +157,7 @@ public class VInfo extends JFrame {
 			}
 			
 			
-			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(), hSalida);
+			Reserva reserva = new Reserva(COD_R, precio, loggedUser.getDni(), hSalida,fecha);
 			GestorDB.regReserva(reserva);
 			dispose();
 			JOptionPane.showMessageDialog(null, "Reserva realizada", "[DeustoAir] Información", JOptionPane.NO_OPTION);
