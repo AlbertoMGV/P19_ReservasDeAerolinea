@@ -1,7 +1,7 @@
 # Scripts PHP
-Este script ha sido escrito en PHP por ser más fácil de implementar que en Java. Una opción mejor hubiera sido Python.
+El script get_photos.php ha sido escrito en PHP por ser más fácil de implementar que en Java. Una opción mejor hubiera sido Python. Su funci�n es la de descargar autom�ticamente desde Flickr 5 im�genes por cada 'tag' contenida en el archivo aircraft.dat (modificable).
 
-## Uso del Script
+## Uso del Script get_photos.php:
 
 El script necesita 2 modificaciones para funcionar correctamente. Primero, en la línea 4 deberemos modificar la siguiente línea:
 
@@ -18,7 +18,7 @@ $pathname = 'D:/xampp/htdocs/deusto/imagenes/'.$aircraft_name.'_images/';
 
 se deberá modificar la ruta por la correspondiente, manteniendo la última porción (.$aircraft_name.'_images/').
 
-## aircraft.dat
+## aircraft.dat:
 
 Este fichero contiene un listado de los aviones disponibles en la base de datos. Ha sido generado utilizando la clase FormatData.java del paquete utilidades, en concreto, con el método generarArchivoAviones().
 Fragmento del archivo:
