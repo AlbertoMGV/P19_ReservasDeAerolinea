@@ -50,13 +50,22 @@ public class VPerfil extends JFrame {
 	public VPerfil(Usuario u) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(725, 350, 700, 442);
+		setBounds(25, 350, 700, 442);
 		setTitle("[DeustoAIR] Mi Perfil");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
+		
+		//cambiar iconos del jtree
+		
+		Icon planeIcon =  new ImageIcon("res/imagenes/plane_icon_s.png");
+		Icon ticketIcon =  new ImageIcon("res/imagenes/ticket_icon_s.png");
+		
+		UIManager.put("Tree.closedIcon", ticketIcon);
+		UIManager.put("Tree.openIcon", ticketIcon);
+		UIManager.put("Tree.leafIcon", planeIcon);
 
 
 		String[] columnNames = {"NºReserva", "Precio", "Dia", "Hora de Salida"};
